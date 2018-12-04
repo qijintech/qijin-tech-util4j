@@ -1,6 +1,7 @@
 package tech.qijin.util4j.web.filter;
 
-import tech.qijin.util4j.web.util.TraceUtil;
+
+import tech.qijin.util4j.trace.util.TraceUtil;
 
 import javax.servlet.*;
 import java.io.IOException;

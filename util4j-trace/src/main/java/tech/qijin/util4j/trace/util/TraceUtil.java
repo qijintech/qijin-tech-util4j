@@ -1,4 +1,4 @@
-package tech.qijin.util4j.web.util;
+package tech.qijin.util4j.trace.util;
 
 import java.util.UUID;
 

@@ -8,7 +8,7 @@ import tech.qijin.util4j.lang.vo.PageReqVo;
 import tech.qijin.util4j.practice.config.ProfileConfig;
 import tech.qijin.util4j.practice.model.User;
 import tech.qijin.util4j.practice.service.UserService;
-import tech.qijin.util4j.web.util.LogFormat;
+import tech.qijin.util4j.utils.log.LogFormat;
 
 import java.util.List;
 

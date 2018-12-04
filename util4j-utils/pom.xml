@@ -20,6 +20,10 @@
             <artifactId>util4j-lang</artifactId>
         </dependency>
         <dependency>
+            <groupId>tech.qijin.util4j</groupId>
+            <artifactId>util4j-trace</artifactId>
+        </dependency>
+        <dependency>
             <groupId>commons-beanutils</groupId>
             <artifactId>commons-beanutils</artifactId>
         </dependency>

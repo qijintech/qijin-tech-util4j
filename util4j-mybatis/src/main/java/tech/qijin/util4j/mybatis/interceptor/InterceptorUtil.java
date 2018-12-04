@@ -8,7 +8,7 @@ import org.apache.ibatis.mapping.ParameterMapping;
 import org.apache.ibatis.mapping.SqlSource;
 import org.apache.ibatis.plugin.Invocation;
 import tech.qijin.util4j.lang.constant.EnumValue;
-import tech.qijin.util4j.web.pojo.EnvEnum;
+import tech.qijin.util4j.trace.pojo.EnvEnum;
 
 import java.lang.reflect.Field;
 import java.util.List;

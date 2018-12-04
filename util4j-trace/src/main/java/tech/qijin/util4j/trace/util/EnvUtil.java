@@ -1,6 +1,6 @@
-package tech.qijin.util4j.web.util;
+package tech.qijin.util4j.trace.util;
 
-import tech.qijin.util4j.web.pojo.EnvEnum;
+import tech.qijin.util4j.trace.pojo.EnvEnum;
 
 /**
  * @author michealyang

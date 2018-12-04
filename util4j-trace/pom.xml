@@ -20,10 +20,6 @@
             <artifactId>util4j-lang</artifactId>
         </dependency>
         <dependency>
-            <groupId>tech.qijin.util4j</groupId>
-            <artifactId>util4j-web</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter</artifactId>
         </dependency>

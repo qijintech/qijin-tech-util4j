@@ -1,7 +1,7 @@
 package tech.qijin.util4j.web.filter;
 
-import tech.qijin.util4j.web.pojo.EnvEnum;
-import tech.qijin.util4j.web.util.EnvUtil;
+import tech.qijin.util4j.trace.pojo.EnvEnum;
+import tech.qijin.util4j.trace.util.EnvUtil;
 import tech.qijin.util4j.web.util.ServletUtil;
 
 import javax.servlet.*;

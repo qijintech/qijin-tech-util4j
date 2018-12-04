@@ -44,6 +44,7 @@
         <druid.version>1.1.10</druid.version>
         <commons.codec.version>1.11</commons.codec.version>
         <poi.version>3.9</poi.version>
+        <firebase.admin.version>6.5.0</firebase.admin.version>
 
         <plugin.compiler.version>3.8.0</plugin.compiler.version>
         <plugin.source.version>3.0.1</plugin.source.version>
@@ -144,6 +145,12 @@
                 <version>${spring.boot.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>com.google.firebase</groupId>
+                <artifactId>firebase-admin</artifactId>
+                <version>${firebase.admin.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.mybatis.spring.boot</groupId>

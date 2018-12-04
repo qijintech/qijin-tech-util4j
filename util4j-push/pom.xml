@@ -15,6 +15,14 @@
     <artifactId>util4j-push</artifactId>
 
     <dependencies>
+        <dependency>
+            <groupId>tech.qijin.util4j</groupId>
+            <artifactId>util4j-utils</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.google.firebase</groupId>
+            <artifactId>firebase-admin</artifactId>
+        </dependency>
     </dependencies>
 
     <build>

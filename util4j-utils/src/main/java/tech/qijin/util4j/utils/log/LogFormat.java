@@ -2,6 +2,7 @@ package tech.qijin.util4j.utils.log;
 
 import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;
+import tech.qijin.util4j.trace.util.TraceUtil;
 
 import java.util.Map;
 
@@ -18,6 +19,13 @@ public class LogFormat {
     public static class LogFormatBuilder {
         protected Map<String, Object> container = Maps.newHashMap();
         protected String message;
+
+        private String traceId;
+
+        public LogFormatBuilder() {
+            this.traceId = TraceUtil.getTraceId();
+        }
+
         public LogFormatBuilder put(String key, Object value){
             if (StringUtils.isBlank(key)) {
                 return this;
@@ -38,6 +46,9 @@ public class LogFormat {
 
         public String build() {
             StringBuilder sb = new StringBuilder();
+            if (traceId != null) {
+                sb.append("[").append(traceId).append("] ");
+            }
             if (StringUtils.isNotBlank(message)) {
                 sb.append(message).append(" ");
             }
