@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+    <settings>
+        <setting name="mapUnderscoreToCamelCase" value="true" />
+    </settings>
+    <typeHandlers>
+    </typeHandlers>
+    <plugins>
+        <!--自动插入env和更新updated_at-->
+        <plugin interceptor="tech.qijin.commons.mybatis.interceptor.SqlInfoInterceptor"></plugin>
+        <plugin interceptor="tech.qijin.commons.mybatis.interceptor.EnvInterceptor"></plugin>
+    </plugins>
+
+</configuration>
