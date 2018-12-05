@@ -29,8 +29,8 @@ import java.util.concurrent.Executor;
  **/
 @Slf4j(topic = "Firebase")
 public class FirebaseUtil {
+
     private static boolean available = false;
-    //TODO 如何选择最优的Executor
     private static Executor executor = MoreExecutors.directExecutor();
 
     static {
@@ -46,17 +46,17 @@ public class FirebaseUtil {
 
             FirebaseApp.initializeApp(options);
             available = true;
-            log.info("firebase initialize succeed!");
+            log.info(LogFormat.builder().message("firebase initialization succeed!").build());
         } catch (FileNotFoundException e) {
-            log.error("serviceAccountKey.json not found", e);
+            log.error(LogFormat.builder().message("serviceAccountKey.json not found").build(), e);
         } catch (IOException e) {
-            log.error("io exception", e);
+            log.error(LogFormat.builder().message("io exception").build(), e);
         } finally {
             if (inputStream != null) {
                 try {
                     inputStream.close();
                 } catch (Exception e) {
-                    log.error("close input stream error", e);
+                    log.error(LogFormat.builder().message("close inputstream error").build(), e);
                 }
             }
         }
