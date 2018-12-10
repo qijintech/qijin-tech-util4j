@@ -15,7 +15,8 @@ public class EnvUtil {
     }
 
     public static EnvEnum getEnv() {
-        return envThreadLocal.get();
+        EnvEnum envEnum = envThreadLocal.get();
+        return envEnum == null ? EnvEnum.TEST : envEnum;
     }
 
     public static void remove() {
