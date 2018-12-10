@@ -68,7 +68,6 @@ public abstract class AbstractTenantInterceptor<T> implements Interceptor {
             return invocation.proceed();
         }
         long start = System.currentTimeMillis();
-        log.info("0, time={}", start);
         Object[] args = invocation.getArgs();
         MappedStatement ms = (MappedStatement) args[Config.MAPPED_STATEMENT_INDEX];
         Object parameter = args[Config.PARAMETER_INDEX];
@@ -79,7 +78,6 @@ public abstract class AbstractTenantInterceptor<T> implements Interceptor {
         //记录SQL
         BoundSql boundSql = handler.getBoundSql();
         //sql类型
-        log.info("1, time={}", System.currentTimeMillis());
         SqlCommandType sqlCommandType = ms.getSqlCommandType();
         rewriteService.dispatch(sqlCommandType, invocation, boundSql, getTenantValue());
         log.info(LogFormat.builder()
@@ -142,7 +140,6 @@ public abstract class AbstractTenantInterceptor<T> implements Interceptor {
             Statement statement;
             try {
                 statement = sqlParse(originalSql);
-                log.info("1.1, time={}", System.currentTimeMillis());
                 switch (sqlCommandType) {
                     case INSERT:
                         rewriteInsert((Insert) statement, invocation, boundSql, tenantValue);
@@ -211,13 +208,11 @@ public abstract class AbstractTenantInterceptor<T> implements Interceptor {
                                   BoundSql boundSql,
                                   T tenantValue) throws JSQLParserException {
             PlainSelect ps = (PlainSelect) select.getSelectBody();
-            log.info("2, time={}", System.currentTimeMillis());
             Map<String, String> needRewriteTables = getNeedRewriteTables(ps);
             if (!needRewriteTables.isEmpty()) {
                 Expression where = modifyWhere(ps.getWhere(), needRewriteTables, tenantValue);
                 ps.setWhere(where);
             }
-            log.info("3, time={}", System.currentTimeMillis());
             doInvocation(ps.toString(), invocation, boundSql);
         }
 
