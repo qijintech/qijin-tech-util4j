@@ -67,62 +67,24 @@ public class FirebaseUtil {
      *
      * @param token
      * @param notification
-     * @return
-     * @throws FirebaseMessagingException
-     */
-    public static void send(String token, Notification notification)
-            throws FirebaseMessagingException {
-        Preconditions.checkState(available, "firebase not available");
-        long start = System.currentTimeMillis();
-
-        Message message = Message.builder()
-                .setNotification(notification)
-                .setToken(token)
-                .build();
-        log.info(LogFormat.builder().message("start to send to FCM").build());
-        ApiFuture apiFuture = FirebaseMessaging.getInstance().sendAsync(message);
-        ApiFutures.addCallback(apiFuture, new ApiFutureCallback<String>() {
-            @Override
-            public void onFailure(Throwable t) {
-                log.error(LogFormat.builder()
-                        .message("send failure")
-                        .put("token", token)
-                        .put("time cost", System.currentTimeMillis() - start + " ms")
-                        .build());
-            }
-
-            @Override
-            public void onSuccess(String result) {
-                log.info(LogFormat.builder()
-                        .message("send success")
-                        .put("token", token)
-                        .put("result", result)
-                        .put("time cost", System.currentTimeMillis() - start + " ms")
-                        .build());
-            }
-        }, executor);
-    }
-
-    /**
-     * 单播
-     *
-     * @param token
-     * @param notification
      * @param data
      * @return
      * @throws FirebaseMessagingException
      */
-    public static void send(String token, Notification notification, Map<String, String> data)
+    public static void unicast(String token, Notification notification, Map<String, String> data)
             throws FirebaseMessagingException {
         Preconditions.checkState(available, "firebase not available");
 
         long start = System.currentTimeMillis();
 
-        Message message = Message.builder()
+        Message.Builder builder = Message.builder()
                 .setNotification(notification)
-                .putAllData(data)
-                .setToken(token)
-                .build();
+                .setToken(token);
+        if (data != null) {
+            builder.putAllData(data);
+        }
+
+        Message message = builder.build();
 
         log.info(LogFormat.builder().message("start to send to FCM").build());
         ApiFuture apiFuture = FirebaseMessaging.getInstance().sendAsync(message);
@@ -149,68 +111,43 @@ public class FirebaseUtil {
     }
 
     /**
-     * 广播
+     * 组播
      *
-     * @param topic
+     * @param tokens
      * @param notification
+     * @param data
      * @throws FirebaseMessagingException
      */
-    public static void multicast(String topic, Notification notification)
+    public static void multicast(List<String> tokens, Notification notification, Map<String, String> data)
             throws FirebaseMessagingException {
-
-        Preconditions.checkState(available, "firebase not available");
-
-        long start = System.currentTimeMillis();
-
-        Message message = Message.builder()
-                .setNotification(notification)
-                .setTopic(topic)
-                .build();
-
-        log.info(LogFormat.builder().message("start to multicast to FCM").build());
-        ApiFuture apiFuture = FirebaseMessaging.getInstance().sendAsync(message);
-        ApiFutures.addCallback(apiFuture, new ApiFutureCallback<String>() {
-            @Override
-            public void onFailure(Throwable t) {
-                log.error(LogFormat.builder()
-                        .message("send failure")
-                        .put("topic", topic)
-                        .put("time cost", System.currentTimeMillis() - start + " ms")
-                        .build());
-            }
-
-            @Override
-            public void onSuccess(String result) {
-                log.info(LogFormat.builder()
-                        .message("send success")
-                        .put("topic", topic)
-                        .put("result", result)
-                        .put("time cost", System.currentTimeMillis() - start + " ms")
-                        .build());
-            }
-        }, executor);
+        for (String token : tokens) {
+            unicast(token, notification, data);
+        }
     }
 
     /**
-     * 广播
+     * 按topic发送
      *
      * @param topic
      * @param notification
      * @param data
      * @throws FirebaseMessagingException
      */
-    public static void multicast(String topic, Notification notification, Map<String, String> data)
+    public static void topic(String topic, Notification notification, Map<String, String> data)
             throws FirebaseMessagingException {
 
         Preconditions.checkState(available, "firebase not available");
 
         long start = System.currentTimeMillis();
 
-        Message message = Message.builder()
+        Message.Builder builder = Message.builder()
                 .setNotification(notification)
-                .putAllData(data)
-                .setTopic(topic)
-                .build();
+                .setTopic(topic);
+        if (data != null) {
+            builder.putAllData(data);
+        }
+
+        Message message = builder.build();
 
         log.info(LogFormat.builder().message("start to multicast to FCM").build());
         ApiFuture apiFuture = FirebaseMessaging.getInstance().sendAsync(message);
@@ -229,43 +166,6 @@ public class FirebaseUtil {
                 log.info(LogFormat.builder()
                         .message("send success")
                         .put("topic", topic)
-                        .put("result", result)
-                        .put("time cost", System.currentTimeMillis() - start + " ms")
-                        .build());
-            }
-        }, executor);
-    }
-
-    /**
-     * 注册Topic
-     *
-     * @param topic
-     * @param token
-     */
-    public static void registerTopic(String topic, String token) {
-        Preconditions.checkState(available, "firebase not available");
-
-        long start = System.currentTimeMillis();
-
-        log.info(LogFormat.builder().message("start to register to topic").build());
-        ApiFuture apiFuture = FirebaseMessaging.getInstance().subscribeToTopicAsync(Lists.newArrayList(token), topic);
-        ApiFutures.addCallback(apiFuture, new ApiFutureCallback<TopicManagementResponse>() {
-            @Override
-            public void onFailure(Throwable t) {
-                log.error(LogFormat.builder()
-                        .message("register topic failure")
-                        .put("topic", topic)
-                        .put("token", token)
-                        .put("time cost", System.currentTimeMillis() - start + " ms")
-                        .build());
-            }
-
-            @Override
-            public void onSuccess(TopicManagementResponse result) {
-                log.info(LogFormat.builder()
-                        .message("register topic success")
-                        .put("topic", topic)
-                        .put("token", token)
                         .put("result", result)
                         .put("time cost", System.currentTimeMillis() - start + " ms")
                         .build());
@@ -279,12 +179,12 @@ public class FirebaseUtil {
      * @param topic
      * @param tokens
      */
-    public static void registerTopic(String topic, List<String> tokens) {
+    public static void register(String topic, List<String> tokens) {
         Preconditions.checkState(available, "firebase not available");
 
         long start = System.currentTimeMillis();
 
-        log.info(LogFormat.builder().message("start to register to topic").build());
+        log.info(LogFormat.builder().message("start to register to topic").put("topic", topic).build());
         ApiFuture apiFuture = FirebaseMessaging.getInstance().subscribeToTopicAsync(tokens, topic);
         ApiFutures.addCallback(apiFuture, new ApiFutureCallback<TopicManagementResponse>() {
             @Override
@@ -310,14 +210,51 @@ public class FirebaseUtil {
         }, executor);
     }
 
+    /**
+     * 取消注册Topic
+     *
+     * @param topic
+     * @param tokens
+     */
+    public static void unregister(String topic, List<String> tokens) {
+        Preconditions.checkState(available, "firebase not available");
+
+        long start = System.currentTimeMillis();
+
+        log.info(LogFormat.builder().message("start to unregister from topic").put("topic", topic).build());
+        ApiFuture apiFuture = FirebaseMessaging.getInstance().unsubscribeFromTopicAsync(tokens, topic);
+        ApiFutures.addCallback(apiFuture, new ApiFutureCallback<TopicManagementResponse>() {
+            @Override
+            public void onFailure(Throwable t) {
+                log.error(LogFormat.builder()
+                        .message("unregister topic failure")
+                        .put("topic", topic)
+                        .put("tokens", tokens)
+                        .put("time cost", System.currentTimeMillis() - start + " ms")
+                        .build());
+            }
+
+            @Override
+            public void onSuccess(TopicManagementResponse result) {
+                log.info(LogFormat.builder()
+                        .message("unregister topic success")
+                        .put("topic", topic)
+                        .put("tokens", tokens)
+                        .put("result", result)
+                        .put("time cost", System.currentTimeMillis() - start + " ms")
+                        .build());
+            }
+        }, executor);
+    }
+
     public static void main(String[] args) throws IOException, FirebaseMessagingException, InterruptedException {
         String token = "dC2mELMN02U:APA91bH4AScDxUTA54ocrOILawxwKg_6COA_Gpyv7Bp2kvBoqRDTKMXwDGf-y6_oz_VIoastaBIvnb2JVbi_gnAcppTNPZ7FJkWoH5g_Gf8J6tWJjgTf4bsRU0HLeVWQdQ7POM9enR3L";
-        FirebaseUtil.send(token, new Notification("mm", "123"));
+        FirebaseUtil.unicast(token, new Notification("mm", "123"), null);
         log.info("====finished====");
 
         String topic = "test";
-        FirebaseUtil.registerTopic(topic, token);
-        FirebaseUtil.multicast(topic, new Notification("multi", "asdf"));
+        FirebaseUtil.register(topic, Lists.newArrayList(token));
+        FirebaseUtil.topic(topic, new Notification("multi", "asdf"), null);
         Thread.sleep(10000);
     }
 
