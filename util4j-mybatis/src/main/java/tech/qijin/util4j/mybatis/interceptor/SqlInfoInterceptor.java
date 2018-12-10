@@ -62,12 +62,14 @@ public class SqlInfoInterceptor implements Interceptor {
             case INSERT:
                 int affectedRows = Integer.valueOf(Integer.parseInt(result.toString()));
                 LOGGER.info(LogFormat.builder().put("sql", boundSql.getSql())
+                        .put("params", parameter)
                         .put("affect rows", affectedRows)
                         .put("time cost", String.format("%d %s", end - start, "ms"))
                         .build());
                 break;
             case SELECT:
                 LOGGER.info(LogFormat.builder().put("sql", boundSql.getSql())
+                        .put("params", parameter)
                         .put("time cost", String.format("%d %s", end - start, "ms"))
                         .build());
                 break;
