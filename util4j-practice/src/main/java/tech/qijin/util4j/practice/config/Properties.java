@@ -6,11 +6,12 @@ import org.springframework.stereotype.Component;
 
 /**
  * @author michealyang
- * @date 2018/11/27
+ * @date 2018/12/7
  * 开始做眼保健操：←_← ↑_↑ →_→ ↓_↓
  **/
+@Component
 @Data
 @ConfigurationProperties(prefix = "test")
-public class BaseConfig {
+public class Properties {
     private String hehe;
 }

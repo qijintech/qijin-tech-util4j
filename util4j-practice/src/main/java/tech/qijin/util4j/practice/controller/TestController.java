@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import tech.qijin.util4j.lang.vo.PageReqVo;
 import tech.qijin.util4j.practice.config.ProfileConfig;
+import tech.qijin.util4j.practice.config.Properties;
 import tech.qijin.util4j.practice.model.User;
 import tech.qijin.util4j.practice.service.UserService;
 import tech.qijin.util4j.utils.log.LogFormat;
@@ -26,7 +27,7 @@ public class TestController {
     private UserService userService;
 
     @Autowired
-    private ProfileConfig.Property property;
+    private Properties properties;
 
     @GetMapping("/test1")
     public Object test1(@ModelAttribute PageReqVo pageReqVo) {
@@ -36,6 +37,6 @@ public class TestController {
                 .put("page", pageReqVo)
                 .put("users", users)
                 .build());
-        return property.getHehe();
+        return properties.getHehe();
     }
 }

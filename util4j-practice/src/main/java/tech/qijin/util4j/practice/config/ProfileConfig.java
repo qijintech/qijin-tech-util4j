@@ -14,22 +14,16 @@ import org.springframework.stereotype.Component;
  **/
 @Configuration
 public class ProfileConfig {
-    @Data
-    @ConfigurationProperties(prefix = "test")
-    public static class Property {
-        private String hehe;
-    }
-
-    @org.springframework.context.annotation.Profile("dev")
+    @Profile("dev")
     @Component
     @PropertySource("classpath:config-dev.properties")
-    public static class Dev extends Property {
+    public static class Dev{
     }
 
-    @org.springframework.context.annotation.Profile("test")
+    @Profile("test")
     @Component
     @PropertySource("classpath:config-test.properties")
-    public static class Test extends Property {
+    public static class Test{
     }
 
 
