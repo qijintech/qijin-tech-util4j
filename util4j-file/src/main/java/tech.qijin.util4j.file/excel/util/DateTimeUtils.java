@@ -1,4 +1,4 @@
-package tech.qijin.util4j.file.download.excel.util;
+package tech.qijin.util4j.file.excel.util;
 
 import com.google.common.base.Strings;
 import org.apache.commons.lang3.time.DateUtils;

@@ -1,0 +1,31 @@
+
+# profile config
+# 参考地址: https://www.baeldung.com/spring-profiles
+spring:
+  profiles:
+    active: dev
+  quartz:
+    schedulerName: practice
+    properties:
+      org.quartz.scheduler.instanceId: practice_clustered
+  datasource:
+    druid:
+      url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=utf-8
+      username: root
+      password:
+      driver-class-name: com.mysql.jdbc.Driver
+      initial-size: 10
+      max-active: 30
+      min-idle: 5
+      max-wait: 60
+
+# mybatis config
+mybatis:
+  config-location: classpath:sqlMapConfig.xml
+
+# logging config
+logging:
+  level:
+    tech.qijin.util4j.practice.db: DEBUG
+server:
+  port: 8080

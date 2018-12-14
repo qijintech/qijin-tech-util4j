@@ -1,4 +1,4 @@
-package tech.qijin.util4j.file.download.excel.convert;
+package tech.qijin.util4j.file.excel.convert;
 
 import com.google.common.collect.Lists;
 import org.apache.commons.beanutils.PropertyUtils;
@@ -8,9 +8,9 @@ import org.apache.commons.lang3.reflect.TypeUtils;
 import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import tech.qijin.util4j.file.download.excel.annotation.ExcelCellField;
-import tech.qijin.util4j.file.download.excel.annotation.ExcelSheetField;
-import tech.qijin.util4j.file.download.excel.util.DateTimeUtils;
+import tech.qijin.util4j.file.excel.annotation.ExcelCellField;
+import tech.qijin.util4j.file.excel.annotation.ExcelSheetField;
+import tech.qijin.util4j.file.excel.util.DateTimeUtils;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;

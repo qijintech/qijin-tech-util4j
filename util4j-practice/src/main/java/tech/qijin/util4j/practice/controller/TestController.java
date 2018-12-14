@@ -8,6 +8,7 @@ import tech.qijin.util4j.lang.vo.PageReqVo;
 import tech.qijin.util4j.practice.config.ProfileConfig;
 import tech.qijin.util4j.practice.config.Properties;
 import tech.qijin.util4j.practice.model.User;
+import tech.qijin.util4j.practice.pojo.ListBind;
 import tech.qijin.util4j.practice.service.UserService;
 import tech.qijin.util4j.utils.log.LogFormat;
 
@@ -38,5 +39,10 @@ public class TestController {
                 .put("users", users)
                 .build());
         return properties.getHehe();
+    }
+
+    @PostMapping("/test2")
+    public Object test2(@RequestParam(value = "id") List<Integer> ids) {
+        return ids;
     }
 }

@@ -1,4 +1,4 @@
-package tech.qijin.util4j.file.download.excel.convert;
+package tech.qijin.util4j.file.excel.convert;
 
 import com.google.common.collect.Lists;
 import org.apache.commons.beanutils.BeanUtils;
@@ -8,10 +8,10 @@ import org.apache.commons.lang3.reflect.TypeUtils;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
-import tech.qijin.util4j.file.download.excel.annotation.ExcelCellField;
-import tech.qijin.util4j.file.download.excel.annotation.ExcelObJectInstanceType;
-import tech.qijin.util4j.file.download.excel.annotation.ExcelObjectInstance;
-import tech.qijin.util4j.file.download.excel.annotation.ExcelSheetField;
+import tech.qijin.util4j.file.excel.annotation.ExcelCellField;
+import tech.qijin.util4j.file.excel.annotation.ExcelObJectInstanceType;
+import tech.qijin.util4j.file.excel.annotation.ExcelObjectInstance;
+import tech.qijin.util4j.file.excel.annotation.ExcelSheetField;
 
 import java.beans.PropertyDescriptor;
 import java.lang.annotation.Annotation;

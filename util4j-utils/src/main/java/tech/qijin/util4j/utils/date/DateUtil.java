@@ -24,6 +24,93 @@ public class DateUtil {
     public static final String MINITES_ZH = "yyyy年MM月dd日 HH:mm分";
     public static final int FIRST_HOUR_OF_DAY = 0;
 
+    /**
+     * 返回当前日期
+     *
+     * @return Date
+     */
+    public static Date now() {
+        return new Date();
+    }
+
+    /**
+     * 得到这一天的起始, 00:00:00
+     *
+     * @param date
+     * @return yyyy-MM-dd 00:00:00
+     */
+    public static Date getDayBegin(Date date) {
+        return Date.from(LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault())
+                .withHour(0)
+                .withMinute(0)
+                .withSecond(0)
+                .withNano(0)
+                .atZone(ZoneId.systemDefault()).toInstant());
+    }
+
+    /**
+     * 得到这一天的结束 23:59:59
+     *
+     * @param date
+     * @return yyyy-MM-dd 23:59:59
+     */
+    public static Date getDayEnd(Date date) {
+        return Date.from(LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault())
+                .withHour(23)
+                .withMinute(59)
+                .withSecond(59)
+                .withNano(0).atZone(ZoneId.systemDefault()).toInstant());
+    }
+
+    /**
+     * 在当前时间基础上增减n天
+     *
+     * @param date
+     * @param n    为正时表示往后推n天，为负时表示往前推n天
+     * @return
+     */
+    public static Date incrDays(Date date, int n) {
+        return Date.from(LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault())
+                .plusDays(n).atZone(ZoneId.systemDefault()).toInstant());
+    }
+
+    /**
+     * 在当前时间基础上增减n小时
+     *
+     * @param date
+     * @param n
+     * @return
+     */
+    public static Date incrHours(Date date, int n) {
+        return Date.from(LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault())
+                .plusHours(n).atZone(ZoneId.systemDefault()).toInstant());
+    }
+
+    /**
+     * 在当前时间基础上增减n分钟
+     *
+     * @param date
+     * @param n
+     * @return
+     */
+    public static Date incrMinutes(Date date, int n) {
+        return Date.from(LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault())
+                .plusMinutes(n).atZone(ZoneId.systemDefault()).toInstant());
+    }
+
+    /**
+     * @param date
+     * @param day     day = -1 表示往前推1天 0为当天
+     * @param hour
+     * @param minute
+     * @param seconds
+     * @return
+     */
+    public static Date getDate(Date date, int day, int hour, int minute, int seconds) {
+        return Date.from(LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault()).plusDays(day).withHour(hour)
+                .withMinute(minute).withSecond(seconds).withNano(0).atZone(ZoneId.systemDefault()).toInstant());
+    }
+
     public static Date getTodayZeroTime() {
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date());
@@ -41,10 +128,6 @@ public class DateUtil {
         return calendar.getTime();//获取一年前的时间，或者一个月前的时间
     }
 
-
-    public static Date now() {
-        return new Date();
-    }
 
     public static String nowInMinitesZH() {
         return DateTimeFormatter.ofPattern(MINITES_ZH).format(LocalDateTime.now());
@@ -113,28 +196,6 @@ public class DateUtil {
     public static Date getLastDay(Date date) {
         return Date.from(LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault()).minusDays(1).withHour(23)
                 .withMinute(59).withSecond(59).withNano(0).atZone(ZoneId.systemDefault()).toInstant());
-    }
-
-    /**
-     * 得到这一天的起始, 00:00:00
-     *
-     * @param date
-     * @return yyyy-MM-dd 00:00:00
-     */
-    public static Date getDayBegin(Date date) {
-        return Date.from(LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault()).withHour(0).withMinute(0)
-                .withSecond(0).withNano(0).atZone(ZoneId.systemDefault()).toInstant());
-    }
-
-    /**
-     * 得到这一天的结束 23:59:59
-     *
-     * @param date
-     * @return yyyy-MM-dd 23:59:59
-     */
-    public static Date getDayEnd(Date date) {
-        return Date.from(LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault()).withHour(23).withMinute(59)
-                .withSecond(59).withNano(0).atZone(ZoneId.systemDefault()).toInstant());
     }
 
     /**
@@ -388,16 +449,13 @@ public class DateUtil {
         return date.compareTo(getDbDefaultDate()) == 0;
     }
 
-    /**
-     * @param date
-     * @param day     day = -1 表示往前推1天 0为当天
-     * @param hour
-     * @param minute
-     * @param seconds
-     * @return
-     */
-    public static Date getDate(Date date, int day, int hour, int minute, int seconds) {
-        return Date.from(LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault()).plusDays(day).withHour(hour)
-                .withMinute(minute).withSecond(seconds).withNano(0).atZone(ZoneId.systemDefault()).toInstant());
+
+    public static void main(String[] args) {
+        Date now = now();
+        System.out.println(now);
+        Date a = incrDays(now, 1);
+        System.out.println(a);
+        Date b = getDate(now, 1, 0, 0, 0);
+        System.out.println(b);
     }
 }

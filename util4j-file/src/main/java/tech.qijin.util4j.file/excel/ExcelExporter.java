@@ -1,4 +1,4 @@
-package tech.qijin.util4j.file.download.excel;
+package tech.qijin.util4j.file.excel;
 
 import com.google.common.collect.Maps;
 import org.apache.commons.collections.CollectionUtils;
@@ -10,9 +10,9 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import tech.qijin.util4j.file.download.excel.convert.RowConvert;
-import tech.qijin.util4j.file.download.excel.convert.WorkBookConvert;
-import tech.qijin.util4j.file.download.excel.util.DateTimeUtils;
+import tech.qijin.util4j.file.excel.convert.RowConvert;
+import tech.qijin.util4j.file.excel.convert.WorkBookConvert;
+import tech.qijin.util4j.file.excel.util.DateTimeUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;

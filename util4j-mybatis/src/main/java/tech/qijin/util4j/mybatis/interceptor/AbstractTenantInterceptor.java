@@ -164,6 +164,15 @@ public abstract class AbstractTenantInterceptor<T> implements Interceptor {
                 return;
             }
             List<Column> columns = insert.getColumns();
+            //检查tenant是否已经存在
+            long count = columns.stream().filter(column -> {
+                String columnName = column.getColumnName();
+                return columnName.equals(getTenantColumnName())
+                        || columnName.contains("." + getTenantColumnName());
+            }).count();
+            if (count > 0) {
+                return;
+            }
             Table table = insert.getTable();
             Column column = new Column(table, getTenantColumnName());
             columns.add(column);

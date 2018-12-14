@@ -1,4 +1,4 @@
-package tech.qijin.util4j.file.download.excel.annotation;
+package tech.qijin.util4j.file.excel.annotation;
 
 /**
  * @author michealyang

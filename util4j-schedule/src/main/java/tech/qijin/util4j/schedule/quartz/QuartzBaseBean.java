@@ -12,6 +12,7 @@ import org.springframework.scheduling.quartz.QuartzJobBean;
  * @date 2018/11/22
  * 开始做眼保健操：←_← ↑_↑ →_→ ↓_↓
  **/
+@Deprecated
 public abstract class QuartzBaseBean extends QuartzJobBean {
     protected static final Logger LOGGER = LoggerFactory.getLogger("Quartz");
 
