@@ -1,4 +1,4 @@
-package tech.qijin.util4j.advice.annotation;
+package tech.qijin.util4j.aop.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

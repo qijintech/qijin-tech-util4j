@@ -12,7 +12,7 @@
     </parent>
 
     <groupId>tech.qijin.util4j</groupId>
-    <artifactId>util4j-advice</artifactId>
+    <artifactId>util4j-aop</artifactId>
 
     <dependencies>
         <dependency>

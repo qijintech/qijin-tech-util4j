@@ -1,4 +1,4 @@
-package tech.qijin.util4j.advice.advice;
+package tech.qijin.util4j.aop.advice;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;

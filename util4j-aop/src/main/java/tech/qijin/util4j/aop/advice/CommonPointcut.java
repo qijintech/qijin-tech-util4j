@@ -1,4 +1,4 @@
-package tech.qijin.util4j.advice.advice;
+package tech.qijin.util4j.aop.advice;
 
 import org.aspectj.lang.annotation.Pointcut;
 
@@ -9,12 +9,12 @@ import org.aspectj.lang.annotation.Pointcut;
  * @refer: Tutorials:: http://www.springboottutorial.com/spring-boot-and-aop-with-spring-boot-starter-aop
  **/
 public class CommonPointcut {
-    @Pointcut("@annotation(tech.qijin.util4j.advice.annotation.Retry)")
+    @Pointcut("@annotation(tech.qijin.util4j.aop.annotation.Retry)")
     public void retryAnnotationPointcut() {}
 
-    @Pointcut("@annotation(tech.qijin.util4j.advice.annotation.Timed)")
+    @Pointcut("@annotation(tech.qijin.util4j.aop.annotation.Timed)")
     public void timedAnnotationPointcut() {}
 
-    @Pointcut("@annotation(tech.qijin.util4j.advice.annotation.Cas)")
+    @Pointcut("@annotation(tech.qijin.util4j.aop.annotation.Cas)")
     public void casAnnotationPointcut() {}
 }

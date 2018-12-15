@@ -1,4 +1,4 @@
-package tech.qijin.util4j.advice.exception;
+package tech.qijin.util4j.aop.exception;
 
 /**
  * @author michealyang

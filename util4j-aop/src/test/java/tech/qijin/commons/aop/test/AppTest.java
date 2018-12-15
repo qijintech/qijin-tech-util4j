@@ -1,4 +1,4 @@
-package tech.qijin.commons.advice;
+package tech.qijin.commons.aop.test;
 
 /**
  * Unit test for simple App.

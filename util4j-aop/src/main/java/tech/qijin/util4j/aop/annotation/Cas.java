@@ -1,4 +1,4 @@
-package tech.qijin.util4j.advice.annotation;
+package tech.qijin.util4j.aop.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -16,4 +16,7 @@ import java.lang.annotation.Target;
 public @interface Cas {
     //重试次数，默认为3
     int times() default 3;
+
+    //重复的间隔时间，单位为毫秒
+    int interval() default 0;
 }

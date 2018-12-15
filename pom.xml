@@ -17,7 +17,7 @@
         <module>util4j-utils</module>
         <module>util4j-web</module>
         <module>util4j-trace</module>
-        <module>util4j-advice</module>
+        <module>util4j-aop</module>
         <module>util4j-mybatis</module>
         <module>util4j-cache</module>
         <module>util4j-security</module>

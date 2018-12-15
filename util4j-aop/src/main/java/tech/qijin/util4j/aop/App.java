@@ -1,4 +1,4 @@
-package tech.qijin.util4j.advice;
+package tech.qijin.util4j.aop;
 
 /**
  * Hello world!

@@ -1,4 +1,4 @@
-package tech.qijin.util4j.advice.advice;
+package tech.qijin.util4j.aop.advice;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
@@ -7,8 +7,8 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import tech.qijin.util4j.advice.annotation.Cas;
-import tech.qijin.util4j.advice.exception.CasException;
+import tech.qijin.util4j.aop.annotation.Cas;
+import tech.qijin.util4j.aop.exception.CasException;
 import tech.qijin.util4j.utils.log.LogFormat;
 
 /**
@@ -31,6 +31,7 @@ public class CasAdvice {
         String className = joinPoint.getTarget().getClass().getSimpleName();
         Cas cas = signature.getMethod().getDeclaredAnnotation(Cas.class);
         int times = cas.times();
+        int interval = cas.interval();
 
         while (times-- > 0) {
             try {
@@ -43,6 +44,9 @@ public class CasAdvice {
                         .put("methodName", methodName)
                         .put("times", times)
                         .build());
+                if (interval > 0) {
+                    Thread.sleep(interval);
+                }
             } catch (Exception e) {
                 throw e;
             }
