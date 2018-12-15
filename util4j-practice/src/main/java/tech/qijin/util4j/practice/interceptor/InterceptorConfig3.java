@@ -10,7 +10,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * @date 2018/11/26
  * 开始做眼保健操：←_← ↑_↑ →_→ ↓_↓
  **/
-@Configuration
+//@Configuration
 @Order(1)
 public class InterceptorConfig3 implements WebMvcConfigurer {
     @Override
