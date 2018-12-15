@@ -8,7 +8,17 @@ import lombok.Data;
  * 开始做眼保健操：←_← ↑_↑ →_→ ↓_↓
  **/
 @Data
-public class PageResVo extends PageReqVo {
+public class PageVo{
+    public static final String PAGE_NO = "pageNo";
+    public static final String PAGE_SIZE = "pageSize";
+    /**
+     * 当前页码
+     */
+    private Integer pageNo;
+    /**
+     * 每页展示数量
+     */
+    private Integer pageSize;
     /**
      * 总页数
      */
