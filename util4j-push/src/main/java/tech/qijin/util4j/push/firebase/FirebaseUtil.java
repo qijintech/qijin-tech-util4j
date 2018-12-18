@@ -11,7 +11,7 @@ import com.google.firebase.FirebaseApp;
 import com.google.firebase.FirebaseOptions;
 import com.google.firebase.messaging.*;
 import lombok.extern.slf4j.Slf4j;
-import tech.qijin.util4j.utils.log.LogFormat;
+import tech.qijin.util4j.utils.LogFormat;
 
 import java.io.*;
 import java.util.List;

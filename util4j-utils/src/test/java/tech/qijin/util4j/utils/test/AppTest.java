@@ -2,7 +2,7 @@ package tech.qijin.util4j.utils.test;
 
 import com.alibaba.fastjson.JSON;
 import org.junit.Test;
-import tech.qijin.util4j.utils.builder.ResBuilder;
+import tech.qijin.util4j.utils.ResBuilder;
 
 /**
  * Unit test for simple App.

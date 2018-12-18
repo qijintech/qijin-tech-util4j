@@ -1,4 +1,4 @@
-package tech.qijin.util4j.utils.serialize;
+package tech.qijin.util4j.utils;
 
 import java.io.*;
 

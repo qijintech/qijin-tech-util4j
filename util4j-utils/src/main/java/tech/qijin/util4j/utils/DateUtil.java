@@ -1,4 +1,4 @@
-package tech.qijin.util4j.utils.date;
+package tech.qijin.util4j.utils;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
@@ -426,10 +426,10 @@ public class DateUtil {
         List<Date> result = new ArrayList<Date>();
 
         Calendar startCalendar = Calendar.getInstance();
-        startCalendar.setTime(DateUtil.getDayBegin(startDate));
+        startCalendar.setTime(getDayBegin(startDate));
 
         Calendar endCalendar = Calendar.getInstance();
-        endCalendar.setTime(DateUtil.getDayBegin(endDate));
+        endCalendar.setTime(getDayBegin(endDate));
 
         Calendar temp = startCalendar;
         while (!temp.after(endCalendar)) {

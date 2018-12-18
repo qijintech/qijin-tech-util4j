@@ -30,7 +30,7 @@ import org.apache.ibatis.plugin.Invocation;
 import org.apache.ibatis.plugin.Plugin;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.RowBounds;
-import tech.qijin.util4j.utils.log.LogFormat;
+import tech.qijin.util4j.utils.LogFormat;
 
 import java.io.StringReader;
 import java.util.List;

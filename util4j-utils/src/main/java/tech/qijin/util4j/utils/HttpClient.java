@@ -1,4 +1,4 @@
-package tech.qijin.util4j.utils.http;
+package tech.qijin.util4j.utils;
 
 import com.alibaba.fastjson.JSONObject;
 import okhttp3.*;

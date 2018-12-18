@@ -1,4 +1,4 @@
-package tech.qijin.util4j.utils.validation;
+package tech.qijin.util4j.utils;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
@@ -7,6 +7,7 @@ import org.apache.commons.lang3.ArrayUtils;
 import tech.qijin.util4j.lang.annotation.FieldCheck;
 import tech.qijin.util4j.lang.annotation.Required;
 import tech.qijin.util4j.lang.constant.ResEnum;
+import tech.qijin.util4j.utils.MAssert;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;

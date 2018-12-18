@@ -1,4 +1,4 @@
-package tech.qijin.util4j.utils.validation;
+package tech.qijin.util4j.utils;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;

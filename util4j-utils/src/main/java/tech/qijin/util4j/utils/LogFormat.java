@@ -1,4 +1,4 @@
-package tech.qijin.util4j.utils.log;
+package tech.qijin.util4j.utils;
 
 import com.google.common.collect.Maps;
 import org.apache.commons.lang3.StringUtils;

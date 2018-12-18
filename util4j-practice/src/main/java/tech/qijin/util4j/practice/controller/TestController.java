@@ -4,14 +4,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import tech.qijin.util4j.lang.vo.PageVo;
-import tech.qijin.util4j.practice.config.ProfileConfig;
 import tech.qijin.util4j.practice.config.Properties;
 import tech.qijin.util4j.practice.model.User;
-import tech.qijin.util4j.practice.pojo.ListBind;
 import tech.qijin.util4j.practice.pojo.TestPageVo;
 import tech.qijin.util4j.practice.service.UserService;
-import tech.qijin.util4j.utils.log.LogFormat;
+import tech.qijin.util4j.utils.LogFormat;
 
 import java.util.List;
 

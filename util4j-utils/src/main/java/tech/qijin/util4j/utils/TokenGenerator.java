@@ -1,4 +1,4 @@
-package tech.qijin.util4j.utils.generator;
+package tech.qijin.util4j.utils;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.DigestUtils;

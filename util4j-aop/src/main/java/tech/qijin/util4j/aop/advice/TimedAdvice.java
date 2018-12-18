@@ -7,7 +7,7 @@ import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
-import tech.qijin.util4j.utils.log.LogFormat;
+import tech.qijin.util4j.utils.LogFormat;
 
 /**
  * @author yangshangqiang

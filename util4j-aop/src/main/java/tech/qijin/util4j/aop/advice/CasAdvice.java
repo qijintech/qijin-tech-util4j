@@ -9,7 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import tech.qijin.util4j.aop.annotation.Cas;
 import tech.qijin.util4j.aop.exception.CasException;
-import tech.qijin.util4j.utils.log.LogFormat;
+import tech.qijin.util4j.utils.LogFormat;
 
 /**
  * @author yangshangqiang

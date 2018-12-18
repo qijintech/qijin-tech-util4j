@@ -1,4 +1,4 @@
-package tech.qijin.util4j.utils.builder;
+package tech.qijin.util4j.utils;
 
 
 import tech.qijin.util4j.lang.constant.ResEnum;

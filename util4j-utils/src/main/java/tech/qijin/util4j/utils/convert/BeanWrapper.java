@@ -1,4 +1,4 @@
-package tech.qijin.util4j.utils.wrapper;
+package tech.qijin.util4j.utils.convert;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.lang3.ClassUtils;
