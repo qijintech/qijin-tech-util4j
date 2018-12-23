@@ -5,7 +5,7 @@
     <artifactId>util4j-build</artifactId>
     <packaging>pom</packaging>
     <version>1.0.0-SNAPSHOT</version>
-    <name>QiJinTech util4j package</name>
+    <name>util4j-build</name>
     <description>QiJinTech util4j package</description>
     <properties>
         <plugin.versions.version>2.3</plugin.versions.version>

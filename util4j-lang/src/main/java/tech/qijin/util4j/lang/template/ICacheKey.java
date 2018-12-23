@@ -1,4 +1,4 @@
-package com.aviagames.commons.lang.template;
+package tech.qijin.util4j.lang.template;
 
 import org.apache.commons.lang3.StringUtils;
 

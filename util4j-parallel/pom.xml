@@ -4,21 +4,13 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>tech.qijin</groupId>
-        <artifactId>util4j</artifactId>
-        <version>1.0-SNAPSHOT</version>
+        <groupId>tech.qijin.util4j</groupId>
+        <artifactId>util4j-parent</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+        <relativePath>../util4j-parent</relativePath>
     </parent>
-    <groupId>tech.qijin</groupId>
+    <groupId>tech.qijin.util4j</groupId>
     <artifactId>util4j-parallel</artifactId>
-    <version>1.0-SNAPSHOT</version>
-    <name>util4j-parallel</name>
-    <url>http://maven.apache.org</url>
     <dependencies>
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>3.8.1</version>
-            <scope>test</scope>
-        </dependency>
     </dependencies>
 </project>

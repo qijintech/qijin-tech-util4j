@@ -49,9 +49,11 @@ TestCacheKey.INSTANCE.key("gameId", "modleId");
 ```
 
 注：
+
 * 使用enum类，是为了保证CacheKey是单例的
 * `key()`方法接受String数组作为参数。每个String之间用`.`分割。
 * 建议在各模块的CacheKey实现类中，添加足够的、有意义的方法，而不直接使用`key()`方法。如：
+
 ```java
 public enum TestCacheKey implements ICacheKey{
     private static final String GAME_PREFIX = "game";
