@@ -4,11 +4,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import tech.qijin.util4j.lang.constant.ResEnum;
 import tech.qijin.util4j.practice.config.Properties;
 import tech.qijin.util4j.practice.model.User;
 import tech.qijin.util4j.practice.pojo.TestPageVo;
 import tech.qijin.util4j.practice.service.UserService;
 import tech.qijin.util4j.utils.LogFormat;
+import tech.qijin.util4j.utils.MAssert;
+import tech.qijin.util4j.web.pojo.ResultVo;
 
 import java.util.List;
 
@@ -29,14 +32,14 @@ public class TestController {
     private Properties properties;
 
     @RequestMapping("/test1")
-    public Object test1(@RequestBody TestPageVo pageVo) {
+    public Object test1(TestPageVo pageVo) {
         List<User> users = userService.getUser(1);
         LOGGER.info(LogFormat.builder()
                 .message("this is a test")
                 .put("page", pageVo)
                 .put("users", users)
                 .build());
-        return properties.getHehe();
+        return ResultVo.instance().code(ResEnum.BAD_REQUEST.code);
     }
 
     @PostMapping("/test2")

@@ -3,6 +3,7 @@ package tech.qijin.util4j.practice.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import tech.qijin.util4j.aop.annotation.Log;
 import tech.qijin.util4j.practice.dao.UserDao;
 import tech.qijin.util4j.practice.model.User;
 import tech.qijin.util4j.practice.model.UserExample;
@@ -25,6 +26,7 @@ public class UserService {
     }
 
     @Transactional
+    @Log
     public List<User> getUser(int id) {
         return userDao.getUser(id);
     }
