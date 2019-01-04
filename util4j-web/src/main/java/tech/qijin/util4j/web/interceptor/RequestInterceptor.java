@@ -1,13 +1,19 @@
 package tech.qijin.util4j.web.interceptor;
 
+import com.alibaba.fastjson.JSON;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 import tech.qijin.util4j.utils.LogFormat;
+import tech.qijin.util4j.web.filter.ResponseWrapper;
+import tech.qijin.util4j.web.pojo.ResultVo;
+import tech.qijin.util4j.web.util.ServletUtil;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.util.Optional;
 
 /**
  * @author michealyang
@@ -20,28 +26,39 @@ public class RequestInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        System.out.println("request interceptor start");
         long start = System.currentTimeMillis();
         request.setAttribute("start", start);
-
+        LOGGER.info(LogFormat.builder()
+                .put("request", "{" + request.getQueryString() + "}")
+                .put("uri", request.getRequestURI())
+                .put("token", ServletUtil.getHeader(request, "token").orElse(null))
+                .build());
         return true;
     }
 
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
-        long start = (Long) request.getAttribute("start");
-        long end = System.currentTimeMillis();
-        System.out.println("request interceptor end");
-        LOGGER.info(LogFormat.builder()
-                .put("duration", String.valueOf(end - start) + "ms")
-                .put("request", "{" + request.getQueryString() + "}")
-                .put("uri", request.getRequestURI())
-                .put("httpStatus", String.valueOf(response.getStatus()))
-                .build());
     }
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+        Long start = (Long) request.getAttribute("start");
+        if (start == null) {
+            return;
+        }
+        Optional<ResultVo> resultVo = parseResult(response);
+        long end = System.currentTimeMillis();
+        LOGGER.info(LogFormat.builder()
+                .put("duration", String.valueOf(end - start) + "ms")
+                .put("uri", request.getRequestURI())
+                .put("httpStatus", String.valueOf(response.getStatus()))
+                .put("resCode", resultVo.map(ResultVo::getCode).orElse(null))
+                .build());
+    }
 
+    private Optional<ResultVo> parseResult(HttpServletResponse response) throws IOException {
+        ResponseWrapper responseWrapper = new ResponseWrapper(response);
+        String result = responseWrapper.getContent();
+        return Optional.ofNullable(JSON.parseObject(result, ResultVo.class));
     }
 }
