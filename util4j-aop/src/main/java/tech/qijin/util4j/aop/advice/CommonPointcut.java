@@ -10,11 +10,18 @@ import org.aspectj.lang.annotation.Pointcut;
  **/
 public class CommonPointcut {
     @Pointcut("@annotation(tech.qijin.util4j.aop.annotation.Retry)")
-    public void retryAnnotationPointcut() {}
+    public void retryAnnotationPointcut() {
+    }
 
     @Pointcut("@annotation(tech.qijin.util4j.aop.annotation.Timed)")
-    public void timedAnnotationPointcut() {}
+    public void timedAnnotationPointcut() {
+    }
 
     @Pointcut("@annotation(tech.qijin.util4j.aop.annotation.Cas)")
-    public void casAnnotationPointcut() {}
+    public void casAnnotationPointcut() {
+    }
+
+    @Pointcut("@annotation(tech.qijin.util4j.aop.annotation.Log)")
+    public void logAnnotationPointcut() {
+    }
 }
