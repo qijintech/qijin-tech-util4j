@@ -1,0 +1,34 @@
+package tech.qijin.util4j.web.util;
+
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import tech.qijin.util4j.lang.vo.PageVo;
+
+/**
+ * @author michealyang
+ * @date 2019/1/4
+ * 开始做眼保健操：←_← ↑_↑ →_→ ↓_↓
+ **/
+public class PageHelperProxy {
+    private static final ThreadLocal<PageVo> LOCAL_PAGE_VO = new ThreadLocal<PageVo>();
+
+    public static <T> PageProxy<T> getLocalPage() {
+        Page page = PageHelper.getLocalPage();
+        return new PageProxy<T>(page);
+    }
+
+    public static void setPageVo(PageVo pageInfo) {
+        if (LOCAL_PAGE_VO.get() != null) {
+            throw new IllegalStateException("more than once page operation in one thread is not supported");
+        }
+        LOCAL_PAGE_VO.set(pageInfo);
+    }
+
+    public static PageVo getPageVo() {
+        return LOCAL_PAGE_VO.get();
+    }
+
+    public static void clear() {
+        LOCAL_PAGE_VO.remove();
+    }
+}

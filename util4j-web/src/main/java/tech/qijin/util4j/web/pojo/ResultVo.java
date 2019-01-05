@@ -7,6 +7,7 @@ package tech.qijin.util4j.web.pojo;
 import lombok.Data;
 import tech.qijin.util4j.lang.constant.ResEnum;
 import tech.qijin.util4j.lang.dto.ResultDto;
+import tech.qijin.util4j.lang.vo.PageVo;
 
 /**
  * Restful接口的返回值对象
@@ -14,6 +15,7 @@ import tech.qijin.util4j.lang.dto.ResultDto;
 @Data
 public class ResultVo {
     private int code;
+    private PageVo page;
     private String message;
     private Object data;
 

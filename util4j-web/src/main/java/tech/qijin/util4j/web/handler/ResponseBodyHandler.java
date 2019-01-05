@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 import tech.qijin.util4j.web.annotation.ResponseBodyIgnore;
 import tech.qijin.util4j.web.pojo.ResultVo;
+import tech.qijin.util4j.web.util.PageHelperProxy;
+
+import java.util.List;
 
 /**
  * 自动封装ResponseBody数据
@@ -46,12 +49,19 @@ public class ResponseBodyHandler implements ResponseBodyAdvice {
 
     @Override
     public Object beforeBodyWrite(Object o, MethodParameter methodParameter, MediaType mediaType, Class aClass, ServerHttpRequest serverHttpRequest, ServerHttpResponse serverHttpResponse) {
+
         ResultVo ret = new ResultVo();
         if (o != null) {
             if (o instanceof ResultVo) {
+                if (((ResultVo) o).getData() != null && ((ResultVo) o).getData() instanceof List) {
+                    ((ResultVo) o).setPage(PageHelperProxy.getPageVo());
+                }
                 return o;
             } else {
                 ret.success().data(o);
+                if (o instanceof List) {
+                    ret.setPage(PageHelperProxy.getPageVo());
+                }
             }
         } else {
             // 满足前端关于没内容不行的要求

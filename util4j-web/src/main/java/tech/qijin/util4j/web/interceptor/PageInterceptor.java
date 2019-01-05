@@ -1,35 +1,33 @@
-package tech.qijin.util4j.web.filter;
+package tech.qijin.util4j.web.interceptor;
 
 import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.web.servlet.HandlerInterceptor;
+import org.springframework.web.servlet.ModelAndView;
 import tech.qijin.util4j.lang.vo.PageVo;
+import tech.qijin.util4j.trace.pojo.EnvEnum;
+import tech.qijin.util4j.trace.util.EnvUtil;
 import tech.qijin.util4j.utils.LogFormat;
+import tech.qijin.util4j.web.filter.RequestWrapper;
+import tech.qijin.util4j.web.util.PageHelperProxy;
 import tech.qijin.util4j.web.util.ServletUtil;
 
-import javax.servlet.*;
-import java.io.IOException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 /**
- * 需要结合PageHelper使用
- *
  * @author michealyang
  * @date 2018/11/23
  * 开始做眼保健操：←_← ↑_↑ →_→ ↓_↓
  **/
 @Slf4j
-@Deprecated
-public class PageFilter implements Filter {
+public class PageInterceptor implements HandlerInterceptor {
     private static final Integer DEFAULT_PAGE_SIZE = 10;
     private static final Integer PAGE_SIZE_LIMIT = 500;
 
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
-
-    }
-
-    @Override
-    public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         RequestWrapper requestWrapper = (RequestWrapper) request;
         Map<String, String[]> params = ServletUtil.getParameters(requestWrapper);
         String[] pageNoArr = params.get(PageVo.PAGE_NO);
@@ -44,14 +42,19 @@ public class PageFilter implements Filter {
         }
         if (pageSize > PAGE_SIZE_LIMIT) {
             log.error(LogFormat.builder().message("too large page size").build());
-            return;
+            return false;
         }
         PageHelper.startPage(pageNo, pageSize);
-        chain.doFilter(request, response);
+        return true;
     }
 
     @Override
-    public void destroy() {
+    public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler, ModelAndView modelAndView) throws Exception {
 
+    }
+
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+        PageHelperProxy.clear();
     }
 }

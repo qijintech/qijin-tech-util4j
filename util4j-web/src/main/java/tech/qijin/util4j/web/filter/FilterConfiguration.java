@@ -83,7 +83,7 @@ public class FilterConfiguration {
      *
      * @return
      */
-    @Bean
+//    @Bean
     public FilterRegistrationBean<PageFilter> pageFilterBean() {
         FilterRegistrationBean registrationBean = new FilterRegistrationBean();
         PageFilter filter = new PageFilter();
