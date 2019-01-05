@@ -20,7 +20,20 @@ public class PageVo{
      */
     private Integer pageSize;
     /**
+     * 总数
+     */
+    private long total;
+    /**
      * 总页数
      */
-    private Integer totalPages;
+    private int pages;
+    /**
+     * 起始行
+     */
+    private int startRow;
+    /**
+     * 末行
+     */
+    private int endRow;
+
 }
