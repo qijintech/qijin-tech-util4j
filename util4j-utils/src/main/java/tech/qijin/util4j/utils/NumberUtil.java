@@ -46,6 +46,16 @@ public class NumberUtil {
     }
 
     /**
+     * 是否大于0
+     *
+     * @param value
+     * @return
+     */
+    public static boolean gtZero(Number value) {
+        return !nullOrLeZero(value);
+    }
+
+    /**
      * 判断是否为null或<=0
      *
      * @param value
@@ -62,5 +72,15 @@ public class NumberUtil {
             return ((Comparable) value).compareTo(0L) <= 0;
         }
         throw new UnsupportedOperationException();
+    }
+
+    /**
+     * 是否大于等于0
+     *
+     * @param value
+     * @return
+     */
+    public static boolean geZero(Number value) {
+        return !nullOrLtZero(value);
     }
 }
