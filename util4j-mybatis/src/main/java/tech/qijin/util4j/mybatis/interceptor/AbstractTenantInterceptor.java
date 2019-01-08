@@ -134,6 +134,7 @@ public abstract class AbstractTenantInterceptor<T> implements Interceptor {
              * 如果tenant column name为空，则不重写sql
              */
             if (StringUtils.isBlank(tenantColumnName)) {
+                log.warn(LogFormat.builder().message("tenant column name is blank").build());
                 return;
             }
             String originalSql = boundSql.getSql();
