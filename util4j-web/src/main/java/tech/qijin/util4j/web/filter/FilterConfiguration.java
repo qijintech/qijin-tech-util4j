@@ -1,8 +1,10 @@
 package tech.qijin.util4j.web.filter;
 
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
 import tech.qijin.util4j.web.interceptor.EnvInterceptor;
 import tech.qijin.util4j.web.interceptor.RequestInterceptor;
@@ -15,6 +17,11 @@ import tech.qijin.util4j.web.interceptor.TraceInterceptor;
  **/
 @Configuration
 public class FilterConfiguration {
+
+    private static final String FILTER_PREFIX = "util4j.web.filter";
+    private static final String TRACE_PREFIX = FILTER_PREFIX + ".trace";
+    private static final String ENV_PREFIX = FILTER_PREFIX + ".env";
+    private static final String CHANNEL_PREFIX = FILTER_PREFIX + ".channel";
 
     /**
      * WrapperFilter
@@ -38,7 +45,7 @@ public class FilterConfiguration {
      *
      * @return
      */
-    @ConditionalOnMissingBean({TraceInterceptor.class})
+    @ConditionalOnProperty(prefix = TRACE_PREFIX, name = "enabled", matchIfMissing = true, havingValue = "true")
     @Bean
     public FilterRegistrationBean<TraceFilter> traceFilterBean() {
         FilterRegistrationBean registrationBean = new FilterRegistrationBean();
@@ -53,7 +60,7 @@ public class FilterConfiguration {
      *
      * @return
      */
-    @ConditionalOnMissingBean({EnvInterceptor.class})
+    @ConditionalOnProperty(prefix = ENV_PREFIX, name = "enabled", matchIfMissing = true, havingValue = "true")
     @Bean
     public FilterRegistrationBean<EnvFilter> envFilterBean() {
         FilterRegistrationBean registrationBean = new FilterRegistrationBean();
@@ -89,6 +96,16 @@ public class FilterConfiguration {
         PageFilter filter = new PageFilter();
         registrationBean.setFilter(filter);
         registrationBean.setOrder(16);
+        return registrationBean;
+    }
+
+    @ConditionalOnProperty(prefix = CHANNEL_PREFIX, name = "enabled", matchIfMissing = true, havingValue = "true")
+    @Bean
+    public FilterRegistrationBean<ChannelFilter> channelFilterBean() {
+        FilterRegistrationBean registrationBean = new FilterRegistrationBean();
+        ChannelFilter filter = new ChannelFilter();
+        registrationBean.setFilter(filter);
+        registrationBean.setOrder(20);
         return registrationBean;
     }
 }

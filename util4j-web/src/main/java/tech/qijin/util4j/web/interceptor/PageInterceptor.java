@@ -28,6 +28,9 @@ public class PageInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        if (!(request instanceof RequestWrapper)) {
+            return true;
+        }
         RequestWrapper requestWrapper = (RequestWrapper) request;
         Map<String, String[]> params = ServletUtil.getParameters(requestWrapper);
         String[] pageNoArr = params.get(PageVo.PAGE_NO);
