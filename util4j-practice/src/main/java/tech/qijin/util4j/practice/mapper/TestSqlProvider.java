@@ -3,66 +3,77 @@ package tech.qijin.util4j.practice.mapper;
 import java.util.List;
 import java.util.Map;
 import org.apache.ibatis.jdbc.SQL;
-import tech.qijin.util4j.practice.model.User;
-import tech.qijin.util4j.practice.model.UserExample.Criteria;
-import tech.qijin.util4j.practice.model.UserExample.Criterion;
-import tech.qijin.util4j.practice.model.UserExample;
+import tech.qijin.util4j.practice.model.Test;
+import tech.qijin.util4j.practice.model.TestExample.Criteria;
+import tech.qijin.util4j.practice.model.TestExample.Criterion;
+import tech.qijin.util4j.practice.model.TestExample;
 
-public class UserSqlProvider {
+public class TestSqlProvider {
 
-    public String countByExample(UserExample example) {
+    public String countByExample(TestExample example) {
         SQL sql = new SQL();
-        sql.SELECT("count(*)").FROM("user");
+        sql.SELECT("count(*)").FROM("test");
         applyWhere(sql, example, false);
         return sql.toString();
     }
 
-    public String deleteByExample(UserExample example) {
+    public String deleteByExample(TestExample example) {
         SQL sql = new SQL();
-        sql.DELETE_FROM("user");
+        sql.DELETE_FROM("test");
         applyWhere(sql, example, false);
         return sql.toString();
     }
 
-    public String insertSelective(User record) {
+    public String insertSelective(Test record) {
         SQL sql = new SQL();
-        sql.INSERT_INTO("user");
+        sql.INSERT_INTO("test");
         
-        if (record.getId() != null) {
-            sql.VALUES("id", "#{id,jdbcType=INTEGER}");
+        if (record.getCol1() != null) {
+            sql.VALUES("col1", "#{col1,jdbcType=INTEGER}");
         }
         
-        if (record.getName() != null) {
-            sql.VALUES("name", "#{name,jdbcType=VARCHAR}");
+        if (record.getCol2() != null) {
+            sql.VALUES("col2", "#{col2,jdbcType=VARCHAR}");
         }
         
-        if (record.getUserName() != null) {
-            sql.VALUES("user_name", "#{userName,jdbcType=VARCHAR}");
-        }
-        
-        if (record.getValid() != null) {
-            sql.VALUES("valid", "#{valid,jdbcType=TINYINT}");
+        if (record.getCol3() != null) {
+            sql.VALUES("col3", "#{col3,jdbcType=DECIMAL}");
         }
         
         if (record.getEnv() != null) {
             sql.VALUES("env", "#{env,jdbcType=TINYINT}");
         }
         
+        if (record.getValid() != null) {
+            sql.VALUES("valid", "#{valid,jdbcType=TINYINT}");
+        }
+        
+        if (record.getCtime() != null) {
+            sql.VALUES("ctime", "#{ctime,jdbcType=TIMESTAMP}");
+        }
+        
+        if (record.getUtime() != null) {
+            sql.VALUES("utime", "#{utime,jdbcType=TIMESTAMP}");
+        }
+        
         return sql.toString();
     }
 
-    public String selectByExample(UserExample example) {
+    public String selectByExample(TestExample example) {
         SQL sql = new SQL();
         if (example != null && example.isDistinct()) {
             sql.SELECT_DISTINCT("id");
         } else {
             sql.SELECT("id");
         }
-        sql.SELECT("name");
-        sql.SELECT("user_name");
-        sql.SELECT("valid");
+        sql.SELECT("col1");
+        sql.SELECT("col2");
+        sql.SELECT("col3");
         sql.SELECT("env");
-        sql.FROM("user");
+        sql.SELECT("valid");
+        sql.SELECT("ctime");
+        sql.SELECT("utime");
+        sql.FROM("test");
         applyWhere(sql, example, false);
         
         if (example != null && example.getOrderByClause() != null) {
@@ -73,30 +84,42 @@ public class UserSqlProvider {
     }
 
     public String updateByExampleSelective(Map<String, Object> parameter) {
-        User record = (User) parameter.get("record");
-        UserExample example = (UserExample) parameter.get("example");
+        Test record = (Test) parameter.get("record");
+        TestExample example = (TestExample) parameter.get("example");
         
         SQL sql = new SQL();
-        sql.UPDATE("user");
+        sql.UPDATE("test");
         
         if (record.getId() != null) {
             sql.SET("id = #{record.id,jdbcType=INTEGER}");
         }
         
-        if (record.getName() != null) {
-            sql.SET("name = #{record.name,jdbcType=VARCHAR}");
+        if (record.getCol1() != null) {
+            sql.SET("col1 = #{record.col1,jdbcType=INTEGER}");
         }
         
-        if (record.getUserName() != null) {
-            sql.SET("user_name = #{record.userName,jdbcType=VARCHAR}");
+        if (record.getCol2() != null) {
+            sql.SET("col2 = #{record.col2,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getCol3() != null) {
+            sql.SET("col3 = #{record.col3,jdbcType=DECIMAL}");
+        }
+        
+        if (record.getEnv() != null) {
+            sql.SET("env = #{record.env,jdbcType=TINYINT}");
         }
         
         if (record.getValid() != null) {
             sql.SET("valid = #{record.valid,jdbcType=TINYINT}");
         }
         
-        if (record.getEnv() != null) {
-            sql.SET("env = #{record.env,jdbcType=TINYINT}");
+        if (record.getCtime() != null) {
+            sql.SET("ctime = #{record.ctime,jdbcType=TIMESTAMP}");
+        }
+        
+        if (record.getUtime() != null) {
+            sql.SET("utime = #{record.utime,jdbcType=TIMESTAMP}");
         }
         
         applyWhere(sql, example, true);
@@ -105,37 +128,52 @@ public class UserSqlProvider {
 
     public String updateByExample(Map<String, Object> parameter) {
         SQL sql = new SQL();
-        sql.UPDATE("user");
+        sql.UPDATE("test");
         
         sql.SET("id = #{record.id,jdbcType=INTEGER}");
-        sql.SET("name = #{record.name,jdbcType=VARCHAR}");
-        sql.SET("user_name = #{record.userName,jdbcType=VARCHAR}");
-        sql.SET("valid = #{record.valid,jdbcType=TINYINT}");
+        sql.SET("col1 = #{record.col1,jdbcType=INTEGER}");
+        sql.SET("col2 = #{record.col2,jdbcType=VARCHAR}");
+        sql.SET("col3 = #{record.col3,jdbcType=DECIMAL}");
         sql.SET("env = #{record.env,jdbcType=TINYINT}");
+        sql.SET("valid = #{record.valid,jdbcType=TINYINT}");
+        sql.SET("ctime = #{record.ctime,jdbcType=TIMESTAMP}");
+        sql.SET("utime = #{record.utime,jdbcType=TIMESTAMP}");
         
-        UserExample example = (UserExample) parameter.get("example");
+        TestExample example = (TestExample) parameter.get("example");
         applyWhere(sql, example, true);
         return sql.toString();
     }
 
-    public String updateByPrimaryKeySelective(User record) {
+    public String updateByPrimaryKeySelective(Test record) {
         SQL sql = new SQL();
-        sql.UPDATE("user");
+        sql.UPDATE("test");
         
-        if (record.getName() != null) {
-            sql.SET("name = #{name,jdbcType=VARCHAR}");
+        if (record.getCol1() != null) {
+            sql.SET("col1 = #{col1,jdbcType=INTEGER}");
         }
         
-        if (record.getUserName() != null) {
-            sql.SET("user_name = #{userName,jdbcType=VARCHAR}");
+        if (record.getCol2() != null) {
+            sql.SET("col2 = #{col2,jdbcType=VARCHAR}");
+        }
+        
+        if (record.getCol3() != null) {
+            sql.SET("col3 = #{col3,jdbcType=DECIMAL}");
+        }
+        
+        if (record.getEnv() != null) {
+            sql.SET("env = #{env,jdbcType=TINYINT}");
         }
         
         if (record.getValid() != null) {
             sql.SET("valid = #{valid,jdbcType=TINYINT}");
         }
         
-        if (record.getEnv() != null) {
-            sql.SET("env = #{env,jdbcType=TINYINT}");
+        if (record.getCtime() != null) {
+            sql.SET("ctime = #{ctime,jdbcType=TIMESTAMP}");
+        }
+        
+        if (record.getUtime() != null) {
+            sql.SET("utime = #{utime,jdbcType=TIMESTAMP}");
         }
         
         sql.WHERE("id = #{id,jdbcType=INTEGER}");
@@ -143,7 +181,7 @@ public class UserSqlProvider {
         return sql.toString();
     }
 
-    protected void applyWhere(SQL sql, UserExample example, boolean includeExamplePhrase) {
+    protected void applyWhere(SQL sql, TestExample example, boolean includeExamplePhrase) {
         if (example == null) {
             return;
         }

@@ -15,6 +15,7 @@
 
     <properties>
         <mysql.connector.version>5.1.47</mysql.connector.version>
+        <satellites.version>1.0.0-SNAPSHOT</satellites.version>
     </properties>
 
     <dependencies>
@@ -31,6 +32,11 @@
                     <artifactId>spring-boot-starter-logging</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>tech.qijin.satellites</groupId>
+            <artifactId>satellites-comments</artifactId>
+            <version>${satellites.version}</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
