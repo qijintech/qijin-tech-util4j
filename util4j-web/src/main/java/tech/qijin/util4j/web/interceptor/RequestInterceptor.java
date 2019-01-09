@@ -57,7 +57,12 @@ public class RequestInterceptor implements HandlerInterceptor {
     }
 
     private Optional<ResultVo> parseResult(HttpServletResponse response) throws IOException {
-        ResponseWrapper responseWrapper = new ResponseWrapper(response);
+        ResponseWrapper responseWrapper;
+        if (response instanceof ResponseWrapper) {
+            responseWrapper = (ResponseWrapper) response;
+        } else {
+            responseWrapper = new ResponseWrapper(response);
+        }
         String result = responseWrapper.getContent();
         return Optional.ofNullable(JSON.parseObject(result, ResultVo.class));
     }

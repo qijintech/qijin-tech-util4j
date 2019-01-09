@@ -15,7 +15,7 @@ import java.io.IOException;
  **/
 public class EnvFilter implements Filter {
 
-    private static final String TEST_KEYWORD = "test";
+    private static final String[] TEST_KEYWORDS = {"test", "localhost", "127.0.0.1"};
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -25,7 +25,7 @@ public class EnvFilter implements Filter {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         String host = ServletUtil.getHost((HttpServletRequest) request);
-        EnvEnum envEnum = host.contains(TEST_KEYWORD)
+        EnvEnum envEnum = isTest(host)
                 ? EnvEnum.TEST
                 : EnvEnum.PRODUCT;
         EnvUtil.setEnv(envEnum);
@@ -35,5 +35,14 @@ public class EnvFilter implements Filter {
     @Override
     public void destroy() {
 
+    }
+
+    private boolean isTest(String host) {
+        for (String keyword : TEST_KEYWORDS) {
+            if (host.contains(keyword)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
