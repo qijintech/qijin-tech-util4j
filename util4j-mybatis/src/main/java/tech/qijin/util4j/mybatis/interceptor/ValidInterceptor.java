@@ -19,6 +19,9 @@ import tech.qijin.util4j.trace.util.EnvUtil;
         @Signature(type = Executor.class, method = "update",
                 args = {MappedStatement.class, Object.class}),
         @Signature(type = Executor.class, method = "query",
+                args = {MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class,
+                        CacheKey.class, BoundSql.class}),
+        @Signature(type = Executor.class, method = "query",
                 args = {MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class})})
 public class ValidInterceptor extends AbstractTenantInterceptor<Integer> {
     @Override
