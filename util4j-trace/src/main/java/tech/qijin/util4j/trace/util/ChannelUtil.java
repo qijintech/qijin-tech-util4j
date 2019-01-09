@@ -16,8 +16,8 @@ public class ChannelUtil {
         channelThreadLocal.set(channel);
     }
 
-    public static Optional<Channel> getChannel() {
-        return Optional.ofNullable(channelThreadLocal.get());
+    public static Channel getChannel() {
+        return channelThreadLocal.get();
     }
 
     public static void remove() {
