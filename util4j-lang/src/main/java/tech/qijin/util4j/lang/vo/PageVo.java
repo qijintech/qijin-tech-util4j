@@ -8,9 +8,11 @@ import lombok.Data;
  * 开始做眼保健操：←_← ↑_↑ →_→ ↓_↓
  **/
 @Data
-public class PageVo{
+public class PageVo {
     public static final String PAGE_NO = "pageNo";
     public static final String PAGE_SIZE = "pageSize";
+    public static final String MIN_ID = "minId";
+    public static final String MAX_ID = "maxId";
     /**
      * 当前页码
      */
