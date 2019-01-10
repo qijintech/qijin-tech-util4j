@@ -23,18 +23,18 @@ public class InterceptorConfiguration implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(requestInterceptor()).excludePathPatterns(InterceptorExclusion.COMMON);
-        registry.addInterceptor(pageInterceptor()).excludePathPatterns(InterceptorExclusion.COMMON);
+        registry.addInterceptor(pageInterceptor2()).excludePathPatterns(InterceptorExclusion.COMMON);
         registry.addInterceptor(channelInterceptor()).excludePathPatterns(InterceptorExclusion.COMMON);
     }
 
     @ConditionalOnMissingBean(value = {TraceFilter.class})
-    @Bean
+//    @Bean
     public TraceInterceptor traceInterceptor() {
         log.info(LogFormat.builder().message("TraceInterceptor init").build());
         return new TraceInterceptor();
     }
 
-    @Bean
+//    @Bean
     public EnvInterceptor envInterceptor() {
         log.info(LogFormat.builder().message("EnvInterceptor init").build());
         return new EnvInterceptor();
@@ -46,10 +46,16 @@ public class InterceptorConfiguration implements WebMvcConfigurer {
         return new RequestInterceptor();
     }
 
-    @Bean
+//    @Bean
     public PageInterceptor pageInterceptor() {
         log.info(LogFormat.builder().message("PageInterceptor init").build());
         return new PageInterceptor();
+    }
+
+    @Bean
+    public PageInterceptor2 pageInterceptor2() {
+        log.info(LogFormat.builder().message("PageInterceptor2 init").build());
+        return new PageInterceptor2();
     }
 
     @Bean

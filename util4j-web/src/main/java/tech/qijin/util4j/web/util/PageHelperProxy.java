@@ -11,6 +11,8 @@ import tech.qijin.util4j.lang.vo.PageVo;
  **/
 public class PageHelperProxy {
     private static final ThreadLocal<PageVo> LOCAL_PAGE_VO = new ThreadLocal<PageVo>();
+    private static final ThreadLocal<Long> MIN_ID = new ThreadLocal<Long>();
+    private static final ThreadLocal<Long> MAX_ID = new ThreadLocal<Long>();
 
     public static <T> PageProxy<T> getLocalPage() {
         Page page = PageHelper.getLocalPage();
@@ -30,5 +32,21 @@ public class PageHelperProxy {
 
     public static void clear() {
         LOCAL_PAGE_VO.remove();
+    }
+
+    public static Long getMinId() {
+        return MIN_ID.get();
+    }
+
+    public static Long getMaxId() {
+        return MAX_ID.get();
+    }
+
+    public static void setMinId(Long minId) {
+        MIN_ID.set(minId);
+    }
+
+    public static void setMaxId(Long maxId) {
+        MAX_ID.set(maxId);
     }
 }

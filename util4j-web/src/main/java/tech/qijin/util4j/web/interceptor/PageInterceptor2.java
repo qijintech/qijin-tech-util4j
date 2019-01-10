@@ -5,8 +5,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 import tech.qijin.util4j.lang.vo.PageVo;
-import tech.qijin.util4j.trace.pojo.EnvEnum;
-import tech.qijin.util4j.trace.util.EnvUtil;
 import tech.qijin.util4j.utils.LogFormat;
 import tech.qijin.util4j.web.filter.RequestWrapper;
 import tech.qijin.util4j.web.util.PageHelperProxy;
@@ -17,16 +15,18 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.Map;
 
 /**
- * 这个用offset进行分页，性能不太好
+ * 这个用id进行分页，offset永远为0
  *
  * @author michealyang
  * @date 2018/11/23
  * 开始做眼保健操：←_← ↑_↑ →_→ ↓_↓
  **/
 @Slf4j
-public class PageInterceptor implements HandlerInterceptor {
+public class PageInterceptor2 implements HandlerInterceptor {
     private static final Integer DEFAULT_PAGE_SIZE = 10;
     private static final Integer PAGE_SIZE_LIMIT = 500;
+    private static final Long MAX_ID = Long.MAX_VALUE;
+    private static final Long MIN_ID = -1L;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
@@ -35,13 +35,10 @@ public class PageInterceptor implements HandlerInterceptor {
         }
         RequestWrapper requestWrapper = (RequestWrapper) request;
         Map<String, String[]> params = ServletUtil.getParameters(requestWrapper);
-        String[] pageNoArr = params.get(PageVo.PAGE_NO);
         String[] pageSizeArr = params.get(PageVo.PAGE_SIZE);
-        int pageNo = 0;
+        String[] minIdArr = params.get(PageVo.MIN_ID);
+        String[] maxIdArr = params.get(PageVo.MAX_ID);
         int pageSize = DEFAULT_PAGE_SIZE;
-        if (pageNoArr != null && pageNoArr.length > 0) {
-            pageNo = Integer.valueOf(pageNoArr[0]);
-        }
         if (pageSizeArr != null && pageSizeArr.length > 0) {
             pageSize = Integer.valueOf(pageSizeArr[0]);
         }
@@ -49,7 +46,19 @@ public class PageInterceptor implements HandlerInterceptor {
             log.error(LogFormat.builder().message("too large page size").build());
             return false;
         }
-        PageHelper.startPage(pageNo, pageSize);
+        PageHelper.startPage(0, pageSize);
+        PageHelperProxy.setMinId(MIN_ID);
+        PageHelperProxy.setMaxId(MAX_ID);
+        if (maxIdArr != null && maxIdArr.length > 0) {
+            PageHelper.getLocalPage().setOrderBy("id desc");
+            PageHelperProxy.setMaxId(Long.valueOf(maxIdArr[0]));
+        } else if (minIdArr != null) {
+            PageHelper.getLocalPage().setOrderBy("id asc");
+            PageHelperProxy.setMinId(Long.valueOf(minIdArr[0]));
+        } else {
+            //maxId和minId都不设置时，默认降序排序
+            PageHelper.getLocalPage().setOrderBy("id desc");
+        }
         return true;
     }
 
