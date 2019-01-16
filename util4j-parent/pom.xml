@@ -22,12 +22,14 @@
         <commons.collections.version>3.2.2</commons.collections.version>
         <commons.beanutils.version>1.9.3</commons.beanutils.version>
         <lombok.version>1.16.20</lombok.version>
-        <junit.version>4.12</junit.version>
+        <junit4.version>4.12</junit4.version>
+        <junit5.version>5.3.1</junit5.version>
 
         <plugin.compiler.version>3.8.0</plugin.compiler.version>
         <plugin.source.version>3.0.1</plugin.source.version>
         <plugin.surefire.version>2.22.1</plugin.surefire.version>
         <plugin.versions.version>2.7</plugin.versions.version>
+        <plugin.jacoco.version>0.8.2</plugin.jacoco.version>
     </properties>
     <dependencies>
         <dependency>
@@ -70,9 +72,17 @@
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>${junit.version}</version>
+            <version>${junit4.version}</version>
             <scope>test</scope>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>${junit5.version}</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <distributionManagement>
@@ -109,7 +119,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${plugin.surefire.version}</version>
                 <configuration>
-                    <skipTests>true</skipTests>
+                    <!--<skipTests>true</skipTests>-->
                 </configuration>
             </plugin>
             <plugin>
@@ -142,6 +152,42 @@
                 <version>${plugin.versions.version}</version>
                 <configuration>
                     <generateBackupPoms>false</generateBackupPoms>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.jacoco</groupId>
+                <artifactId>jacoco-maven-plugin</artifactId>
+                <version>${plugin.jacoco.version}</version>
+                <executions>
+                    <execution>
+                        <id>prepare-agent</id>
+                        <goals>
+                            <goal>prepare-agent</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>report</id>
+                        <phase>prepare-package</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>post-unit-test</id>
+                        <phase>test</phase>
+                        <goals>
+                            <goal>report</goal>
+                        </goals>
+                        <configuration>
+                            <dataFile>target/jacoco.exec</dataFile>
+                            <outputDirectory>target/jacoco-ut</outputDirectory>
+                        </configuration>
+                    </execution>
+                </executions>
+                <configuration>
+                    <!--<systemPropertyVariables>-->
+                        <!--<jacoco-agent.destfile>target/jacoco.exec</jacoco-agent.destfile>-->
+                    <!--</systemPropertyVariables>-->
                 </configuration>
             </plugin>
         </plugins>

@@ -41,6 +41,11 @@
         <jsqlparser.version>1.2</jsqlparser.version>
         <freemarker.version>2.3.23</freemarker.version>
         <jedis.version>2.9.0</jedis.version>
+        <javax.validation.version>2.0.1.Final</javax.validation.version>
+        <hibenate.validator.version>6.0.13.Final</hibenate.validator.version>
+        <javax.el.api.version>3.0.1-b06</javax.el.api.version>
+        <glassfish.el.versino>2.2.6</glassfish.el.versino>
+        <bouncycastle.bcprov.version>1.60</bouncycastle.bcprov.version>
 
         <plugin.compiler.version>3.8.0</plugin.compiler.version>
         <plugin.source.version>3.0.1</plugin.source.version>
@@ -314,7 +319,39 @@
                 <artifactId>freemarker</artifactId>
                 <version>${freemarker.version}</version>
             </dependency>
-
+            <!-- https://mvnrepository.com/artifact/javax.validation/validation-api -->
+            <dependency>
+                <groupId>javax.validation</groupId>
+                <artifactId>validation-api</artifactId>
+                <version>${javax.validation.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-validator -->
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-validator</artifactId>
+                <version>${hibenate.validator.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate.validator</groupId>
+                <artifactId>hibernate-validator-annotation-processor</artifactId>
+                <version>${hibenate.validator.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>javax.el</groupId>
+                <artifactId>javax.el-api</artifactId>
+                <version>${javax.el.api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.glassfish.web</groupId>
+                <artifactId>javax.el</artifactId>
+                <version>${glassfish.el.versino}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk15on -->
+            <dependency>
+                <groupId>org.bouncycastle</groupId>
+                <artifactId>bcprov-jdk15on</artifactId>
+                <version>${bouncycastle.bcprov.version}</version>
+            </dependency>
 
         </dependencies>
     </dependencyManagement>
