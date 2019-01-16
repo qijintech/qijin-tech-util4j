@@ -2,9 +2,8 @@ package tech.qijin.util4j.cache;
 
 /**
  * @author michealyang
- * @date 2018/11/30
+ * @date 2019/1/11
  * 开始做眼保健操：←_← ↑_↑ →_→ ↓_↓
  **/
-public enum  CacheEnum {
-    REDIS, TAIR, MEMCACHED;
+public class DLock {
 }
