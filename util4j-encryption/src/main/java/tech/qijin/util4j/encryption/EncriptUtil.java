@@ -31,6 +31,10 @@ public class EncriptUtil {
         return DigestUtils.md5Hex(value);
     }
 
+    public static String md5Encode(byte[] value) {
+        return DigestUtils.md5Hex(value);
+    }
+
     static class InnerClass {
         private static Base58 base58 = new Base58();
 
