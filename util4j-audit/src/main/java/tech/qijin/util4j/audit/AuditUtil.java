@@ -43,7 +43,7 @@ public class AuditUtil {
         sb.append(checksum(fields));
 
         //计算MD5
-        return EncriptUtil.md5Hex(sb.toString().getBytes());
+        return EncriptUtil.md5Encode(sb.toString().getBytes());
     }
 
     /**
