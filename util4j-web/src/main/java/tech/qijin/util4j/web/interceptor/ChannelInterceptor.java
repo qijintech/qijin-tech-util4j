@@ -1,16 +1,12 @@
 package tech.qijin.util4j.web.interceptor;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 import tech.qijin.util4j.lang.constant.ResEnum;
 import tech.qijin.util4j.trace.pojo.Channel;
 import tech.qijin.util4j.trace.util.ChannelUtil;
-import tech.qijin.util4j.utils.LogFormat;
 import tech.qijin.util4j.utils.MAssert;
 import tech.qijin.util4j.web.annotation.ChannelRequired;
 import tech.qijin.util4j.web.util.ServletUtil;
