@@ -4,7 +4,7 @@ package tech.qijin.util4j.cache;
  * Hello world!
  *
  */
-public class App 
+public class App
 {
     public static void main( String[] args )
     {
