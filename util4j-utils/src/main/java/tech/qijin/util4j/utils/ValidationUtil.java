@@ -1,5 +1,6 @@
 package tech.qijin.util4j.utils;
 
+import org.apache.commons.validator.routines.EmailValidator;
 import tech.qijin.util4j.lang.constant.ResEnum;
 
 import javax.validation.ConstraintViolation;
@@ -7,6 +8,8 @@ import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 /**
  * @author michealyang
@@ -14,6 +17,8 @@ import java.util.Set;
  * 开始做眼保健操：←_← ↑_↑ →_→ ↓_↓
  **/
 public class ValidationUtil {
+
+    private static String phoneNoRegex = "^((13[0-9])|(14[5,7,9])|(15([0-3]|[5-9]))|(166)|(17[0,1,3,5,6,7,8])|(18[0-9])|(19[8|9]))\\d{8}$";
 
     /**
      * 密码强度校验
@@ -45,6 +50,52 @@ public class ValidationUtil {
 
     public static boolean password(String password) {
         MAssert.notBlank(password, ResEnum.INVALID_PARAM);
-        return password.matches(regex);
+        return password.matches(phoneNoRegex);
+    }
+
+    /**
+     * 判断是否是手机号
+     *
+     * @param value
+     * @return
+     */
+    public static boolean matchPhoneNo(String value) {
+        if (value.length() != 11) {
+            return false;
+        }
+        Pattern p = Pattern.compile(phoneNoRegex);
+        Matcher m = p.matcher(value);
+        return m.matches();
+    }
+
+    /**
+     * 校验手机号的合法性
+     *
+     * @param phoneNo
+     */
+    public static void validatePhoneNo(String phoneNo) {
+        MAssert.isTrue(phoneNo.length() == 11, ResEnum.INVALID_PARAM.code, "手机号应为11位数");
+        Pattern p = Pattern.compile(phoneNoRegex);
+        Matcher m = p.matcher(phoneNo);
+        MAssert.isTrue(m.matches(), ResEnum.INVALID_PARAM.code, "请输入正确的手机号");
+    }
+
+    /**
+     * 判断是否是邮箱
+     *
+     * @param value
+     * @return
+     */
+    public static boolean matchEmail(String value) {
+        return EmailValidator.getInstance().isValid(value);
+    }
+
+    /**
+     * 校验email的合法性
+     *
+     * @param email
+     */
+    public static void validateEmail(String email) {
+        MAssert.isTrue(EmailValidator.getInstance().isValid(email), ResEnum.INVALID_EMAIL);
     }
 }
