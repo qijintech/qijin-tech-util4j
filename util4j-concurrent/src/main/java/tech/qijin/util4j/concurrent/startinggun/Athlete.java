@@ -1,4 +1,4 @@
-package tech.qijin.util4j.concurrent;
+package tech.qijin.util4j.concurrent.startinggun;
 
 /**
  * @author michealyang
