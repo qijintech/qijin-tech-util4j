@@ -11,6 +11,7 @@ import java.util.concurrent.BrokenBarrierException;
 import java.util.concurrent.CyclicBarrier;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * 发令枪
@@ -27,6 +28,8 @@ public class StartingGun {
     private ExecutorService executorService = Executors.newCachedThreadPool(new NamedThreadFactory(THREAD_NAME_PREFIX));
     private CyclicBarrier barrier;
     private StartingGunMode mode;
+    private AtomicInteger count = new AtomicInteger(0);
+    private int capacity;
 
     public StartingGun() {
         mode = StartingGunMode.DYNAMIC;
@@ -34,12 +37,16 @@ public class StartingGun {
 
     public StartingGun(int capacity) {
         mode = StartingGunMode.FIXED;
+        this.capacity = capacity;
         this.barrier = new CyclicBarrier(capacity);
     }
 
     public StartingGun addAthlete(Athlete athlete) {
         switch (mode) {
             case FIXED:
+                if (count.incrementAndGet() > this.capacity) {
+                    return this;
+                }
                 go(athlete);
                 break;
             case DYNAMIC:
@@ -63,7 +70,7 @@ public class StartingGun {
     }
 
     private void go(Athlete athlete) {
-        executorService.submit(() -> {
+        executorService.execute(() -> {
             try {
                 // randomSleep(); // just for test
                 log.info("athlete {} is waiting", athlete);
