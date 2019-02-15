@@ -45,6 +45,7 @@
         <javax.el.api.version>3.0.1-b06</javax.el.api.version>
         <glassfish.el.versino>2.2.6</glassfish.el.versino>
         <bouncycastle.bcprov.version>1.60</bouncycastle.bcprov.version>
+        <netty.all.version>4.1.31.Final</netty.all.version>
 
         <plugin.compiler.version>3.8.0</plugin.compiler.version>
         <plugin.source.version>3.0.1</plugin.source.version>
@@ -144,6 +145,11 @@
             <dependency>
                 <groupId>tech.qijin.util4j</groupId>
                 <artifactId>util4j-push</artifactId>
+                <version>${util4j.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>tech.qijin.util4j</groupId>
+                <artifactId>util4j-concurrent</artifactId>
                 <version>${util4j.version}</version>
             </dependency>
 
@@ -350,6 +356,12 @@
                 <groupId>org.bouncycastle</groupId>
                 <artifactId>bcprov-jdk15on</artifactId>
                 <version>${bouncycastle.bcprov.version}</version>
+            </dependency>
+            <!-- https://mvnrepository.com/artifact/io.netty/netty-all -->
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-all</artifactId>
+                <version>${netty.all.version}</version>
             </dependency>
 
         </dependencies>
