@@ -3,7 +3,11 @@ package tech.qijin.util4j.utils;
 import lombok.extern.slf4j.Slf4j;
 import tech.qijin.util4j.lang.constant.ResEnum;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
+import java.net.URISyntaxException;
 import java.net.URL;
 
 /**
@@ -37,5 +41,15 @@ public class FileUtil {
                     .put("fileName", fileName).build());
         }
         return in;
+    }
+
+    public static FileInputStream readFileFdFromClasspath(String fileName) throws URISyntaxException, FileNotFoundException {
+        MAssert.notBlank(fileName, ResEnum.INVALID_PARAM);
+        File file = new File(FileUtil.class.getClassLoader().getResource(fileName).toURI());
+        if (file == null) {
+            log.error(LogFormat.builder().message("file not found from classpath")
+                    .put("fileName", fileName).build());
+        }
+        return new FileInputStream(file);
     }
 }
