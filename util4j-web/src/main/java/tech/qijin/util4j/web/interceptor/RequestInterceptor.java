@@ -46,13 +46,11 @@ public class RequestInterceptor implements HandlerInterceptor {
         if (start == null) {
             return;
         }
-        Optional<ResultVo> resultVo = parseResult(response);
         long end = System.currentTimeMillis();
         LOGGER.info(LogFormat.builder()
                 .put("duration", String.valueOf(end - start) + "ms")
                 .put("uri", request.getRequestURI())
                 .put("httpStatus", String.valueOf(response.getStatus()))
-                .put("resCode", resultVo.map(ResultVo::getCode).orElse(null))
                 .build());
     }
 

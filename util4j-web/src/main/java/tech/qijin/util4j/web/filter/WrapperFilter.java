@@ -17,11 +17,24 @@ public class WrapperFilter implements Filter {
 
     }
 
+    /**
+     * 暂时不要用ResponseWrapper。
+     * 当需要返回页面view时，ResponseWrapper会导致不显示结果
+     * <p>
+     * 如果需要打印response code，可以通过{@link org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice}来实现
+     * </p>
+     *
+     * @param request
+     * @param response
+     * @param chain
+     * @throws IOException
+     * @throws ServletException
+     */
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         RequestWrapper requestWrapper = new RequestWrapper((HttpServletRequest) request);
-        ResponseWrapper responseWrapper = new ResponseWrapper((HttpServletResponse) response);
-        chain.doFilter(requestWrapper, responseWrapper);
+//        ResponseWrapper responseWrapper = new ResponseWrapper((HttpServletResponse) response);
+        chain.doFilter(requestWrapper, response);
     }
 
     @Override
