@@ -33,6 +33,7 @@ mybatis:
 logging:
   level:
     tech.qijin.util4j.practice.db: DEBUG
+    tech.qijin.satellites.favorites.db: DEBUG
 server:
   port: 8080
 

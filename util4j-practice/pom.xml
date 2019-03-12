@@ -34,10 +34,29 @@
             </exclusions>
         </dependency>
         <dependency>
-            <groupId>tech.qijin.satellites</groupId>
-            <artifactId>satellites-comments</artifactId>
-            <version>${satellites.version}</version>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-freemarker</artifactId>
         </dependency>
+        <!--<dependency>-->
+        <!--<groupId>tech.qijin.satellites</groupId>-->
+        <!--<artifactId>satellites-comments</artifactId>-->
+        <!--<version>${satellites.version}</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+        <!--<groupId>tech.qijin.satellites</groupId>-->
+        <!--<artifactId>satellites-favorites</artifactId>-->
+        <!--<version>${satellites.version}</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+        <!--<groupId>tech.qijin.satellites</groupId>-->
+        <!--<artifactId>satellites-user</artifactId>-->
+        <!--<version>${satellites.version}</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+        <!--<groupId>tech.qijin.satellites</groupId>-->
+        <!--<artifactId>satellites-websocket</artifactId>-->
+        <!--<version>${satellites.version}</version>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-jdbc</artifactId>
@@ -56,15 +75,23 @@
         </dependency>
         <dependency>
             <groupId>tech.qijin.util4j</groupId>
-            <artifactId>util4j-mybatis</artifactId>
+            <artifactId>util4j-timezone</artifactId>
         </dependency>
         <dependency>
             <groupId>tech.qijin.util4j</groupId>
-            <artifactId>util4j-schedule</artifactId>
+            <artifactId>util4j-mybatis</artifactId>
         </dependency>
+        <!--<dependency>-->
+        <!--<groupId>tech.qijin.util4j</groupId>-->
+        <!--<artifactId>util4j-schedule</artifactId>-->
+        <!--</dependency>-->
         <dependency>
             <groupId>tech.qijin.util4j</groupId>
             <artifactId>util4j-aop</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>tech.qijin.util4j</groupId>
+            <artifactId>util4j-timezone</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -83,6 +110,10 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid-spring-boot-starter</artifactId>
         </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>

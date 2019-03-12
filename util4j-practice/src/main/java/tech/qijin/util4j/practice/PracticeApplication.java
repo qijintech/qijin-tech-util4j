@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class PracticeApplication {
 
     public static void main(String[] args) {
+        System.setProperty("spring.devtools.restart.enabled", "false");
         SpringApplication.run(PracticeApplication.class, args);
     }
 }

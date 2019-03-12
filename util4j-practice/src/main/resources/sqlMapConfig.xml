@@ -10,6 +10,8 @@
                      javaType="tech.qijin.util4j.trace.pojo.EnvEnum" />
         <typeHandler handler="tech.qijin.util4j.mybatis.handler.EnumValueTypeHandler"
                      javaType="tech.qijin.util4j.trace.pojo.Channel" />
+        <!--<typeHandler handler="tech.qijin.util4j.mybatis.handler.EnumValueTypeHandler"-->
+                     <!--javaType="tech.qijin.satellites.user.base.Source" />-->
     </typeHandlers>
     <plugins>
         <plugin interceptor="com.github.pagehelper.PageInterceptor">
