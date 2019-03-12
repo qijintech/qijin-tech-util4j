@@ -32,6 +32,7 @@
         <module>util4j-encryption</module>
         <module>util4j-push</module>
         <module>util4j-timezone</module>
+        <module>util4j-config</module>
   </modules>
 
     <build>
