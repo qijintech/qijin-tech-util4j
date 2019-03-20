@@ -13,6 +13,20 @@ public class PageVo {
     public static final String PAGE_SIZE = "pageSize";
     public static final String MIN_ID = "minId";
     public static final String MAX_ID = "maxId";
+
+    public PageVo() {
+    }
+
+    public PageVo(Integer pageNo, Integer pageSize) {
+        this.pageNo = pageNo;
+        this.pageSize = pageSize;
+    }
+
+    public PageVo(Long maxId, Long minId) {
+        this.maxId = maxId;
+        this.minId = minId;
+    }
+
     /**
      * 当前页码
      */
@@ -30,12 +44,12 @@ public class PageVo {
      */
     private int pages;
     /**
-     * 起始行
+     * 查询的结果需要<=maxId
      */
-    private int startRow;
+    private Long maxId;
     /**
-     * 末行
+     * 查询的结果需要>=minId
      */
-    private int endRow;
+    private Long minId;
 
 }
