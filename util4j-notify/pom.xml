@@ -15,6 +15,13 @@
     <artifactId>util4j-notify</artifactId>
 
     <dependencies>
+        <!-- https://mvnrepository.com/artifact/org.jodd/jodd-mail -->
+        <dependency>
+            <groupId>org.jodd</groupId>
+            <artifactId>jodd-mail</artifactId>
+            <version>5.0.10</version>
+        </dependency>
+
     </dependencies>
 
     <build>
