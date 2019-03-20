@@ -54,13 +54,13 @@ public class ResponseBodyHandler implements ResponseBodyAdvice {
         if (o != null) {
             if (o instanceof ResultVo) {
                 if (((ResultVo) o).getData() != null && ((ResultVo) o).getData() instanceof List) {
-                    ((ResultVo) o).setPage(PageHelperProxy.getPageVo());
+                    ((ResultVo) o).setPage(PageHelperProxy.getResPageVo());
                 }
                 return o;
             } else {
                 ret.success().data(o);
                 if (o instanceof List) {
-                    ret.setPage(PageHelperProxy.getPageVo());
+                    ret.setPage(PageHelperProxy.getResPageVo());
                 }
             }
         } else {

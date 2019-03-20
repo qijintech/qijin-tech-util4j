@@ -49,7 +49,8 @@ public class PageInterceptor implements HandlerInterceptor {
             log.error(LogFormat.builder().message("too large page size").build());
             return false;
         }
-        PageHelper.startPage(pageNo, pageSize);
+        PageHelperProxy.setReqPageVo(new PageVo(pageNo, pageSize));
+        PageHelper.startPage(pageNo - 1, pageSize);
         return true;
     }
 
@@ -60,6 +61,7 @@ public class PageInterceptor implements HandlerInterceptor {
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+        PageHelper.clearPage();
         PageHelperProxy.clear();
     }
 }
