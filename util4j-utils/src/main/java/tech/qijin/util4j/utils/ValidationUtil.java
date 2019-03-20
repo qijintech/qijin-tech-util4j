@@ -1,5 +1,6 @@
 package tech.qijin.util4j.utils;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.validator.routines.EmailValidator;
 import tech.qijin.util4j.lang.constant.ResEnum;
 
@@ -32,6 +33,21 @@ public class ValidationUtil {
      */
     private static final String regex = "^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,16}$";
 
+
+    /**
+     * 校验参数的合法性
+     *
+     * @param t
+     * @param <T>
+     * @return
+     */
+    public static <T> Boolean isValid(T t) {
+        ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
+        Validator validator = factory.getValidator();
+        Set<ConstraintViolation<T>> validationSet = validator.validate(t);
+        return CollectionUtils.isEmpty(validationSet);
+    }
+
     /**
      * 校验参数的合法性。
      * <p>需要结合javax validation提供的注解使用，如@NotNull, @NotEmpty</p>
@@ -44,8 +60,12 @@ public class ValidationUtil {
         ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
         Validator validator = factory.getValidator();
         Set<ConstraintViolation<T>> validationSet = validator.validate(t);
-        validationSet.stream().forEach(
-                validation -> MAssert.isTrue(false, ResEnum.INVALID_PARAM.code, validation.getMessage()));
+        if (CollectionUtils.isNotEmpty(validationSet)) {
+            StringBuilder sb = new StringBuilder();
+            validationSet.stream().forEach(
+                    validation -> sb.append(validation.getMessage()).append(";"));
+            MAssert.isTrue(false, ResEnum.INVALID_PARAM.code, sb.toString());
+        }
     }
 
     public static boolean password(String password) {
