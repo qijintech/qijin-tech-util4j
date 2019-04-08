@@ -1,0 +1,12 @@
+spring:
+  redis:
+    host: ec2-52-80-189-105.cn-north-1.compute.amazonaws.com.cn
+    port: 8501
+    password:
+    jedis:
+      pool:
+        max-idle: 8
+        min-idle: 0
+        max-active: 8
+    timeout: 300ms
+    db: 0
