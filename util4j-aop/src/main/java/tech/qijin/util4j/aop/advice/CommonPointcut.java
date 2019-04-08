@@ -24,4 +24,12 @@ public class CommonPointcut {
     @Pointcut("@annotation(tech.qijin.util4j.aop.annotation.Log)")
     public void logAnnotationPointcut() {
     }
+
+    @Pointcut("@annotation(tech.qijin.util4j.aop.annotation.ListCheck)")
+    public void listCheckAnnotationPointcut() {
+    }
+
+//    @Pointcut("execution(public * tech.qijin.util4j..services.*.*(..))")
+//    public void dubboProviderPointcut() {
+//    }
 }
