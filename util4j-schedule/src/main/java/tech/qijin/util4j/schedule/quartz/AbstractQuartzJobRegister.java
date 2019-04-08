@@ -1,6 +1,7 @@
 package tech.qijin.util4j.schedule.quartz;
 
 import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
 import org.apache.commons.collections.CollectionUtils;
 import org.quartz.*;
 import org.slf4j.Logger;
@@ -11,6 +12,12 @@ import tech.qijin.util4j.schedule.IScheduler;
 import javax.annotation.PostConstruct;
 import java.text.ParseException;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import static org.quartz.JobKey.jobKey;
+import static org.quartz.impl.matchers.GroupMatcher.groupEquals;
 
 /**
  * @author michealyang
@@ -19,7 +26,7 @@ import java.util.List;
  **/
 public abstract class AbstractQuartzJobRegister implements IScheduler {
 
-    protected static final Logger LOGGER = LoggerFactory.getLogger("Quartz");
+    protected static final Logger log = LoggerFactory.getLogger("Quartz");
 
     private static final String DEFAULT_GROUP = "group1";
 
@@ -32,12 +39,13 @@ public abstract class AbstractQuartzJobRegister implements IScheduler {
     public void init() throws ParseException, SchedulerException {
         registerJobs(jobs);
         if (CollectionUtils.isEmpty(jobs)) {
-            LOGGER.warn("no quartz job");
+            log.warn("no quartz job");
             return;
         }
         for (QuartzJob job : jobs) {
             register(job);
         }
+        unregisterJobs();
     }
 
     public abstract void registerJobs(List<QuartzJob> jobs);
@@ -49,7 +57,7 @@ public abstract class AbstractQuartzJobRegister implements IScheduler {
         JobDetail storedJobDetail = scheduler.getJobDetail(getJobKey(job.getClazz(), getGroup(job.getGroup())));
         if (storedTrigger == null && storedJobDetail == null) {
             //trigger和job之前不存在，则注册trigger和job
-            LOGGER.info("add new trigger and job. triggerKey={}, jobKey={}",
+            log.info("add new trigger and job. triggerKey={}, jobKey={}",
                     triggerKey.getName(), jobKey.getName());
             JobDetail jobDetail = registerJob(job.getClazz(), getGroup(job.getGroup()));
             CronTrigger trigger = registerTrigger(jobDetail,
@@ -59,22 +67,110 @@ public abstract class AbstractQuartzJobRegister implements IScheduler {
             scheduler.scheduleJob(jobDetail, trigger);
         } else if (storedJobDetail == null) {
             //如果只是job不存在，则创建job
-            LOGGER.info("only job not exist. triggerKey={}, jobKey={}",
+            log.info("only job not exist. triggerKey={}, jobKey={}",
                     triggerKey.getName(), jobKey.getName());
             rescheduleJob(storedTrigger, job);
         } else if (storedTrigger == null) {
-            LOGGER.info("only trigger not exist. triggerKey={}, jobKey={}",
+            log.info("only trigger not exist. triggerKey={}, jobKey={}",
                     triggerKey.getName(), jobKey.getName());
             rescheduleTrigger(job, jobKey, triggerKey);
         } else {
-            LOGGER.info("trigger and job already exist. triggerKey={}, jobKey={}",
+            log.info("trigger and job already exist. triggerKey={}, jobKey={}",
                     triggerKey.getName(), jobKey.getName());
             //如果trigger的expression被修改了，则更新trigger
             if (isTriggerChanged(storedTrigger, job)) {
-                LOGGER.info("trigger exist, but should updated. triggerKey={}, jobKey={}",
+                log.info("trigger exist, but should updated. triggerKey={}, jobKey={}",
                         triggerKey.getName(), jobKey.getName());
                 updateTrigger(storedTrigger, job);
             }
+        }
+    }
+
+    /**
+     * 暂停无用的job
+     *
+     * <p>
+     * 所谓无用job是指不在 {@link #jobs}列表中的job
+     * </p>
+     */
+    public void unregisterJobs() {
+        try {
+            Set<TriggerKey> validTriggerKeys = jobs.stream().map(job ->
+                    getTriggerKey(job.getClazz(), getGroup(job.getGroup())))
+                    .collect(Collectors.toSet());
+            Set<TriggerKey> existingTriggerKeys = listAllTriggers().get(DEFAULT_GROUP);
+            if (CollectionUtils.isEmpty(existingTriggerKeys)
+                    || CollectionUtils.isEmpty(validTriggerKeys)) {
+                return;
+            }
+
+            existingTriggerKeys.stream()
+                    .filter(triggerKey -> !validTriggerKeys.contains(triggerKey))
+                    .forEach(triggerKey -> stopTrigger(triggerKey));
+        } catch (SchedulerException e) {
+            log.error("unregister jobs fail, encountered SchedulerException", e);
+        } catch (Exception e) {
+            log.error("unregister jobs fail, encountered Exception", e);
+        }
+    }
+
+    /**
+     * 查看所有的job key
+     *
+     * @return
+     * @throws SchedulerException
+     */
+    public Map<String, Set<JobKey>> listAllJobs() throws SchedulerException {
+        Map<String, Set<JobKey>> jobKeyMap = Maps.newHashMap();
+        for (String group : scheduler.getJobGroupNames()) {
+            // enumerate each job in group
+            jobKeyMap.put(group, scheduler.getJobKeys(groupEquals(group)));
+        }
+        return jobKeyMap;
+    }
+
+    /**
+     * 查看所有的job trigger
+     *
+     * @return
+     * @throws SchedulerException
+     */
+    public Map<String, Set<TriggerKey>> listAllTriggers() throws SchedulerException {
+        Map<String, Set<TriggerKey>> triggerKeyMap = Maps.newHashMap();
+        for (String group : scheduler.getTriggerGroupNames()) {
+            // enumerate each trigger in group
+            triggerKeyMap.put(group, scheduler.getTriggerKeys(groupEquals(group)));
+        }
+        return triggerKeyMap;
+    }
+
+    /**
+     * 停止一个trigger
+     *
+     * @param triggerKey
+     * @throws SchedulerException
+     */
+    public void stopTrigger(TriggerKey triggerKey) {
+        log.info("start to cancel a job. triggerKey={}", triggerKey);
+        try {
+            scheduler.unscheduleJob(triggerKey);
+        } catch (SchedulerException e) {
+            log.error("encountered SchedulerException", e);
+        }
+    }
+
+    /**
+     * 删除一个job
+     *
+     * @param jobKey
+     * @throws SchedulerException
+     */
+    public void deleteJob(JobKey jobKey) {
+        log.info("start to delete a job. jobKey={}", jobKey);
+        try {
+            scheduler.deleteJob(jobKey(jobKey.getName(), jobKey.getGroup()));
+        } catch (SchedulerException e) {
+            log.error("encountered SchedulerException", e);
         }
     }
 
@@ -122,7 +218,7 @@ public abstract class AbstractQuartzJobRegister implements IScheduler {
     }
 
     private JobKey getJobKey(Class<? extends Job> clazz, String group) {
-        return JobKey.jobKey(clazz.getSimpleName() + "Detail", group);
+        return jobKey(clazz.getSimpleName() + "Detail", group);
     }
 
     private TriggerKey getTriggerKey(Class<? extends Job> clazz, String group) {
