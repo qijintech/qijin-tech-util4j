@@ -3,7 +3,13 @@ package tech.qijin.util4j.lang.dto;
 
 import tech.qijin.util4j.lang.constant.ResEnum;
 
-public class ResultDto<T> {
+import java.io.Serializable;
+
+/**
+ * @author michealyang
+ * @param <T>
+ */
+public class ResultDto<T> implements Serializable {
     private int code;
     private String msg;
     private T data;
@@ -36,7 +42,7 @@ public class ResultDto<T> {
     }
 
 
-    public Boolean isSuccess(){
-        return ResEnum.SUCCESS.code==code;
+    public Boolean isSuccess() {
+        return ResEnum.SUCCESS.code == code;
     }
 }
