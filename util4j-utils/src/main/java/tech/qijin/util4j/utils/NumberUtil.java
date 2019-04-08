@@ -37,10 +37,10 @@ public class NumberUtil {
             return true;
         }
         if (value instanceof Integer) {
-            return ((Comparable) value).compareTo(0) < 0;
+            return ((Comparable) value).compareTo(0) <= 0;
         }
         if (value instanceof Long) {
-            return ((Comparable) value).compareTo(0L) < 0;
+            return ((Comparable) value).compareTo(0L) <= 0;
         }
         throw new UnsupportedOperationException();
     }
@@ -56,7 +56,7 @@ public class NumberUtil {
     }
 
     /**
-     * 判断是否为null或<=0
+     * 判断是否为null或<0
      *
      * @param value
      * @return
@@ -66,10 +66,10 @@ public class NumberUtil {
             return true;
         }
         if (value instanceof Integer) {
-            return ((Comparable) value).compareTo(0) <= 0;
+            return ((Comparable) value).compareTo(0) < 0;
         }
         if (value instanceof Long) {
-            return ((Comparable) value).compareTo(0L) <= 0;
+            return ((Comparable) value).compareTo(0L) < 0;
         }
         throw new UnsupportedOperationException();
     }

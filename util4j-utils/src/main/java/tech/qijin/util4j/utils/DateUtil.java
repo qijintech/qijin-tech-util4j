@@ -25,12 +25,61 @@ public class DateUtil {
     public static final int FIRST_HOUR_OF_DAY = 0;
 
     /**
+     * 每分钟的秒数
+     */
+    public static final int SECONDS_PER_MINUTE = 60;
+    /**
+     * 每小时的分钟数
+     */
+    public static final int MINUTES_PER_HOUR = 60;
+    /**
+     * 每小时的秒数
+     */
+    public static final int SECONDS_PER_HOUR = SECONDS_PER_MINUTE * MINUTES_PER_HOUR;
+    /**
+     * 每天小时数
+     */
+    public static final int HOURS_PER_DAY = 24;
+    /**
+     * 每天分钟数
+     */
+    public static final int MINUTES_PER_DAY = HOURS_PER_DAY * MINUTES_PER_HOUR;
+    /**
+     * 每天秒数
+     */
+    public static final int SECONDS_PER_DAY = HOURS_PER_DAY * SECONDS_PER_HOUR;
+    /**
+     * 每秒的毫秒数
+     */
+    public static final int MILLI_PER_SECOND = 1000;
+
+    /**
      * 返回当前日期
      *
      * @return Date
      */
     public static Date now() {
         return new Date();
+    }
+
+    /**
+     * 将秒数变成毫秒数
+     *
+     * @param seconds
+     * @return
+     */
+    public static long seconds2mill(long seconds) {
+        return MILLI_PER_SECOND * seconds;
+    }
+
+    /**
+     * 与{@link #seconds2mill(long)} 相同
+     *
+     * @param seconds
+     * @return
+     */
+    public static long s2m(long seconds) {
+        return seconds2mill(seconds);
     }
 
     /**
