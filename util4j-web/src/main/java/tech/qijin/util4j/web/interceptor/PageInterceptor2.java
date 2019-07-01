@@ -48,17 +48,14 @@ public class PageInterceptor2 implements HandlerInterceptor {
         }
         Long maxId = MAX_ID;
         Long minId = MIN_ID;
-        PageHelper.startPage(0, pageSize);
+        PageHelper.startPage(0, pageSize, false);
 
         if (maxIdArr != null && maxIdArr.length > 0) {
-            PageHelper.getLocalPage().setOrderBy("id desc");
             maxId = Long.valueOf(maxIdArr[0]);
         } else if (minIdArr != null) {
-            PageHelper.getLocalPage().setOrderBy("id asc");
             minId = Long.valueOf(minIdArr[0]);
         } else {
             //maxId和minId都不设置时，默认降序排序
-            PageHelper.getLocalPage().setOrderBy("id desc");
         }
         PageHelperProxy.setReqPageVo(new PageVo(maxId, minId));
         return true;

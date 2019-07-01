@@ -1,16 +1,27 @@
 package tech.qijin.util4j.utils;
 
 import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.validator.routines.InetAddressValidator;
 
 import javax.servlet.http.HttpServletRequest;
+import java.net.InetAddress;
+import java.net.UnknownHostException;
 
 /**
  * @author michealyang
  * @date 2019/2/22
  * 开始做眼保健操：←_← ↑_↑ →_→ ↓_↓
  **/
+@Slf4j
 public class IpUtil {
+
+    private static final String UNKNOWN = "unknown";
+    private static final String LOCAL_HOST = "127.0.0.1";
+    private static final String IP_SEPARATOR = ",";
+    private static final int IP_LENGTH = 15;
 
     /**
      * 从request中获取真实的ip地址
@@ -20,23 +31,42 @@ public class IpUtil {
      * @refer https://blog.csdn.net/xiaokui_wingfly/article/details/45888381
      */
     public static String getIpv4(HttpServletRequest request) {
-        String ip = request.getHeader("x-forwarded-for");
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getHeader("Proxy-Client-IP");
+        try {
+            String ipAddress = request.getHeader("x-forwarded-for");
+            if (StringUtils.isBlank(ipAddress) || UNKNOWN.equalsIgnoreCase(ipAddress)) {
+                ipAddress = request.getHeader("Proxy-Client-IP");
+            }
+            if (StringUtils.isBlank(ipAddress) || UNKNOWN.equalsIgnoreCase(ipAddress)) {
+                ipAddress = request.getHeader("WL-Proxy-Client-IP");
+            }
+            if (StringUtils.isBlank(ipAddress) || UNKNOWN.equalsIgnoreCase(ipAddress)) {
+                ipAddress = request.getHeader("HTTP_CLIENT_IP");
+            }
+            if (StringUtils.isBlank(ipAddress) || UNKNOWN.equalsIgnoreCase(ipAddress)) {
+                ipAddress = request.getHeader("HTTP_X_FORWARDED_FOR");
+            }
+            if (ipAddress == null || ipAddress.length() == 0 || UNKNOWN.equalsIgnoreCase(ipAddress)) {
+                ipAddress = request.getRemoteAddr();
+                if (ipAddress.equals(LOCAL_HOST)) {
+                    // 根据网卡取本机配置的IP
+                    InetAddress inet = InetAddress.getLocalHost();
+                    ipAddress = inet.getHostAddress();
+                }
+            }
+            // 对于通过多个代理的情况，第一个IP为客户端真实IP,多个IP按照','分割
+            // "***.***.***.***".length()
+            if (StringUtils.isNotBlank(ipAddress) && ipAddress.length() > IP_LENGTH) {
+                int index = ipAddress.indexOf(IP_SEPARATOR);
+                if (index > 0) {
+                    ipAddress = ipAddress.substring(0, index);
+                }
+            }
+            return ipAddress;
+        } catch (Exception e) {
+            log.error(LogFormat.builder().message("parse ip exception").build(), e);
         }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getHeader("WL-Proxy-Client-IP");
-        }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getHeader("HTTP_CLIENT_IP");
-        }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getHeader("HTTP_X_FORWARDED_FOR");
-        }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
-            ip = request.getRemoteAddr();
-        }
-        return ip;
+
+        return "";
     }
 
     public static boolean isValid(String ip) {

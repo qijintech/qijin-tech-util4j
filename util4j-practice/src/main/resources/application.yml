@@ -1,3 +1,4 @@
+module: practice
 
 util4j:
   web:
@@ -39,3 +40,6 @@ server:
 
 swagger:
   enable: true
+
+conditional:
+  test1: true

@@ -43,6 +43,8 @@ function create_dao()
     echo "import org.apache.commons.lang3.StringUtils;" >> $file
     echo "import java.util.List;" >> $file
     echo "import java.util.Map;" >> $file
+    echo "import com.google.common.base.Preconditions;" >> $file
+    echo "import org.apache.commons.collections.CollectionUtils;" >> $file
     echo "import java.util.stream.Collectors;" >> $file
     echo "" >> $file
     echo "/**" >> $file
@@ -54,16 +56,25 @@ function create_dao()
     echo "\t@InsertProvider(type = SqlProvider.class, method = \"batchInsert\")" >> $file
     echo "\tint batchInsert(@Param(\"records\") List<${model}> records);" >> $file
     echo "" >> $file
+    echo "\t@InsertProvider(type = SqlProvider.class, method = \"batchInsertOrUpdate\")" >> $file
+    echo "\tint batchInsertOrUpdate(@Param(\"records\") List<${model}> records, @Param(\"columns\") List<String> columns);" >> $file
+    echo "" >> $file
     echo "\tclass SqlProvider {" >> $file
     echo "\t\tprivate static final String VALUES = \"VALUES\";" >> $file
     echo "\t\t${sqlprovider} provider = new ${sqlprovider}();" >> $file
     echo "" >> $file
     echo "\t\tpublic String batchInsert(Map<String, Object> param) {" >> $file
     echo "\t\t\tList<${model}> records = (List<${model}>) param.get(\"records\");" >> $file
-    echo "\t\t\treturn genSql(records);" >> $file
+    echo "\t\t\treturn genSqlForBatchInsert(records);" >> $file
     echo "\t\t}" >> $file
     echo "" >> $file
-    echo "\t\tprivate String genSql(List<${model}> records) {" >> $file
+    echo "\t\tpublic String batchInsertOrUpdate(Map<String, Object> param) {" >> $file
+    echo "\t\t\tList<${model}> records = (List<${model}>) param.get(\"records\");" >> $file
+    echo "\t\t\tList<String> columns = (List<String>) param.get(\"columns\");" >> $file
+    echo "\t\t\treturn genSqlForBatchInsertOrUpdate(records, columns);" >> $file
+    echo "\t\t}" >> $file
+    echo "" >> $file
+    echo "\t\tprivate String genSqlForBatchInsert(List<${model}> records) {" >> $file
     echo "\t\t\tList<String> sqls = records.stream()" >> $file
     echo "\t\t\t\t\t.map(record -> provider.insertSelective(record))" >> $file
     echo "\t\t\t\t\t.collect(Collectors.toList());" >> $file
@@ -78,8 +89,41 @@ function create_dao()
     echo "\t\t\treturn new StringBuilder().append(head).append(\" \").append(VALUES).append(\" \")" >> $file
     echo "\t\t\t\t\t.append(StringUtils.join(values, \",\")).toString();" >> $file
     echo "\t\t}" >> $file
+    echo "" >> $file
+    echo "\t\tpublic String genSqlForBatchInsertOrUpdate(List<${model}> records, List<String> columns) {" >> $file
+    echo "\t\t\tPreconditions.checkArgument(CollectionUtils.isNotEmpty(columns));" >> $file
+    echo "\t\t\tList<String> insertSqls = records.stream()" >> $file
+    echo "\t\t\t\t.map(record -> provider.insertSelective(record))" >> $file
+    echo "\t\t\t\t.collect(Collectors.toList());" >> $file
+    echo "" >> $file
+    echo "\t\t\tList<String> updateSqls = Lists.newArrayList();" >> $file
+    echo "\t\t\tcolumns.stream().forEach(column ->" >> $file
+    echo "\t\t\t\tupdateSqls.add(new StringBuilder().append(column)" >> $file
+    echo "\t\t\t\t\t.append(\"=VALUES(\")" >> $file
+    echo "\t\t\t\t\t.append(column)" >> $file
+    echo "\t\t\t\t\t.append(\")\").toString())" >> $file
+    echo "\t\t\t);" >> $file
+    echo "" >> $file
+    echo "\t\t\tString updateSegment = new StringBuilder()" >> $file
+    echo "\t\t\t\t.append(\" ON DUPLICATE KEY UPDATE \")" >> $file
+    echo "\t\t\t\t.append(StringUtils.join(updateSqls, \",\"))" >> $file
+    echo "\t\t\t\t.toString();" >> $file
+    echo "\t\t\tString[] arr = insertSqls.get(0).split(VALUES);" >> $file
+    echo "\t\t\tString head = arr[0];" >> $file
+    echo "\t\t\tString value = arr[1];" >> $file
+    echo "\t\t\tList<String> values = Lists.newArrayList();" >> $file
+    echo "\t\t\tfor (int i = 0; i <= insertSqls.size() - 1; i++) {" >> $file
+    echo "\t\t\t\tStringBuilder sb = new StringBuilder().append(\"#{records[\").append(i).append(\"].\");" >> $file
+    echo "\t\t\t\tvalues.add(value.replace(\"#{\", sb.toString()));" >> $file
+    echo "\t\t\t}" >> $file
+    echo "\t\t\treturn new StringBuilder().append(head).append(\" \").append(VALUES).append(\" \")" >> $file
+    echo "\t\t\t\t\t.append(StringUtils.join(values, \",\"))" >> $file
+    echo "\t\t\t\t\t.append(updateSegment)" >> $file
+    echo "\t\t\t\t\t.toString();" >> $file
+    echo "\t\t}" >> $file
     echo "\t}" >> $file
     echo "}" >> $file
+    echo "" >> $file
 }
 
 mapper_path=./util4j-practice/src/main/java/$pack_path/mapper

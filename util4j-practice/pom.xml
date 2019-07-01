@@ -4,10 +4,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-        <artifactId>util4j-parent</artifactId>
+        <artifactId>util4j-dependencies</artifactId>
         <groupId>tech.qijin.util4j</groupId>
         <version>1.0.0-SNAPSHOT</version>
-        <relativePath>../util4j-parent</relativePath>
+        <relativePath>../util4j-dependencies</relativePath>
     </parent>
 
     <groupId>tech.qijin.util4j</groupId>
@@ -91,6 +91,10 @@
         </dependency>
         <dependency>
             <groupId>tech.qijin.util4j</groupId>
+            <artifactId>util4j-config</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>tech.qijin.util4j</groupId>
             <artifactId>util4j-timezone</artifactId>
         </dependency>
         <dependency>
@@ -123,6 +127,13 @@
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/com.sun.tools.btrace/btrace-client -->
+        <dependency>
+            <groupId>com.sun.tools.btrace</groupId>
+            <artifactId>btrace-client</artifactId>
+            <version>1.2</version>
+        </dependency>
+
     </dependencies>
 
     <build>

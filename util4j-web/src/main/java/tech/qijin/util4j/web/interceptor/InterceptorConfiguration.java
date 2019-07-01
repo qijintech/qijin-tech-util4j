@@ -52,7 +52,7 @@ public class InterceptorConfiguration implements WebMvcConfigurer {
         return new PageInterceptor();
     }
 
-    @Bean
+//    @Bean
     public PageInterceptor2 pageInterceptor2() {
         log.info(LogFormat.builder().message("PageInterceptor2 init").build());
         return new PageInterceptor2();

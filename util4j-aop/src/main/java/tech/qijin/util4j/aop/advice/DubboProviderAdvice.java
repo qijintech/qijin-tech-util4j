@@ -22,7 +22,7 @@ import tech.qijin.util4j.utils.ResBuilder;
 @Aspect
 @Component
 public class DubboProviderAdvice {
-    @Around("CommonPointcut.dubboProviderPointcut()")
+//    @Around("CommonPointcut.dubboProviderPointcut()")
     public Object retry(ProceedingJoinPoint joinPoint) throws Throwable {
         log.info(LogFormat.builder().message("start DubboProviderAdvice").build());
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();

@@ -13,4 +13,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class ConfigProperties {
     //配置域名
     private String host;
+
+    /**
+     * 配置文件路径
+     */
+    private String configPath;
 }

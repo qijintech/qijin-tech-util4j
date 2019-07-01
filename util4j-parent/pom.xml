@@ -3,10 +3,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <artifactId>util4j-dependencies</artifactId>
+        <artifactId>util4j-build</artifactId>
         <groupId>tech.qijin.util4j</groupId>
         <version>1.0.0-SNAPSHOT</version>
-        <relativePath>../util4j-dependencies/pom.xml</relativePath>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>util4j-parent</artifactId>
@@ -15,6 +15,8 @@
 
     <properties>
         <java.version>1.8</java.version>
+
+        <spring.boot.version>2.1.1.RELEASE</spring.boot.version>
 
         <guava.version>24.0-jre</guava.version>
         <fastjson.version>1.2.47</fastjson.version>
@@ -31,6 +33,21 @@
         <plugin.versions.version>2.7</plugin.versions.version>
         <plugin.jacoco.version>0.8.2</plugin.jacoco.version>
     </properties>
+
+    <!--请按说明顺序填写依BaseTest赖配置，保持文档的清晰性，防止重复添加-->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <!-- Import dependency management from Spring Boot -->
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-dependencies</artifactId>
+                <version>${spring.boot.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
     <dependencies>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -120,7 +137,14 @@
                 <version>${plugin.surefire.version}</version>
                 <configuration>
                     <!--<skipTests>true</skipTests>-->
+                    <excludes>
+                        <exclude>ExampleTest.java</exclude>
+                        <exclude>**/ExampleTest.java</exclude>
+                        <exclude>BaseTest.java</exclude>
+                        <exclude>**/BaseTest.java</exclude>
+                    </excludes>
                 </configuration>
+
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -186,7 +210,7 @@
                 </executions>
                 <configuration>
                     <!--<systemPropertyVariables>-->
-                        <!--<jacoco-agent.destfile>target/jacoco.exec</jacoco-agent.destfile>-->
+                    <!--<jacoco-agent.destfile>target/jacoco.exec</jacoco-agent.destfile>-->
                     <!--</systemPropertyVariables>-->
                 </configuration>
             </plugin>

@@ -12,4 +12,10 @@ public interface Config {
      * @return
      */
     String host();
+
+    String module();
+
+    String configPath();
+
+    <T> T get(String key, T defaultValue);
 }
