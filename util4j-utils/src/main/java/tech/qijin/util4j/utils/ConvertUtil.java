@@ -1,6 +1,7 @@
 package tech.qijin.util4j.utils;
 
 import com.google.common.collect.Lists;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.ArrayUtils;
@@ -13,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-
+@Slf4j
 public class ConvertUtil {
 
     private static final Map<String, Map<String, Field>> fieldsMap = new ConcurrentHashMap<>(128);
@@ -58,7 +59,9 @@ public class ConvertUtil {
             return beanWrapper.getObject();
         } catch (InstantiationException | IllegalAccessException | InvocationTargetException
                 | NoSuchMethodException e) {
-            throw new RuntimeException("转换失败");
+            String errMsg = "转换失败";
+            log.error(errMsg, e);
+            throw new RuntimeException(errMsg);
         }
     }
 

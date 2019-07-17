@@ -23,7 +23,7 @@ public class InterceptorConfiguration implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(requestInterceptor()).excludePathPatterns(InterceptorExclusion.COMMON);
-        registry.addInterceptor(pageInterceptor2()).excludePathPatterns(InterceptorExclusion.COMMON);
+//        registry.addInterceptor(pageInterceptor2()).excludePathPatterns(InterceptorExclusion.COMMON);
         registry.addInterceptor(channelInterceptor()).excludePathPatterns(InterceptorExclusion.COMMON);
     }
 

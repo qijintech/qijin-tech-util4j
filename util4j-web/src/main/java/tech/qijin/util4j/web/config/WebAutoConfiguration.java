@@ -1,5 +1,6 @@
-package tech.qijin.util4j.web;
+package tech.qijin.util4j.web.config;
 
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import tech.qijin.util4j.web.filter.FilterConfiguration;
@@ -12,5 +13,6 @@ import tech.qijin.util4j.web.interceptor.InterceptorConfiguration;
  **/
 @Configuration
 @Import({FilterConfiguration.class, InterceptorConfiguration.class})
+@ComponentScan("tech.qijin.util4j.web")
 public class WebAutoConfiguration {
 }
