@@ -29,7 +29,7 @@
         </dependency>
         <dependency>
             <groupId>tech.qijin.util4j</groupId>
-            <artifactId>util4j-cache</artifactId>
+            <artifactId>util4j-redis</artifactId>
         </dependency>
     </dependencies>
 
