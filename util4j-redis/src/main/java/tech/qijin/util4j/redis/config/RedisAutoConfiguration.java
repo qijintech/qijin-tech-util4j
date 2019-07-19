@@ -1,4 +1,4 @@
-package tech.qijin.util4j.cache.redis.config;
+package tech.qijin.util4j.redis.config;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
@@ -12,7 +12,7 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.JdkSerializationRedisSerializer;
-import tech.qijin.util4j.cache.redis.RedisApi;
+import tech.qijin.util4j.redis.RedisUtil;
 
 /**
  * @author michealyang
@@ -21,7 +21,7 @@ import tech.qijin.util4j.cache.redis.RedisApi;
  **/
 @Configuration
 @Import(RedisPropertiesConfiguration.class)
-@ComponentScan("tech.qijin.util4j.cache.redis")
+@ComponentScan("tech.qijin.util4j.redis")
 public class RedisAutoConfiguration {
 
     /**
@@ -62,17 +62,17 @@ public class RedisAutoConfiguration {
     /**
      * 注入封装RedisTemplate
      *
-     * @return CacheUtil
+     * @return redisUtil
      * @throws
      * @Title: redisUtil
      * @autor lpl
      * @date 2017年12月21日
      */
-    @Bean(name = "redisApi")
-    public RedisApi redisApi(StringRedisTemplate stringRedisTemplate, RedisTemplate<String, Object> redisObjectTemplate) {
-        RedisApi redisApi = new RedisApi();
-        redisApi.setRedisStringTemplate(stringRedisTemplate);
-        redisApi.setRedisObjectTemplate(redisObjectTemplate);
-        return redisApi;
+    @Bean(name = "redisUtil")
+    public RedisUtil redisUtil(StringRedisTemplate stringRedisTemplate, RedisTemplate<String, Object> redisObjectTemplate) {
+        RedisUtil redisUtil = new RedisUtil();
+        redisUtil.setRedisStringTemplate(stringRedisTemplate);
+        redisUtil.setRedisObjectTemplate(redisObjectTemplate);
+        return redisUtil;
     }
 }

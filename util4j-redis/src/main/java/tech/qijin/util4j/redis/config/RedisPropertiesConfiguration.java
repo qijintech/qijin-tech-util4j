@@ -1,4 +1,4 @@
-package tech.qijin.util4j.cache.redis.config;
+package tech.qijin.util4j.redis.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;

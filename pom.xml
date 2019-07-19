@@ -20,7 +20,7 @@
         <module>util4j-aop</module>
         <module>util4j-mybatis</module>
         <module>util4j-concurrent</module>
-        <module>util4j-cache</module>
+        <module>util4j-redis</module>
         <module>util4j-security</module>
         <module>util4j-schedule</module>
         <module>util4j-file</module>

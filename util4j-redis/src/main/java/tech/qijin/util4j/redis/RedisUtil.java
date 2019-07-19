@@ -1,4 +1,4 @@
-package tech.qijin.util4j.cache.redis;
+package tech.qijin.util4j.redis;
 
 import org.apache.commons.lang3.ArrayUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -11,12 +11,9 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.util.Assert;
-import tech.qijin.util4j.cache.ICache;
-import tech.qijin.util4j.cache.CacheUtil;
 import tech.qijin.util4j.lang.constant.ResEnum;
 import tech.qijin.util4j.utils.MAssert;
 
-import javax.annotation.PostConstruct;
 import java.io.Serializable;
 import java.util.*;
 import java.util.concurrent.TimeUnit;
@@ -27,7 +24,7 @@ import java.util.stream.Collectors;
  * @date 2019/4/3
  * 开始做眼保健操：←_← ↑_↑ →_→ ↓_↓
  **/
-public class RedisApi{
+public class RedisUtil {
     private static final TimeUnit Default_Time_Unit = TimeUnit.MILLISECONDS;
 
     private StringRedisTemplate redisStringTemplate;
