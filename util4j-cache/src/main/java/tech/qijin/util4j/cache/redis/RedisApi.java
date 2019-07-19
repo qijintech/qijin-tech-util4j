@@ -11,6 +11,8 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.data.redis.core.script.DefaultRedisScript;
 import org.springframework.util.Assert;
+import tech.qijin.util4j.cache.ICache;
+import tech.qijin.util4j.cache.CacheUtil;
 import tech.qijin.util4j.lang.constant.ResEnum;
 import tech.qijin.util4j.utils.MAssert;
 
@@ -25,7 +27,7 @@ import java.util.stream.Collectors;
  * @date 2019/4/3
  * 开始做眼保健操：←_← ↑_↑ →_→ ↓_↓
  **/
-public class RedisApi {
+public class RedisApi{
     private static final TimeUnit Default_Time_Unit = TimeUnit.MILLISECONDS;
 
     private StringRedisTemplate redisStringTemplate;
@@ -42,12 +44,6 @@ public class RedisApi {
         this.redisObjectTemplate = redisObjectTemplate;
         redisObjectTemplate.opsForList();
     }
-
-    @PostConstruct
-    public void init() {
-        RedisUtil.setRedisApi(this);
-    }
-
 
     /**
      * 指定缓存失效时间

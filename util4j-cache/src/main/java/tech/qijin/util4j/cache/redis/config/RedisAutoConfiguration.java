@@ -62,7 +62,7 @@ public class RedisAutoConfiguration {
     /**
      * 注入封装RedisTemplate
      *
-     * @return RedisUtil
+     * @return CacheUtil
      * @throws
      * @Title: redisUtil
      * @autor lpl
