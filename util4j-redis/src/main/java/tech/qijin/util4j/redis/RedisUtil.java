@@ -21,11 +21,10 @@ import java.util.stream.Collectors;
 
 /**
  * @author michealyang
- * @date 2019/4/3
- * 开始做眼保健操：←_← ↑_↑ →_→ ↓_↓
- **/
+ */
 public class RedisUtil {
-    private static final TimeUnit Default_Time_Unit = TimeUnit.MILLISECONDS;
+
+    private static final TimeUnit DEFAULT_TIME_UNIT = TimeUnit.SECONDS;
 
     private StringRedisTemplate redisStringTemplate;
 
@@ -42,16 +41,126 @@ public class RedisUtil {
         redisObjectTemplate.opsForList();
     }
 
+
+    public void setLong(String key, Long value) {
+        MAssert.notNull(value, "value should not be null");
+        setString(key, String.valueOf(value));
+    }
+
+    /**
+     * 支持存储long类型数据
+     *
+     * @param key
+     * @param value
+     * @param expire
+     */
+    public void setLong(String key, Long value, long expire) {
+        MAssert.notNull(value, "value should not be null");
+        setString(key, String.valueOf(value), expire);
+    }
+
+    /**
+     * 一个不超时的set
+     *
+     * @param key
+     * @param value
+     */
+    public void setString(String key, String value) {
+        redisStringTemplate.opsForValue().set(key, value);
+    }
+
+    /**
+     * 保存String
+     *
+     * @param key
+     * @param value
+     * @param expire
+     */
+    public void setString(String key, String value, long expire) {
+        setString(key, value, expire, TimeUnit.SECONDS);
+    }
+
+    /**
+     * 普通缓存放入并设置时间
+     *
+     * @param key   键
+     * @param value 值
+     * @param time  时间(秒) time要大于0 如果time等于0 将设置无限期，不能设置小于0
+     * @return true成功 false 失败
+     */
+    public void setString(String key, String value, long time, TimeUnit timeUnit) {
+        redisStringTemplate.opsForValue().set(key, value, time, timeUnit);
+    }
+
+
+    public void setObject(String key, Object object) {
+        redisObjectTemplate.opsForValue().set(key, object);
+    }
+
+    /**
+     * 存对象
+     *
+     * @param key
+     * @param object
+     * @param expire
+     */
+    public void setObject(String key, Object object, int expire) {
+        redisObjectTemplate.opsForValue().set(key, object, expire, DEFAULT_TIME_UNIT);
+    }
+
+
+    /**
+     * 只有在不存在的时候才set Object
+     *
+     * @param key
+     * @param object
+     * @param expire
+     * @return
+     */
+    public Boolean setObjectIfKeyAbsent(String key, Object object, int expire) {
+        Boolean result = redisObjectTemplate.opsForValue().setIfAbsent(key, object);
+
+        if (Boolean.TRUE.equals(result)) {
+            setExpire(key, expire);
+        }
+
+        return result;
+    }
+
+
+    /**
+     * 普通缓存获取
+     *
+     * @param key 键
+     * @return 值
+     */
+    public String getString(String key) {
+        return key == null ? null : redisStringTemplate.opsForValue().get(key);
+    }
+
+
+    /**
+     * 支持获取long类型数据
+     *
+     * @param key
+     * @return
+     */
+    public Long getLong(String key) {
+        String value = getString(key);
+        return StringUtils.isBlank(value) ? null : Long.valueOf(value);
+    }
+
+
     /**
      * 指定缓存失效时间
      * 单位时间为毫秒
      *
-     * @param key  键
-     * @param time 时间(秒)
+     * @param key           键
+     * @param expire 时间(秒)
      * @return
      */
-    public void setExpire(String key, long time) {
-        setExpire(key, time, Default_Time_Unit);
+    public void setExpire(String key, long expire) {
+        setExpire(key, expire, DEFAULT_TIME_UNIT);
     }
 
     /**
@@ -73,7 +182,7 @@ public class RedisUtil {
      * @return 时间(秒) 返回0代表为永久有效
      */
     public long getExpire(String key) {
-        return getExpire(key, Default_Time_Unit);
+        return getExpire(key, DEFAULT_TIME_UNIT);
     }
 
     public long getExpire(String key, TimeUnit timeUnit) {
@@ -96,15 +205,16 @@ public class RedisUtil {
     }
 
     /**
-     * 删除对象
+     * 批量删除非Object数据。对应{@link #setLong(String, Long)}, {@link #setString(String, String)}
      */
     @SuppressWarnings("unchecked")
     public long delete(List<String> keys) {
+        MAssert.notEmpty(keys, "key不能为空");
         return redisStringTemplate.delete(keys);
     }
 
     /**
-     * 删除对象
+     * 删除非Object数据。同{@link #delete(String)}
      *
      * @param key
      * @return
@@ -113,76 +223,18 @@ public class RedisUtil {
         return redisStringTemplate.delete(key);
     }
 
-
     /**
-     * 普通缓存获取
-     *
-     * @param key 键
-     * @return 值
-     */
-    public String getString(String key) {
-        return key == null ? null : redisStringTemplate.opsForValue().get(key);
-    }
-
-
-    /**
-     * 普通缓存放入并设置时间
-     *
-     * @param key   键
-     * @param value 值
-     * @param time  时间(秒) time要大于0 如果time等于0 将设置无限期，不能设置小于0
-     * @return true成功 false 失败
-     */
-    public void setString(String key, String value, long time, TimeUnit timeUnit) {
-        redisStringTemplate.opsForValue().set(key, value, time, timeUnit);
-    }
-
-    /**
-     * 一个不超时的set
-     *
-     * @param key
-     * @param value
-     */
-    public void setString(String key, String value) {
-        redisStringTemplate.opsForValue().set(key, value);
-    }
-
-    /**
-     * 支持存储long类型数据
-     *
-     * @param key
-     * @param value
-     * @param milliseconds
-     */
-    public void set(String key, Long value, long milliseconds) {
-        setString(key, String.valueOf(value), milliseconds);
-    }
-
-    public void set(String key, Long value) {
-        setString(key, String.valueOf(value));
-    }
-
-    /**
-     * 支持获取long类型数据
+     * 只能删除Object。对应{@link #setObject(String, Object)}
      *
      * @param key
      * @return
      */
-    public Long get(String key) {
-        String value = getString(key);
-        return StringUtils.isBlank(value) ? null : Long.valueOf(value);
+    public boolean deleteObject(String key) {
+        return redisObjectTemplate.delete(key);
     }
 
-    /**
-     * 保存String
-     *
-     * @param key
-     * @param value
-     * @param milliseconds
-     */
-    public void setString(String key, String value, long milliseconds) {
-        setString(key, value, milliseconds, TimeUnit.MILLISECONDS);
-    }
+
+
 
 
     /**
@@ -225,6 +277,17 @@ public class RedisUtil {
     }
 
     /**
+     * 删除指定的field
+     *
+     * @param key
+     * @param fields
+     * @return
+     */
+    public Long hDelete(String key, String... fields) {
+        return redisStringTemplate.opsForHash().delete(key, fields);
+    }
+
+    /**
      * 获取hashKey对应的所有键值
      *
      * @param key 键
@@ -250,6 +313,10 @@ public class RedisUtil {
         }
     }
 
+    public void hmSetLong(String key, Map<String, Long> map) {
+        redisStringTemplate.opsForHash().putAll(key, map);
+    }
+
     /**
      * 增加hash的指定field
      *
@@ -260,6 +327,27 @@ public class RedisUtil {
      */
     public Long hIncrBy(String key, String member, long value) {
         return redisStringTemplate.opsForHash().increment(key, member, value);
+    }
+
+    /**
+     * 返回hash结构所有的field
+     *
+     * @param key
+     * @return
+     */
+    public Set<Object> hFields(String key) {
+        return redisStringTemplate.opsForHash().keys(key);
+    }
+
+    /**
+     * 检查hash结构中是否存在指定的hash key(即field)
+     *
+     * @param key
+     * @param field
+     * @return
+     */
+    public Boolean hHasField(String key, String field) {
+        return redisStringTemplate.opsForHash().hasKey(key, field);
     }
 
 
@@ -300,6 +388,29 @@ public class RedisUtil {
         redisStringTemplate.opsForHash().put(key, field, value);
     }
 
+    /**
+     * hset for Object
+     *
+     * @param key
+     * @param field
+     * @param value
+     */
+    public void hSetObject(String key, String field, Serializable value) {
+        redisObjectTemplate.opsForHash().put(key, field, value);
+    }
+
+    /**
+     * hget for Object
+     *
+     * @param key
+     * @param field
+     * @param <T>
+     * @return
+     */
+    public <T extends Serializable> T hGetObject(String key, String field) {
+        return (T) redisObjectTemplate.opsForHash().get(key, field);
+    }
+
 
     public boolean setIfAbsent(String key, String value, long milliseconds) {
         boolean result = redisStringTemplate.opsForValue().setIfAbsent(key, value);
@@ -309,38 +420,6 @@ public class RedisUtil {
         return result;
     }
 
-    /**
-     * 存对象
-     *
-     * @param key
-     * @param object
-     * @param milliseconds
-     * @param timeUnit
-     */
-    public void saveObject(String key, Object object, int milliseconds, TimeUnit timeUnit) {
-        redisObjectTemplate.opsForValue().set(key, object, milliseconds, timeUnit);
-    }
-
-
-    public void saveObject(String key, Object object) {
-        redisObjectTemplate.opsForValue().set(key, object);
-    }
-
-
-    public void saveObject(String key, Object object, int milliseconds) {
-        saveObject(key, object, milliseconds, Default_Time_Unit);
-    }
-
-
-    public Boolean saveObjectIfKeyAbsent(String key, Object object, int time, TimeUnit timeUnit) {
-        Boolean result = redisObjectTemplate.opsForValue().setIfAbsent(key, object);
-
-        if (Boolean.TRUE.equals(result)) {
-            setExpire(key, time, timeUnit);
-        }
-
-        return result;
-    }
 
     /**
      * 设置bitmap值
@@ -354,7 +433,7 @@ public class RedisUtil {
     }
 
     /**
-     * 取bitmap值
+     * 取bitmap值，key为序列化后字符串，有序列化前缀
      *
      * @param key
      * @param offset
@@ -364,9 +443,56 @@ public class RedisUtil {
         return redisObjectTemplate.opsForValue().getBit(key, offset);
     }
 
+
+    /**
+     * 取bitmap值，key为字符串本身
+     *
+     * @param key
+     * @param offset
+     * @return
+     */
+    public boolean getBitWithRawKey(String key, long offset) {
+        return redisStringTemplate.opsForValue().getBit(key, offset);
+    }
+
+    /**
+     * 设置bitmap值
+     *
+     * @param key
+     * @param offset
+     * @param on
+     */
+    public void setBitWithRawKey(String key, long offset, boolean on) {
+        redisStringTemplate.opsForValue().setBit(key, offset, on);
+    }
+
     public Long bitCount(String key) {
         byte[] rawKey = rawKey(redisObjectTemplate, key);
         return redisObjectTemplate.execute((RedisCallback<Long>) connection -> connection.bitCount(rawKey));
+    }
+
+    /**
+     * 获取bitmap所有数据
+     *
+     * @param key
+     * @return
+     */
+    public byte[] getBits(String key) {
+        byte[] rawKey = rawKey(redisObjectTemplate, key);
+        return redisObjectTemplate.execute((RedisCallback<byte[]>) connection -> connection.get(rawKey));
+    }
+
+    /**
+     * 批量设置bit位
+     *
+     * @param key
+     * @param bits
+     * @return
+     */
+    public Boolean setBits(String key, byte[] bits) {
+        byte[] rawKey = key.getBytes();
+
+        return redisObjectTemplate.execute((RedisCallback<Boolean>) connection -> connection.set(rawKey, bits));
     }
 
     /**
@@ -584,6 +710,7 @@ public class RedisUtil {
                 .map(Object::toString)
                 .collect(Collectors.toList())
                 .toArray(new String[members.size()]);
+
         return redisStringTemplate.opsForSet().add(key, arr);
     }
 
@@ -634,7 +761,7 @@ public class RedisUtil {
     }
 
     /**
-     * 删除制定元素
+     * 删除指定元素
      *
      * @param key
      * @param members
@@ -668,7 +795,7 @@ public class RedisUtil {
     }
 
     /**
-     * 给制定成员增加分支
+     * 给指定成员增加分支
      *
      * @param key
      * @param member
@@ -698,7 +825,8 @@ public class RedisUtil {
 
 
     /**
-     * 返回制定分值范围内的元素，有序集合按照从小到大排序
+     * 返回指定分值范围内的元素，有序集合按照从小到大排序
+     * 左闭右闭
      *
      * @param key
      * @param fromScore
@@ -710,7 +838,7 @@ public class RedisUtil {
     }
 
     /**
-     * 返回制定分值范围内的元素，有序集合按照从大到小排序
+     * 返回指定分值范围内的元素，有序集合按照从大到小排序
      *
      * @param key
      * @param fromScore
@@ -787,6 +915,21 @@ public class RedisUtil {
     }
 
     /**
+     * 删除zset成员
+     *
+     * @param key
+     * @param members
+     * @return
+     */
+    public Long zRem(String key, String... members) {
+        return redisStringTemplate.opsForZSet().remove(key, members);
+    }
+
+    public Long zRemoveRangeByScore(String key, double minScore, double maxScore) {
+        return redisStringTemplate.opsForZSet().removeRangeByScore(key, minScore, maxScore);
+    }
+
+    /**
      * 获取指定成员的排名
      *
      * @param key
@@ -834,7 +977,7 @@ public class RedisUtil {
      * 批量获取hash
      *
      * @param keys
-     * @return List<Map < String ,   String>>
+     * @return List<Map                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               <                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               String                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               ,                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               String>>
      */
     public List<Object> hmGet(Collection<String> keys) {
         return redisStringTemplate.executePipelined((RedisCallback<Object>) connection -> {
@@ -847,8 +990,37 @@ public class RedisUtil {
         });
     }
 
+    /**
+     * 批量模糊获取key
+     * 注意：禁止模糊的范围过大
+     *
+     * @param wilds
+     * @return List<LinkedHashSet                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               <                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               String>>
+     */
+    public List<Object> keys(Collection<String> wilds) {
+        return redisStringTemplate.executePipelined((RedisCallback<Object>) connection -> {
+            StringRedisConnection stringRedisConn = (StringRedisConnection) connection;
+
+            wilds.forEach(wild -> {
+                stringRedisConn.keys(wild);
+            });
+            return null;
+        });
+    }
+
+    /**
+     * 模糊获取keys
+     *
+     * @param wild
+     * @return
+     */
+    public Set<String> keys(String wild) {
+        return redisStringTemplate.keys(wild);
+    }
+
     private static final String LUA_CAS =
-            "if (ARGV[1] == '' or redis.call('get',KEYS[1]) == ARGV[1]) then" +
+            "local current=redis.call('get',KEYS[1]);" +
+                    "if ((not current) or  current== ARGV[1]) then" +
                     "    redis.call('set',KEYS[1],ARGV[2]); " +
                     "end;" +
                     "return tonumber(redis.call('get',KEYS[1]))";
@@ -862,7 +1034,42 @@ public class RedisUtil {
      * @return Long
      */
     public Long compareAndSet(String key, Long current, Long next) {
-        return execute(Long.class, LUA_CAS, Arrays.asList(new String[]{key}), current != null ? current.toString() : "", next != null ? next.toString() : "");
+        return execute(
+                Long.class,
+                LUA_CAS,
+                Arrays.asList(new String[]{key}),
+                current != null ? current.toString() : "",
+                next != null ? next.toString() : "");
+    }
+
+    private static final String LUA_FLOAT_EQUAL =
+            "local function float_equal(lhs, rhs, epsilon) " +
+                    "    return math.abs(lhs - rhs) <= math.abs(epsilon * rhs);" +
+                    "end;";
+    private static final String LUA_CAS_ZADD = LUA_FLOAT_EQUAL +
+            "local current = redis.call('zscore',KEYS[1], ARGV[1]);" +
+            "if ((not current) or (ARGV[2] ~= '' and float_equal(tonumber(current), tonumber(ARGV[2]), 0.00001))) then" +
+            "    redis.call('zadd',KEYS[1],ARGV[3], ARGV[1]); " +
+            "end;" +
+            "return {tonumber(redis.call('zscore',KEYS[1],ARGV[1])), tonumber(redis.call('zrevrank',KEYS[1],ARGV[1]))}";
+
+    /**
+     * 当当前分数一致时，设置新分数
+     *
+     * @param key
+     * @param member
+     * @param current
+     * @param next
+     * @return
+     */
+    public List<Long> compareAndZAdd(String key, String member, Long current, Long next) {
+        return execute(
+                List.class,
+                LUA_CAS_ZADD,
+                Arrays.asList(new String[]{key}),
+                member,
+                null != current ? current.toString() : "",
+                null != next ? next.toString() : "0");
     }
 
     private static final String LUA_LPUSH_LTRIM =
@@ -913,5 +1120,16 @@ public class RedisUtil {
         redisScript.setLocation(new ClassPathResource(lua));
         redisScript.setResultType(Long.class);
         return redisObjectTemplate.execute(redisScript, keys, args);
+    }
+
+    /**
+     * 清除redis数据；如果是cluster模式，则清空每个node数据
+     * dangerous!!! 除了数据迁移等特殊场景禁用!!!
+     */
+    public void flushAll(String purpose) {
+        if (!"migration".equals(purpose)) {
+            throw new UnsupportedOperationException("dangerous");
+        }
+        redisStringTemplate.getConnectionFactory().getConnection().flushAll();
     }
 }

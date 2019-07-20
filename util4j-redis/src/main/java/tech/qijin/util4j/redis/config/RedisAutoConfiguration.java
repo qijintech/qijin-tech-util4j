@@ -70,7 +70,8 @@ public class RedisAutoConfiguration {
      */
     @Bean(name = "redisUtil")
     public RedisUtil redisUtil(StringRedisTemplate stringRedisTemplate, RedisTemplate<String, Object> redisObjectTemplate) {
-        RedisUtil redisUtil = new RedisUtil();
+        RedisUtil redisUtil = new RedisUtil() {
+        };
         redisUtil.setRedisStringTemplate(stringRedisTemplate);
         redisUtil.setRedisObjectTemplate(redisObjectTemplate);
         return redisUtil;
