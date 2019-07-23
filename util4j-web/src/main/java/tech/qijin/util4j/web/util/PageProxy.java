@@ -1,6 +1,9 @@
 package tech.qijin.util4j.web.util;
 
-import com.github.pagehelper.*;
+import com.github.pagehelper.ISelect;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageInfo;
+
 import tech.qijin.util4j.lang.vo.PageVo;
 
 /**

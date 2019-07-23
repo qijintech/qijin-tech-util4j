@@ -1,7 +1,8 @@
 package tech.qijin.util4j.utils.test;
 
-import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
+
+import lombok.extern.slf4j.Slf4j;
 import tech.qijin.util4j.utils.IpUtil;
 
 /**

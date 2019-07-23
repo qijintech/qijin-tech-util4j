@@ -3,6 +3,7 @@ package tech.qijin.util4j.web.config;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+
 import tech.qijin.util4j.web.filter.FilterConfiguration;
 import tech.qijin.util4j.web.interceptor.InterceptorConfiguration;
 

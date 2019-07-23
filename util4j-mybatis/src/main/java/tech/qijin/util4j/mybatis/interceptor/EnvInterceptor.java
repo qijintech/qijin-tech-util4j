@@ -8,7 +8,7 @@ import org.apache.ibatis.plugin.Intercepts;
 import org.apache.ibatis.plugin.Signature;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
-import tech.qijin.util4j.trace.pojo.EnvEnum;
+
 import tech.qijin.util4j.trace.util.EnvUtil;
 
 /**

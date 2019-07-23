@@ -1,6 +1,8 @@
 package tech.qijin.util4j.schedule.quartz;
 
-import org.quartz.*;
+import org.quartz.Job;
+import org.quartz.JobDetail;
+import org.quartz.JobExecutionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.quartz.CronTriggerFactoryBean;

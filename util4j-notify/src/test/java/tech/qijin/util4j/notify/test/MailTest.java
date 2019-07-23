@@ -1,10 +1,11 @@
 package tech.qijin.util4j.notify.test;
 
+import org.junit.Test;
+
 import jodd.mail.Email;
 import jodd.mail.MailServer;
 import jodd.mail.SendMailSession;
 import jodd.mail.SmtpServer;
-import org.junit.Test;
 
 /**
  * @author michealyang

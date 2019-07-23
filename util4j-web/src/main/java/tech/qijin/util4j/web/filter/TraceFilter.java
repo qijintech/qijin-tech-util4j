@@ -1,10 +1,15 @@
 package tech.qijin.util4j.web.filter;
 
+import java.io.IOException;
+
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 
 import tech.qijin.util4j.trace.util.TraceUtil;
-
-import javax.servlet.*;
-import java.io.IOException;
 
 /**
  * @author michealyang

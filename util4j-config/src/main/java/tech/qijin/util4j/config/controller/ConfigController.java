@@ -1,10 +1,11 @@
 package tech.qijin.util4j.config.controller;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import lombok.extern.slf4j.Slf4j;
 import tech.qijin.util4j.config.AutoConfig;
 import tech.qijin.util4j.config.Config;
 import tech.qijin.util4j.web.annotation.ResponseBodyIgnore;

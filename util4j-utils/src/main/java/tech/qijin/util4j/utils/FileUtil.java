@@ -1,13 +1,17 @@
 package tech.qijin.util4j.utils;
 
-import lombok.extern.slf4j.Slf4j;
-import tech.qijin.util4j.lang.constant.ResEnum;
-
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.Properties;
+
+import lombok.extern.slf4j.Slf4j;
+import tech.qijin.util4j.lang.constant.ResEnum;
 
 /**
  * @author michealyang

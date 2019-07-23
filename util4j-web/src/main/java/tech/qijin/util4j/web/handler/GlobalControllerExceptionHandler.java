@@ -1,18 +1,17 @@
 package tech.qijin.util4j.web.handler;
 
-import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.context.request.NativeWebRequest;
+
+import lombok.extern.slf4j.Slf4j;
 import tech.qijin.util4j.lang.constant.ResEnum;
 import tech.qijin.util4j.lang.exception.ValidateException;
 import tech.qijin.util4j.utils.LogFormat;
 import tech.qijin.util4j.web.pojo.ResultVo;
-
-import javax.servlet.http.HttpServletRequest;
 
 /**
  *

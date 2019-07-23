@@ -1,7 +1,8 @@
 package tech.qijin.util4j.schedule.quartz.config;
 
-import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
+
+import lombok.Data;
 
 /**
  * @author michealyang

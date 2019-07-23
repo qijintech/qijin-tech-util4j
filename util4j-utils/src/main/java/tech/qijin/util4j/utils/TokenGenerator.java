@@ -1,9 +1,9 @@
 package tech.qijin.util4j.utils;
 
+import java.util.UUID;
+
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.util.DigestUtils;
-
-import java.util.UUID;
 
 /**
  * @author michealyang

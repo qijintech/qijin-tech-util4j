@@ -1,8 +1,8 @@
 package tech.qijin.util4j.notify;
 
-import com.google.common.collect.Lists;
-
 import java.util.List;
+
+import com.google.common.collect.Lists;
 
 /**
  * Hello world!

@@ -1,10 +1,12 @@
 package tech.qijin.util4j.utils;
 
-import com.google.common.collect.Maps;
-import org.apache.commons.lang3.StringUtils;
-import tech.qijin.util4j.trace.util.TraceUtil;
-
 import java.util.Map;
+
+import org.apache.commons.lang3.StringUtils;
+
+import com.google.common.collect.Maps;
+
+import tech.qijin.util4j.trace.util.TraceUtil;
 
 /**
  * @author michealyang

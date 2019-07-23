@@ -1,13 +1,15 @@
 package tech.qijin.util4j.parallel;
 
-import com.google.common.collect.Lists;
-import tech.qijin.util4j.parallel.threadpool.ThreadPoolType;
+import java.util.List;
+import java.util.concurrent.CountDownLatch;
+
 import org.apache.commons.collections.CollectionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.List;
-import java.util.concurrent.CountDownLatch;
+import com.google.common.collect.Lists;
+
+import tech.qijin.util4j.parallel.threadpool.ThreadPoolType;
 
 /**
  * @author michealyang

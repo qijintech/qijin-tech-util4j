@@ -1,8 +1,9 @@
 package tech.qijin.util4j.schedule.quartz;
 
+import org.quartz.Job;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
-import org.quartz.Job;
 
 /**
  * @author michealyang

@@ -1,16 +1,18 @@
 package tech.qijin.util4j.utils;
 
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.validator.routines.EmailValidator;
-import tech.qijin.util4j.lang.constant.ResEnum;
+import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
-import java.util.Set;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.validator.routines.EmailValidator;
+
+import tech.qijin.util4j.lang.constant.ResEnum;
 
 /**
  * @author michealyang

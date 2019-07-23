@@ -1,9 +1,9 @@
 package tech.qijin.util4j.trace.pojo;
 
+import java.io.Serializable;
+
 import lombok.AllArgsConstructor;
 import lombok.Data;
-
-import java.io.Serializable;
 
 @Data
 @AllArgsConstructor

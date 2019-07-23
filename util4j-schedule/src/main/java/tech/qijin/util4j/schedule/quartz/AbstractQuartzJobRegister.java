@@ -1,23 +1,35 @@
 package tech.qijin.util4j.schedule.quartz;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-import org.apache.commons.collections.CollectionUtils;
-import org.quartz.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import tech.qijin.util4j.schedule.IScheduler;
+import static org.quartz.JobKey.jobKey;
+import static org.quartz.impl.matchers.GroupMatcher.groupEquals;
 
-import javax.annotation.PostConstruct;
 import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static org.quartz.JobKey.jobKey;
-import static org.quartz.impl.matchers.GroupMatcher.groupEquals;
+import javax.annotation.PostConstruct;
+
+import org.apache.commons.collections.CollectionUtils;
+import org.quartz.CronScheduleBuilder;
+import org.quartz.CronTrigger;
+import org.quartz.Job;
+import org.quartz.JobBuilder;
+import org.quartz.JobDetail;
+import org.quartz.JobKey;
+import org.quartz.Scheduler;
+import org.quartz.SchedulerException;
+import org.quartz.TriggerBuilder;
+import org.quartz.TriggerKey;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.google.common.collect.Lists;
+import com.google.common.collect.Maps;
+
+import tech.qijin.util4j.schedule.IScheduler;
 
 /**
  * @author michealyang

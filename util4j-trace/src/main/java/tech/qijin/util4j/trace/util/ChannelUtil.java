@@ -2,8 +2,6 @@ package tech.qijin.util4j.trace.util;
 
 import tech.qijin.util4j.trace.pojo.Channel;
 
-import java.util.Optional;
-
 /**
  * @author michealyang
  * @date 2018/11/7

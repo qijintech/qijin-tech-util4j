@@ -1,11 +1,12 @@
 package tech.qijin.util4j.utils.test;
 
-import lombok.extern.slf4j.Slf4j;
+import java.io.File;
+import java.io.FileNotFoundException;
+
 import org.junit.Test;
 import org.springframework.util.ResourceUtils;
 
-import java.io.File;
-import java.io.FileNotFoundException;
+import lombok.extern.slf4j.Slf4j;
 
 /**
  * @author michealyang

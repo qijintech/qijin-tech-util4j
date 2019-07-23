@@ -1,12 +1,18 @@
 package tech.qijin.util4j.web.filter;
 
+import java.io.IOException;
+
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+
 import tech.qijin.util4j.trace.pojo.EnvEnum;
 import tech.qijin.util4j.trace.util.EnvUtil;
 import tech.qijin.util4j.web.util.ServletUtil;
-
-import javax.servlet.*;
-import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 
 /**
  * @author michealyang

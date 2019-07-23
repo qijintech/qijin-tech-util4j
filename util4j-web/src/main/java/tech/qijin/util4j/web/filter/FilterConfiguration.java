@@ -1,12 +1,12 @@
 package tech.qijin.util4j.web.filter;
 
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Conditional;
 import org.springframework.context.annotation.Configuration;
+
+import lombok.extern.slf4j.Slf4j;
 import tech.qijin.util4j.utils.LogFormat;
 import tech.qijin.util4j.web.interceptor.EnvInterceptor;
 import tech.qijin.util4j.web.interceptor.RequestInterceptor;

@@ -1,11 +1,13 @@
 package tech.qijin.util4j.concurrent.parallel;
 
-import com.google.common.collect.Lists;
-import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections.CollectionUtils;
-import tech.qijin.util4j.utils.LogFormat;
-
 import java.util.List;
+
+import org.apache.commons.collections.CollectionUtils;
+
+import com.google.common.collect.Lists;
+
+import lombok.extern.slf4j.Slf4j;
+import tech.qijin.util4j.utils.LogFormat;
 
 /**
  * @author michealyang

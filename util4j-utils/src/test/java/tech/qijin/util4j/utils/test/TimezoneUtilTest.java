@@ -1,18 +1,14 @@
 package tech.qijin.util4j.utils.test;
 
-import lombok.extern.slf4j.Slf4j;
+import java.text.ParseException;
+import java.util.Date;
+
 import org.joda.time.DateTime;
 import org.junit.Test;
-import sun.util.locale.provider.TimeZoneNameUtility;
+
+import lombok.extern.slf4j.Slf4j;
 import tech.qijin.util4j.utils.DateUtil;
 import tech.qijin.util4j.utils.TimezoneUtil;
-
-import java.sql.Time;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.TimeZone;
-import java.util.concurrent.TimeUnit;
 
 /**
  * @author michealyang

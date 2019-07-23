@@ -1,9 +1,8 @@
 package tech.qijin.util4j.lang.dto;
 
+import java.io.Serializable;
 
 import tech.qijin.util4j.lang.constant.ResEnum;
-
-import java.io.Serializable;
 
 /**
  * @author michealyang

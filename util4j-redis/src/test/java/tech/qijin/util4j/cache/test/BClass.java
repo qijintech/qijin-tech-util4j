@@ -1,10 +1,11 @@
 package tech.qijin.util4j.cache.test;
 
-import com.google.common.collect.Lists;
-import lombok.Data;
-
 import java.io.Serializable;
 import java.util.List;
+
+import com.google.common.collect.Lists;
+
+import lombok.Data;
 
 /**
  * @author michealyang

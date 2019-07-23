@@ -1,13 +1,14 @@
 package tech.qijin.util4j.utils.test;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import org.junit.Assert;
-import org.junit.Test;
-import tech.qijin.util4j.utils.ValidationUtil;
-
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+
+import org.junit.Assert;
+import org.junit.Test;
+
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import tech.qijin.util4j.utils.ValidationUtil;
 
 /**
  * @author michealyang

@@ -1,9 +1,8 @@
 package tech.qijin.util4j.audit;
 
+import java.util.Objects;
 
 import tech.qijin.util4j.encryption.EncriptUtil;
-
-import java.util.Objects;
 
 /**
  * 审计原理

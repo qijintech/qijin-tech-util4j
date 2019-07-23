@@ -1,8 +1,8 @@
 package tech.qijin.util4j.cache.test;
 
-import lombok.Data;
-
 import java.io.Serializable;
+
+import lombok.Data;
 
 /**
  * @author michealyang

@@ -1,8 +1,8 @@
 package tech.qijin.util4j.utils;
 
-import com.google.common.collect.Lists;
-
 import java.util.List;
+
+import com.google.common.collect.Lists;
 
 /**
  * CollectionUtils扩展

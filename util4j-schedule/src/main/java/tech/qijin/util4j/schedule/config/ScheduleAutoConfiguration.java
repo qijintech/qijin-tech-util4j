@@ -1,11 +1,10 @@
 package tech.qijin.util4j.schedule.config;
 
-import org.springframework.boot.autoconfigure.condition.ConditionOutcome;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
-import org.springframework.boot.autoconfigure.condition.SpringBootCondition;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
+
 import tech.qijin.util4j.schedule.IScheduler;
 import tech.qijin.util4j.schedule.quartz.config.QuartzAutoConfiguration;
 

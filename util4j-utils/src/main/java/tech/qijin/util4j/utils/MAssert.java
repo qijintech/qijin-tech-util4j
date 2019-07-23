@@ -1,11 +1,12 @@
 package tech.qijin.util4j.utils;
 
+import java.util.Collection;
+
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
+
 import tech.qijin.util4j.lang.constant.ResEnum;
 import tech.qijin.util4j.lang.exception.ValidateException;
-
-import java.util.Collection;
 
 public class MAssert {
 

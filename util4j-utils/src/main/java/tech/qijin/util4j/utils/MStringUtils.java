@@ -1,12 +1,12 @@
 package tech.qijin.util4j.utils;
 
-import com.google.common.base.Preconditions;
-import com.google.common.collect.Lists;
-import org.apache.commons.lang3.StringUtils;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import org.apache.commons.lang3.StringUtils;
+
+import com.google.common.base.Preconditions;
 
 /**
  * StringUtils扩展
