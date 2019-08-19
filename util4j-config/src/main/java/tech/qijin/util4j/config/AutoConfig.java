@@ -31,6 +31,8 @@ public class AutoConfig {
     private boolean isDev = false;
     private boolean isTest = false;
     private boolean isProd = false;
+    private boolean isStress = false;
+    private boolean isStaging = false;
 
     private static final String CONFIG_THREAD_NAME = "SCHEDULED_CONFIG_THREAD";
 
@@ -55,11 +57,15 @@ public class AutoConfig {
             isTest = true;
         } else if (activeProfiles.contains(Const.PROD)) {
             isProd = true;
+        } else if (activeProfiles.contains(Const.STRESS)) {
+            isStress = true;
+        } else if (activeProfiles.contains(Const.STAGING)) {
+            isStaging = true;
         } else {
             isDev = true;
         }
         Executors.newSingleThreadScheduledExecutor(r -> new Thread(r, CONFIG_THREAD_NAME))
-                .scheduleWithFixedDelay(() -> loadProperties(), 0, 10, TimeUnit.SECONDS);
+                .scheduleWithFixedDelay(() -> loadProperties(), 0, 1, TimeUnit.MINUTES);
     }
 
     public void loadProperties() {
@@ -70,6 +76,10 @@ public class AutoConfig {
                 configFile = "config-center-test.properties";
             } else if (isProd) {
                 configFile = "config-center-prod.properties";
+            } else if (isStress) {
+                configFile = "config-center-stress.properties";
+            }else if (isStaging) {
+                configFile = "config-center-staging.properties";
             }
             Optional<Properties> propertiesOpt = FileUtil.readPropertiesFromPath(config.configPath() + config.module() + "/" + configFile);
             if (!propertiesOpt.isPresent()) {

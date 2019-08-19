@@ -1,15 +1,12 @@
 package tech.qijin.util4j.utils;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.net.URISyntaxException;
 import java.net.URL;
 import java.util.Optional;
 import java.util.Properties;
 
+import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
 import tech.qijin.util4j.lang.constant.ResEnum;
 
@@ -21,13 +18,28 @@ import tech.qijin.util4j.lang.constant.ResEnum;
  */
 @Slf4j
 public class FileUtil {
-
-    public static String getFilePath(String fileName) {
-        URL url = Thread.currentThread().getContextClassLoader().getResource(fileName);
-        if (url == null) {
+    /**
+     * 把文件内容转化成json对象
+     *
+     * @param path
+     * @return
+     */
+    public static JSONObject convertJson(String path) {
+        try {
+            StringBuffer buffer = new StringBuffer();
+            BufferedReader bf = new BufferedReader(new FileReader(path));
+            String s = null;
+            while ((s = bf.readLine()) != null) {
+                buffer.append(s.trim());
+            }
+            bf.close();
+            String json = buffer.toString();
+            JSONObject jsonObject = JSONObject.parseObject(json);
+            return jsonObject;
+        } catch (IOException ex) {
+            ex.printStackTrace();
             return null;
         }
-        return url.getPath();
     }
 
     /**
@@ -51,16 +63,6 @@ public class FileUtil {
         File file = new File(fileName);
         if (!file.exists()) {
             return null;
-        }
-        return new FileInputStream(file);
-    }
-
-    public static FileInputStream getFileInputStreamFromClasspath(String fileName) throws URISyntaxException, FileNotFoundException {
-        MAssert.notBlank(fileName, ResEnum.INVALID_PARAM);
-        File file = new File(FileUtil.class.getClassLoader().getResource(fileName).toURI());
-        if (file == null) {
-            log.error(LogFormat.builder().message("file not found from classpath")
-                    .put("fileName", fileName).build());
         }
         return new FileInputStream(file);
     }

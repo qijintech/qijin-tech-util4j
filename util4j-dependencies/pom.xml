@@ -155,6 +155,11 @@
                 <artifactId>util4j-config</artifactId>
                 <version>${util4j.version}</version>
             </dependency>
+            <dependency>
+                <groupId>tech.qijin.util4j</groupId>
+                <artifactId>util4j-websocket</artifactId>
+                <version>${util4j.version}</version>
+            </dependency>
 
             <!--================下面是对第三方库的依赖配置=============-->
             <dependency>

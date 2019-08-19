@@ -20,6 +20,10 @@ public class ConfigImpl implements Config {
     @Value("${module:}")
     private String module;
 
+    private static final String DEBUG_KEY = "debug";
+    private static final String MULTI_LOG_KEY = "multiLog";
+    private static final String MORE_LOG_KEY = "moreLog";
+
     @Autowired
     private ConfigProperties configProperties;
     @Autowired
@@ -41,8 +45,26 @@ public class ConfigImpl implements Config {
     }
 
     @Override
-    public <T> T get(String key, T defaultValue) {
-        Object value = autoConfig.getProperties().get(key);
-        return value != null ? (T) value : defaultValue;
+    public Boolean debugEnabled() {
+        String value = (String) autoConfig.getProperties().get(DEBUG_KEY);
+        return "true".equals(value);
+    }
+
+    @Override
+    public Boolean multiLog() {
+        String value = (String) autoConfig.getProperties().get(MULTI_LOG_KEY);
+        return "true".equals(value);
+    }
+
+    @Override
+    public Boolean moreLog() {
+        String value = (String) autoConfig.getProperties().get(MORE_LOG_KEY);
+        return "true".equals(value);
+    }
+
+    @Override
+    public String get(String key, String defaultValue) {
+        String value = (String) autoConfig.getProperties().get(key);
+        return value != null ? value : defaultValue;
     }
 }
