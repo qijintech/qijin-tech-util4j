@@ -33,6 +33,7 @@
         <module>util4j-timezone</module>
         <module>util4j-config</module>
         <module>util4j-websocket</module>
+        <module>util4j-starters</module>
   </modules>
 
     <build>

@@ -29,9 +29,9 @@
 
         <plugin.compiler.version>3.8.0</plugin.compiler.version>
         <plugin.source.version>3.0.1</plugin.source.version>
-        <plugin.surefire.version>2.22.1</plugin.surefire.version>
+        <!--<plugin.surefire.version>2.22.1</plugin.surefire.version>-->
         <plugin.versions.version>2.7</plugin.versions.version>
-        <plugin.jacoco.version>0.8.2</plugin.jacoco.version>
+        <!--<plugin.jacoco.version>0.8.2</plugin.jacoco.version>-->
     </properties>
 
     <!--请按说明顺序填写依BaseTest赖配置，保持文档的清晰性，防止重复添加-->
@@ -131,21 +131,21 @@
 
     <build>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>${plugin.surefire.version}</version>
-                <configuration>
-                    <!--<skipTests>true</skipTests>-->
-                    <excludes>
-                        <exclude>ExampleTest.java</exclude>
-                        <exclude>**/ExampleTest.java</exclude>
-                        <exclude>BaseTest.java</exclude>
-                        <exclude>**/BaseTest.java</exclude>
-                    </excludes>
-                </configuration>
+            <!--<plugin>-->
+                <!--<groupId>org.apache.maven.plugins</groupId>-->
+                <!--<artifactId>maven-surefire-plugin</artifactId>-->
+                <!--<version>${plugin.surefire.version}</version>-->
+                <!--<configuration>-->
+                    <!--&lt;!&ndash;<skipTests>true</skipTests>&ndash;&gt;-->
+                    <!--<excludes>-->
+                        <!--<exclude>ExampleTest.java</exclude>-->
+                        <!--<exclude>**/ExampleTest.java</exclude>-->
+                        <!--<exclude>BaseTest.java</exclude>-->
+                        <!--<exclude>**/BaseTest.java</exclude>-->
+                    <!--</excludes>-->
+                <!--</configuration>-->
 
-            </plugin>
+            <!--</plugin>-->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -178,42 +178,42 @@
                     <generateBackupPoms>false</generateBackupPoms>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>org.jacoco</groupId>
-                <artifactId>jacoco-maven-plugin</artifactId>
-                <version>${plugin.jacoco.version}</version>
-                <executions>
-                    <execution>
-                        <id>prepare-agent</id>
-                        <goals>
-                            <goal>prepare-agent</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>report</id>
-                        <phase>prepare-package</phase>
-                        <goals>
-                            <goal>report</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>post-unit-test</id>
-                        <phase>test</phase>
-                        <goals>
-                            <goal>report</goal>
-                        </goals>
-                        <configuration>
-                            <dataFile>target/jacoco.exec</dataFile>
-                            <outputDirectory>target/jacoco-ut</outputDirectory>
-                        </configuration>
-                    </execution>
-                </executions>
-                <configuration>
-                    <!--<systemPropertyVariables>-->
-                    <!--<jacoco-agent.destfile>target/jacoco.exec</jacoco-agent.destfile>-->
-                    <!--</systemPropertyVariables>-->
-                </configuration>
-            </plugin>
+            <!--<plugin>-->
+                <!--<groupId>org.jacoco</groupId>-->
+                <!--<artifactId>jacoco-maven-plugin</artifactId>-->
+                <!--<version>${plugin.jacoco.version}</version>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<id>prepare-agent</id>-->
+                        <!--<goals>-->
+                            <!--<goal>prepare-agent</goal>-->
+                        <!--</goals>-->
+                    <!--</execution>-->
+                    <!--<execution>-->
+                        <!--<id>report</id>-->
+                        <!--<phase>prepare-package</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>report</goal>-->
+                        <!--</goals>-->
+                    <!--</execution>-->
+                    <!--<execution>-->
+                        <!--<id>post-unit-test</id>-->
+                        <!--<phase>test</phase>-->
+                        <!--<goals>-->
+                            <!--<goal>report</goal>-->
+                        <!--</goals>-->
+                        <!--<configuration>-->
+                            <!--<dataFile>target/jacoco.exec</dataFile>-->
+                            <!--<outputDirectory>target/jacoco-ut</outputDirectory>-->
+                        <!--</configuration>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+                <!--<configuration>-->
+                    <!--&lt;!&ndash;<systemPropertyVariables>&ndash;&gt;-->
+                    <!--&lt;!&ndash;<jacoco-agent.destfile>target/jacoco.exec</jacoco-agent.destfile>&ndash;&gt;-->
+                    <!--&lt;!&ndash;</systemPropertyVariables>&ndash;&gt;-->
+                <!--</configuration>-->
+            <!--</plugin>-->
         </plugins>
     </build>
 </project>
