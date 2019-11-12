@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>tech.qijin.util4j</groupId>
     <artifactId>util4j-build</artifactId>
@@ -34,7 +35,8 @@
         <module>util4j-config</module>
         <module>util4j-websocket</module>
         <module>util4j-starters</module>
-  </modules>
+        <module>util4j-algorithm</module>
+    </modules>
 
     <build>
         <plugins>
