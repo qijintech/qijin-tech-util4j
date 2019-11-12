@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.extern.slf4j.Slf4j;
 import tech.qijin.util4j.config.AutoConfig;
 import tech.qijin.util4j.config.Config;
-import tech.qijin.util4j.web.annotation.ResponseBodyIgnore;
+import tech.qijin.util4j.web.handler.annotation.ResponseBodyIgnore;
 
 /**
  * @author michealyang
