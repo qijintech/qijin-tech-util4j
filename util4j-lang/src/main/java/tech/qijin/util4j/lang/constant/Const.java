@@ -28,4 +28,13 @@ public class Const {
      * timestamp能表示的最大时间：2018-01-19。
      */
     public static final Long MAX_TIMESTAMP = 2147443200000L;
+
+    /**
+     * 日期格式
+     */
+    public static final String DATE_FORMAT_DASHED_D = "yyyy-MM-dd";
+    public static final String DATE_FORMAT_DASHED_H = "yyyy-MM-dd HH";
+    public static final String DATE_FORMAT_DASHED_M = "yyyy-MM-dd HH:mm";
+    public static final String DATE_FORMAT_DASHED_S = "yyyy-MM-dd HH:mm:ss";
+    public static final String DATE_FORMAT_DAY = "yyyyMMdd";
 }
