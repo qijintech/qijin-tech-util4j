@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 
 import lombok.extern.slf4j.Slf4j;
-import tech.qijin.util4j.web.annotation.ResponseBodyIgnore;
+import tech.qijin.util4j.web.handler.annotation.ResponseBodyIgnore;
 import tech.qijin.util4j.web.pojo.ResultVo;
 import tech.qijin.util4j.web.util.PageHelperProxy;
 

@@ -2,6 +2,11 @@
 
 web相关的类和配置
 
+* 过滤器 - filter
+* 拦截器 - interceptor
+* 参数校验 - validation
+* 结果/异常处理器 - handler
+
 ### filter
 
 放置各种过滤器

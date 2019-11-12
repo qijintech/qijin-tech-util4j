@@ -15,7 +15,7 @@ import tech.qijin.util4j.lang.constant.ResEnum;
 import tech.qijin.util4j.trace.pojo.Channel;
 import tech.qijin.util4j.trace.util.ChannelUtil;
 import tech.qijin.util4j.utils.MAssert;
-import tech.qijin.util4j.web.annotation.ChannelRequired;
+import tech.qijin.util4j.web.interceptor.annotation.ChannelRequired;
 import tech.qijin.util4j.web.util.ServletUtil;
 
 @Slf4j

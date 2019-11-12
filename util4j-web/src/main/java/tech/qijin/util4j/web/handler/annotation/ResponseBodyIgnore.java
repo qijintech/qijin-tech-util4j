@@ -1,4 +1,4 @@
-package tech.qijin.util4j.web.annotation;
+package tech.qijin.util4j.web.handler.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

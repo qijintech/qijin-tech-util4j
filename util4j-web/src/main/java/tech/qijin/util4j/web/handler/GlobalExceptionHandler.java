@@ -2,6 +2,8 @@ package tech.qijin.util4j.web.handler;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.validation.BindException;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -13,13 +15,28 @@ import tech.qijin.util4j.lang.exception.ValidateException;
 import tech.qijin.util4j.utils.LogFormat;
 import tech.qijin.util4j.web.pojo.ResultVo;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  *
  */
 
-@ControllerAdvice
 @Slf4j
-public class GlobalControllerExceptionHandler {
+@ControllerAdvice
+public class GlobalExceptionHandler {
+
+    @ResponseBody
+    @ExceptionHandler(value = {BindException.class})
+    public ResultVo processValidationException(BindException e) {
+        Map<String, String> errors = new HashMap<>();
+        e.getBindingResult().getAllErrors().forEach((error) -> {
+            String fieldName = ((FieldError) error).getField();
+            String errorMessage = error.getDefaultMessage();
+            errors.put(fieldName, errorMessage);
+        });
+        return ResultVo.instance().fail(ResEnum.INVALID_PARAM).message(errors.toString());
+    }
 
     @ExceptionHandler(Exception.class)
     @ResponseBody

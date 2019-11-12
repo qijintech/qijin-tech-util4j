@@ -13,6 +13,7 @@ import tech.qijin.util4j.lang.vo.PageVo;
  * @date 2019/1/4
  * 开始做眼保健操：←_← ↑_↑ →_→ ↓_↓
  **/
+@Deprecated
 public class PageProxy<E> {
     private Page<E> page;
 
