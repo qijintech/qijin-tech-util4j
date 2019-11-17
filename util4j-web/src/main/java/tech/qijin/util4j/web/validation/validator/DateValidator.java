@@ -1,7 +1,6 @@
 package tech.qijin.util4j.web.validation.validator;
 
 import org.apache.commons.lang3.StringUtils;
-import org.springframework.boot.autoconfigure.AutoConfigureOrder;
 import org.springframework.stereotype.Component;
 import tech.qijin.util4j.web.validation.annotation.Date;
 
@@ -10,14 +9,11 @@ import javax.validation.ConstraintValidatorContext;
 
 import java.text.SimpleDateFormat;
 
-import static tech.qijin.util4j.web.common.Constants.*;
-
 /**
  * @author michealyang
  * @date 2019-11-07
  * @relax: 开始眼保健操 ←_← ↓_↓ →_→ ↑_↑
  */
-@AutoConfigureOrder
 @Component
 public class DateValidator implements ConstraintValidator<Date, String> {
     private Date dateAnnotation;
@@ -29,6 +25,9 @@ public class DateValidator implements ConstraintValidator<Date, String> {
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
+        if (value == null) {
+            return true;
+        }
         if (StringUtils.isBlank(value)) {
             return false;
         }

@@ -1,6 +1,6 @@
 package tech.qijin.util4j.web.validation.annotation;
 
-import tech.qijin.util4j.web.validation.validator.MobileValidator;
+import tech.qijin.util4j.web.validation.validator.LngValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -16,10 +16,10 @@ import java.lang.annotation.*;
 @Target({ElementType.FIELD, ElementType.METHOD})
 @Inherited
 @Documented
-//@Pattern(regexp = "^[1][3,4,5,7,8][0-9]{9}$")
-@Constraint(validatedBy = {MobileValidator.class})
-public @interface Mobile {
-    String message() default "invalid phone number";
+@Constraint(validatedBy = {LngValidator.class})
+//@Pattern(regexp = "^[\\-\\+]?(0?\\d{1,2}|0?\\d{1,2}\\.\\d{1,15}|1[0-7]?\\d{1}|1[0-7]?\\d{1}\\.\\d{1,15}|180|180\\.0{1,15})$")
+public @interface Lng {
+    String message() default "invalid latitude";
 
     Class<?>[] groups() default {};
 

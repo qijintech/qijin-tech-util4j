@@ -28,7 +28,7 @@ import tech.qijin.util4j.web.util.PageHelperProxy;
  * @author hanxiao
  */
 @Slf4j
-@ControllerAdvice
+//@ControllerAdvice
 public class ResponseBodyHandler implements ResponseBodyAdvice {
 
     private static final String DEFAULT_PACKAGE = "tech.qijin";

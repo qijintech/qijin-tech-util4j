@@ -1,5 +1,7 @@
 package tech.qijin.util4j.web.validation.annotation;
 
+import tech.qijin.util4j.web.validation.validator.IPV6Validator;
+
 import javax.validation.Constraint;
 import javax.validation.Payload;
 import javax.validation.constraints.Pattern;
@@ -14,10 +16,12 @@ import java.lang.annotation.*;
 @Target({ElementType.FIELD, ElementType.METHOD})
 @Inherited
 @Documented
-@Constraint(validatedBy = {})
+@Constraint(validatedBy = {IPV6Validator.class})
 @Pattern(regexp = "")
 public @interface IPV6 {
     String message() default "";
+
     Class<?>[] groups() default {};
+
     Class<? extends Payload>[] payload() default {};
 }

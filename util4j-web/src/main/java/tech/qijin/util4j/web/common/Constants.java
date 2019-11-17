@@ -36,4 +36,18 @@ public class Constants {
         FORMAT_PATTERN_MAP.put(FORMAT_MINUTE, PATTERN_MINUTE);
         FORMAT_PATTERN_MAP.put(FORMAT_SECOND, PATTERN_SECOND);
     }
+
+    /**
+     * 密码强度
+     */
+    public enum PWDStrenth {
+        // 任意
+        ANY,
+        // 必须包含数字，字母
+        MIDDLE,
+        // 必须包含数字，小写字母，大写字母
+        HIGH,
+        // 必须包含数字，小写字母，大写字母，特殊字符等
+        STRONG
+    }
 }
