@@ -2,6 +2,7 @@ package tech.qijin.util4j.lang.constant;
 
 /**
  * result code
+ *
  * @author michealyang
  * @date 2018/10/31
  * 开始做眼保健操：←_← ↑_↑ →_→ ↓_↓
@@ -14,6 +15,7 @@ public enum ResEnum {
     FORBIDDEN(403, "forbidden"),
     INVALID_PARAM(422, "invalid parameters"),
 
+    INTERNAL_ERROR(500, "internal error"),
     BAD_GATEWAY(502, "bad gateway"),
 
     EMPTY_USER(601, "empty user name"),
@@ -22,7 +24,7 @@ public enum ResEnum {
     DUPLICATE_USER(604, "duplicate user name"),
     PASSWORD_MISMATCH(605, "password mismatch"),
     INVALID_EMAIL(606, "invalid email"),
-    TWO_PASSWORD_INCONSISTENT(607,"Two passwords are inconsistent"),
+    TWO_PASSWORD_INCONSISTENT(607, "Two passwords are inconsistent"),
     NICKNAME_OVERLENGTH(608, "nickname overlength"),
 
     INSUFFICIENT_BALANCE(701, "insufficient balance"),
