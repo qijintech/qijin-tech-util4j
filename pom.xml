@@ -36,6 +36,7 @@
         <module>util4j-websocket</module>
         <module>util4j-starters</module>
         <module>util4j-algorithm</module>
+        <module>util4j-kms</module>
     </modules>
 
     <build>
