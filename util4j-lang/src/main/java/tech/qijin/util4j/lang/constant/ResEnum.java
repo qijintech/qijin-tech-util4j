@@ -28,6 +28,8 @@ public enum ResEnum {
     NICKNAME_OVERLENGTH(608, "nickname overlength"),
 
     INSUFFICIENT_BALANCE(701, "insufficient balance"),
+
+    INVALID_KEY(10001, "invalid secret key")
     ;
 
     public int code;
