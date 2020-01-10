@@ -6,6 +6,6 @@ package tech.qijin.util4j.lang.function;
  * @relax: 开始眼保健操 ←_← ↓_↓ →_→ ↑_↑
  */
 @FunctionalInterface
-public interface Run {
+public interface JustRun {
     void run();
 }
