@@ -37,7 +37,7 @@
         <module>util4j-starters</module>
         <module>util4j-algorithm</module>
         <module>util4j-kms</module>
-        <module>util4j-re</module>
+        <module>util4j-rest</module>
     </modules>
 
     <build>
