@@ -12,7 +12,7 @@
     </parent>
 
     <groupId>tech.qijin.util4j</groupId>
-    <artifactId>util4j-rest</artifactId>
+    <artifactId>util4j-rpc</artifactId>
 
     <dependencies>
         <dependency>

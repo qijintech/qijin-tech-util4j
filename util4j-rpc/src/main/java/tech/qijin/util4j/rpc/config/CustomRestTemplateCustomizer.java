@@ -1,4 +1,4 @@
-package tech.qijin.util4j.rest.config;
+package tech.qijin.util4j.rpc.config;
 
 import org.springframework.boot.web.client.RestTemplateCustomizer;
 import org.springframework.web.client.RestTemplate;

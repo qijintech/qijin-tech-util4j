@@ -1,4 +1,4 @@
-package tech.qijin.util4j.rest;
+package tech.qijin.util4j.rpc;
 
 /**
  * Hello world!
