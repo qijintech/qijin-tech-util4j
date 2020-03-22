@@ -8,6 +8,7 @@ import java.util.Properties;
 
 import com.alibaba.fastjson.JSONObject;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.lang3.StringUtils;
 import tech.qijin.util4j.lang.constant.ResEnum;
 
 /**
@@ -97,5 +98,13 @@ public class FileUtil {
             log.warn(LogFormat.builder().message("file not found in classpath").put("path", fileName).build(), e);
             return Optional.empty();
         }
+    }
+
+
+    public static String suffix(String fileName) {
+        MAssert.notBlank(fileName, ResEnum.BAD_REQUEST);
+        String[] arr = StringUtils.split(fileName, ".");
+        MAssert.isTrue(arr.length >= 2, ResEnum.BAD_REQUEST);
+        return arr[arr.length - 1];
     }
 }
