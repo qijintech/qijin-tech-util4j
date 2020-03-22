@@ -37,4 +37,22 @@ public class Const {
     public static final String DATE_FORMAT_DASHED_M = "yyyy-MM-dd HH:mm";
     public static final String DATE_FORMAT_DASHED_S = "yyyy-MM-dd HH:mm:ss";
     public static final String DATE_FORMAT_DAY = "yyyyMMdd";
+
+    /**
+     * 文件大小
+     */
+    public static final long KB = 1 << 10;
+    public static final long MB = KB << 10;
+    public static final long GB = MB << 10;
+    public static final long TB = GB << 10;
+
+    /**
+     * 文件后缀类型
+     */
+    // 图片
+    public static final String JPG = "jpg";
+    public static final String JPEG = "jpeg";
+    public static final String BMP = "bmp";
+    public static final String PNG = "png";
+    public static final String GIF = "gif";
 }

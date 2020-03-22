@@ -29,8 +29,8 @@ public enum ResEnum {
 
     INSUFFICIENT_BALANCE(701, "insufficient balance"),
 
-    INVALID_KEY(10001, "invalid secret key")
-    ;
+    INVALID_KEY(10001, "invalid secret key"),
+    INVALID_CONFIG(20001, "invalid config");
 
     public int code;
 
