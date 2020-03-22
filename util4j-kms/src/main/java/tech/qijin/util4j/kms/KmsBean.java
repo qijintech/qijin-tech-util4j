@@ -60,6 +60,11 @@ public class KmsBean {
                 .orElse(Optional.empty());
     }
 
+    public Optional<String> getRaw(String prefix, String key) {
+        return propertiesOpt.map(properties -> Optional.ofNullable(properties.getProperty(getPropertiesKey(prefix, key))))
+                .orElse(Optional.empty());
+    }
+
     private String getPropertiesKey(String prefix, String key) {
         if (StringUtils.isNotBlank(prefix)) {
             return prefix + "." + key;
