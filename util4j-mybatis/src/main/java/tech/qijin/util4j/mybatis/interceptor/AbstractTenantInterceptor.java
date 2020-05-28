@@ -275,7 +275,12 @@ public abstract class AbstractTenantInterceptor<T> implements Interceptor {
         private Expression getEqualsTo(String name, T tenantValue) {
             EqualsTo equalsTo = new EqualsTo();
             equalsTo.setLeftExpression(new Column(name));
-            equalsTo.setRightExpression(new Column(tenantValue.toString()));
+            if (tenantValue instanceof String) {
+                equalsTo.setRightExpression(new Column(new StringBuffer().append("'").append(tenantValue.toString()).append("'").toString()));
+            } else {
+                equalsTo.setRightExpression(new Column(tenantValue.toString()));
+            }
+
             return equalsTo;
         }
 
