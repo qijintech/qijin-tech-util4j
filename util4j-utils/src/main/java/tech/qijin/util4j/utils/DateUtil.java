@@ -62,6 +62,25 @@ public class DateUtil {
      */
     public static final int MILLI_PER_SECOND = 1000;
 
+
+    /**
+     * 返回unix时间戳
+     *
+     * @return
+     */
+    public static long unix() {
+        return now().getTime() / MILLI_PER_SECOND;
+    }
+
+    /**
+     * 返回unix时间戳毫秒精度
+     *
+     * @return
+     */
+    public static long unixMilli() {
+        return now().getTime();
+    }
+
     /**
      * 返回当前日期
      *

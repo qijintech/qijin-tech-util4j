@@ -20,6 +20,10 @@ public class MAssert {
         }
     }
 
+    public static void isTrue(boolean expression, ResEnum resEnum, String errMsg) {
+        MAssert.isTrue(expression, resEnum.code, StringUtils.isNotBlank(errMsg) ? errMsg : resEnum.msg);
+    }
+
     public static void isTrue(boolean expression, ResEnum resEnum) {
         MAssert.isTrue(expression, resEnum.code, resEnum.msg);
     }
