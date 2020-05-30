@@ -3,8 +3,8 @@ package tech.qijin.util4j.web.pojo;
 
 import tech.qijin.util4j.lang.constant.EnumValue;
 
-public enum EnvEnum implements EnumValue {
-    PRODUCT(1,"生产环境"), TEST(0,"测试环境");
+public enum EnvEnum implements EnumValue<Integer> {
+    PRODUCT(1, "生产环境"), TEST(0, "测试环境");
 
     EnvEnum(int env, String desc) {
         this.env = env;
@@ -15,7 +15,7 @@ public enum EnvEnum implements EnumValue {
     private String desc;
 
     @Override
-    public int value() {
+    public Integer value() {
         return env;
     }
 
