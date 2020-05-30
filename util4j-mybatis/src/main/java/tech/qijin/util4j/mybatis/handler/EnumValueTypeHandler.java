@@ -12,7 +12,7 @@ import tech.qijin.util4j.lang.constant.EnumValue;
 
 
 //TODO 叫converter会更好
-public class EnumValueTypeHandler<E extends Enum<?> & EnumValue> extends BaseTypeHandler<E> {
+public class EnumValueTypeHandler<E extends EnumValue> extends BaseTypeHandler<E> {
     private Class<E> type;
 
     public EnumValueTypeHandler(Class<E> type) {
@@ -25,18 +25,18 @@ public class EnumValueTypeHandler<E extends Enum<?> & EnumValue> extends BaseTyp
 
     @Override
     public void setNonNullParameter(PreparedStatement ps, int i, E parameter, JdbcType jdbcType) throws SQLException {
-        ps.setInt(i, parameter.value());
+        ps.setObject(i, parameter.value());
     }
 
     @Override
     public E getNullableResult(ResultSet rs, String columnName) throws SQLException {
-        int value = rs.getInt(columnName);
+        Object value = rs.getObject(columnName);
         return rs.wasNull() ? null : this.getEnumInstance(this.type, value);
     }
 
     @Override
     public E getNullableResult(ResultSet rs, int columnIndex) throws SQLException {
-        int value = rs.getInt(columnIndex);
+        Object value = rs.getObject(columnIndex);
         return rs.wasNull() ? null : this.getEnumInstance(this.type, value);
     }
 
@@ -46,9 +46,9 @@ public class EnumValueTypeHandler<E extends Enum<?> & EnumValue> extends BaseTyp
         return cs.wasNull() ? null : this.getEnumInstance(this.type, value);
     }
 
-    private E getEnumInstance(Class<E> type, int enumValue) {
+    private E getEnumInstance(Class<E> type, Object enumValue) {
         for (E e : type.getEnumConstants()) {
-            if (e.value() == enumValue) {
+            if (e.value().equals(enumValue)) {
                 return e;
             }
         }
