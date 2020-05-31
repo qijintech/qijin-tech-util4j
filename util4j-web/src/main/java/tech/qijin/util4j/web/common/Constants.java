@@ -40,7 +40,7 @@ public class Constants {
     /**
      * 密码强度
      */
-    public enum PWDStrenth {
+    public enum PasswdStrength {
         // 任意
         ANY,
         // 必须包含数字，字母
