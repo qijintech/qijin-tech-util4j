@@ -5,6 +5,7 @@ import java.util.Collection;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang3.StringUtils;
 
+import tech.qijin.util4j.lang.constant.BuzCode;
 import tech.qijin.util4j.lang.constant.ResEnum;
 import tech.qijin.util4j.lang.exception.ValidateException;
 
@@ -12,6 +13,10 @@ public class MAssert {
 
     public static void isTrue(boolean expression, String errorMessage) {
         MAssert.isTrue(expression, ResEnum.BAD_REQUEST.code, errorMessage);
+    }
+
+    public static void isTrue(boolean expression, BuzCode buzCode) {
+        MAssert.isTrue(expression, buzCode.code(), buzCode.message());
     }
 
     public static void isTrue(boolean expression, int code, String errorMessage) {
