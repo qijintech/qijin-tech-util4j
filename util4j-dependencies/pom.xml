@@ -47,7 +47,7 @@
         <bouncycastle.bcprov.version>1.60</bouncycastle.bcprov.version>
         <netty.all.version>4.1.31.Final</netty.all.version>
 
-        <mysql.connector.version>5.1.47</mysql.connector.version>
+        <mysql.connector.version>8.0.16</mysql.connector.version>
 
         <plugin.compiler.version>3.8.0</plugin.compiler.version>
         <plugin.source.version>3.0.1</plugin.source.version>
