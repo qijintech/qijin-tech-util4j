@@ -22,6 +22,8 @@ import java.util.Properties;
 public class KmsBean {
     private static final String SECRET_ID = "secretId";
     private static final String SECRET_KEY = "secretKey";
+    private static final String APP_ID = "appId";
+    private static final String SECRET = "secret";
 
     @Autowired
     private KmsProperties kmsProperties;
@@ -57,6 +59,16 @@ public class KmsBean {
 
     public Optional<String> getSecretKey(String prefix) {
         return propertiesOpt.map(properties -> Optional.ofNullable(properties.getProperty(getPropertiesKey(prefix, SECRET_KEY))))
+                .orElse(Optional.empty());
+    }
+
+    public Optional<String> getAppId(String prefix) {
+        return propertiesOpt.map(properties -> Optional.ofNullable(properties.getProperty(getPropertiesKey(prefix, APP_ID))))
+                .orElse(Optional.empty());
+    }
+
+    public Optional<String> getSecret(String prefix) {
+        return propertiesOpt.map(properties -> Optional.ofNullable(properties.getProperty(getPropertiesKey(prefix, SECRET))))
                 .orElse(Optional.empty());
     }
 

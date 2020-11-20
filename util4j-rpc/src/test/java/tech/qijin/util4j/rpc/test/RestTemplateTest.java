@@ -1,4 +1,4 @@
-package tech.qijin.util4j.rest.test;
+package tech.qijin.util4j.rpc.test;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
