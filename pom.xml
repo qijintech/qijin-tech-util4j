@@ -27,7 +27,7 @@
         <module>util4j-file</module>
         <module>util4j-notify</module>
         <module>util4j-id</module>
-        <module>util4j-metric</module>
+        <module>util4j-metrics</module>
         <module>util4j-audit</module>
         <module>util4j-encryption</module>
         <module>util4j-push</module>

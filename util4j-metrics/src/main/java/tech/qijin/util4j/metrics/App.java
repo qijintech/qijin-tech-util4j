@@ -1,4 +1,4 @@
-package tech.qijin.util4j.metric;
+package tech.qijin.util4j.metrics;
 
 /**
  * Hello world!

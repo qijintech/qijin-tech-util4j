@@ -1,4 +1,4 @@
-package tech.qijin.util4j.metric.test;
+package tech.qijin.util4j.metrics.test;
 
 /**
  * Unit test for simple App.
