@@ -29,5 +29,9 @@
             <groupId>tech.qijin.util4j</groupId>
             <artifactId>util4j-web</artifactId>
         </dependency>
+        <dependency>
+            <groupId>tech.qijin.util4j</groupId>
+            <artifactId>util4j-spring</artifactId>
+        </dependency>
     </dependencies>
 </project>
