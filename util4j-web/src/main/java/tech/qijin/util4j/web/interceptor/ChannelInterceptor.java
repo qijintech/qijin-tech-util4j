@@ -39,12 +39,12 @@ public class ChannelInterceptor implements HandlerInterceptor {
         if (!className.startsWith(GROUP_ID)) {
             return true;
         }
-        /**
-         * 不带{@link ChannelRequired}注解的，也直接通过
-         */
-        if (method.getAnnotation(ChannelRequired.class) == null) {
-            return true;
-        }
+//        /**
+//         * 不带{@link ChannelRequired}注解的，也直接通过
+//         */
+//        if (method.getAnnotation(ChannelRequired.class) == null) {
+//            return true;
+//        }
 
         Optional<String> channelOpt = ServletUtil.getHeader((HttpServletRequest) request, CHANNEL_KEYWORD);
         if (channelOpt.isPresent()) {
