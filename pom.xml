@@ -32,12 +32,12 @@
         <module>util4j-push</module>
         <module>util4j-timezone</module>
         <module>util4j-config</module>
-        <module>util4j-websocket1</module>
+        <module>util4j-websocket</module>
         <module>util4j-starters</module>
         <module>util4j-algorithm</module>
         <module>util4j-kms</module>
-      <module>util4j-spring</module>
-  </modules>
+        <module>util4j-spring</module>
+    </modules>
 
     <build>
         <plugins>

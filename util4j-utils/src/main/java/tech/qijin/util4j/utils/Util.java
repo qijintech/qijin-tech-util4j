@@ -13,24 +13,7 @@ import java.util.function.Supplier;
 @Slf4j
 public class Util {
     /**
-     * 执行时忽略异常，只打印log，防止影响主流程
-     *
-     * @param supplier
-     * @param errMessage 出现异常时的错误日志信息
-     * @param <R>
-     * @return
-     */
-    public static <R> R runIgnoreEx(Supplier<R> supplier, String errMessage) {
-        try {
-            return supplier.get();
-        } catch (Exception e) {
-            log.error("encountered exception. msg={}", errMessage, e);
-        }
-        return null;
-    }
-
-    /**
-     * 同{@link #runIgnoreEx(Supplier, String)}，只是无需传入errMessage
+     * 忽略异常的调用
      *
      * @param supplier
      * @param <R>
@@ -45,19 +28,29 @@ public class Util {
         return null;
     }
 
-    public static void runIgnoreEx(JustRun justRun, String errMessage) {
+    /**
+     * 同 {@link #runIgnoreEx(Supplier)}，支持默认值
+     *
+     * @param supplier
+     * @param defaultValue
+     * @param <R>
+     * @return
+     */
+    public static <R> R runIgnoreEx(Supplier<R> supplier, R defaultValue) {
         try {
-            justRun.run();
-        } catch (Exception e) {
-            log.error("encountered exception. msg={}", errMessage, e);
-        }
-    }
-
-    public static void runIgnoreEx(JustRun justRun) {
-        try {
-            justRun.run();
+            return supplier.get();
         } catch (Exception e) {
             log.error("encountered exception", e);
         }
+        return defaultValue;
+    }
+
+    public static <R> R runIgnoreEx(Supplier<R> supplier, R defaultValue, String errMsg) {
+        try {
+            return supplier.get();
+        } catch (Exception e) {
+            log.error("encountered exception msg={}", errMsg, e);
+        }
+        return defaultValue;
     }
 }

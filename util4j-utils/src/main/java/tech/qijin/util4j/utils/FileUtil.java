@@ -100,11 +100,13 @@ public class FileUtil {
         }
     }
 
+    // 文件名
+    public static String prefix(String fileName) {
+        return fileName.substring(0, fileName.lastIndexOf("."));
+    }
 
+    // 文件后缀
     public static String suffix(String fileName) {
-        MAssert.notBlank(fileName, ResEnum.BAD_REQUEST);
-        String[] arr = StringUtils.split(fileName, ".");
-        MAssert.isTrue(arr.length >= 2, ResEnum.BAD_REQUEST);
-        return arr[arr.length - 1];
+        return fileName.substring(fileName.lastIndexOf("."));
     }
 }

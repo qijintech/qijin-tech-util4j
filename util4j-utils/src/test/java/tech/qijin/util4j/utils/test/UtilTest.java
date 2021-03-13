@@ -14,7 +14,6 @@ public class UtilTest {
     @Test
     public void testRunIgnoreEx() {
         int a = 10;
-        Util.runIgnoreEx(() -> test(a), null);
         log.info("asdfasdf");
     }
 
