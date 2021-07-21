@@ -1,5 +1,7 @@
 package tech.qijin.util4j.utils;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -32,6 +34,10 @@ public class DateUtil {
     public static final String YYYYMMDD_ZH = "yyyy年MM月dd日";
     public static final String MINITES_ZH = "yyyy年MM月dd日 HH:mm分";
     public static final int FIRST_HOUR_OF_DAY = 0;
+    public static final String[] starArr = {"魔羯座", "水瓶座", "双鱼座", "白羊座", "金牛座", "双子座", "巨蟹座", "狮子座", "处女座", "天秤座", "天蝎座", "射手座", "魔羯座"};
+    public static final int[] dayArr = {22, 20, 19, 21, 20, 21, 22, 23, 23, 23, 24, 23, 22};
+
+
 
     /**
      * 每分钟的秒数
@@ -526,13 +532,58 @@ public class DateUtil {
         return date.compareTo(getDbDefaultDate()) == 0;
     }
 
+    /**
+     * 根据生日计算年龄
+     * @param birthday
+     * @return
+     */
+    public static int getAgeByBirth(Date birthday) {
+        if (birthday == null) return 0;
+        int age = 0;
+        try {
+            Calendar now = Calendar.getInstance();
+            now.setTime(new Date());// 当前时间
 
-    public static void main(String[] args) {
-        Date now = now();
-        System.out.println(now);
-        Date a = incrDays(now, 1);
-        System.out.println(a);
-        Date b = getDate(now, 1, 0, 0, 0);
-        System.out.println(b);
+            Calendar birth = Calendar.getInstance();
+            birth.setTime(birthday);
+
+            if (birth.after(now)) {//如果传入的时间，在当前时间的后面，返回0岁
+                age = 0;
+            } else {
+                age = now.get(Calendar.YEAR) - birth.get(Calendar.YEAR);
+                if (now.get(Calendar.DAY_OF_YEAR) > birth.get(Calendar.DAY_OF_YEAR)) {
+                    age += 1;
+                }
+            }
+            return age;
+        } catch (Exception e) {//兼容性更强,异常后返回数据
+            return 0;
+        }
+    }
+
+    public static String getConstellation(Date date) {
+        if (date == null) return "";
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int month = calendar.get(Calendar.MONTH) + 1;
+        return day < dayArr[month] ? starArr[month - 1] : starArr[month];
+    }
+
+    /**
+     * 计算星座
+     * @param month
+     * @param day
+     * @return
+     */
+    public static String getConstellation(int month, int day) {
+        return day < dayArr[month] ? starArr[month - 1] : starArr[month];
+    }
+
+    public static void main(String[] args) throws ParseException {
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date birthday = format.parse("1994-08-22 17:20:20");
+        System.out.println(getAgeByBirth(birthday));
+        System.out.println(getConstellation(birthday));
     }
 }

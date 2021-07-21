@@ -77,21 +77,21 @@ public class FilterConfiguration {
         return registrationBean;
     }
 
-    /**
-     * RequestFilter
-     *
-     * @return
-     */
-    @ConditionalOnMissingBean({RequestInterceptor.class})
-    @Bean
-    public FilterRegistrationBean<RequestFilter> requestFilterBean() {
-        log.info(LogFormat.builder().message("RequestFilter init").build());
-        FilterRegistrationBean registrationBean = new FilterRegistrationBean();
-        RequestFilter filter = new RequestFilter();
-        registrationBean.setFilter(filter);
-        registrationBean.setOrder(8);
-        return registrationBean;
-    }
+//    /**
+//     * RequestFilter
+//     *
+//     * @return
+//     */
+//    @ConditionalOnMissingBean({RequestInterceptor.class})
+//    @Bean
+//    public FilterRegistrationBean<RequestFilter> requestFilterBean() {
+//        log.info(LogFormat.builder().message("RequestFilter init").build());
+//        FilterRegistrationBean registrationBean = new FilterRegistrationBean();
+//        RequestFilter filter = new RequestFilter();
+//        registrationBean.setFilter(filter);
+//        registrationBean.setOrder(8);
+//        return registrationBean;
+//    }
 
     /**
      * PageFilter

@@ -9,6 +9,7 @@ import tech.qijin.util4j.lang.constant.EnumValue;
  **/
 public enum Channel implements EnumValue<String> {
     TEST("测试渠道"),
+    SOCIAL("社交"),
     MALL("特产商城"),
     JOB("找工作"),
     CARD("名片"),

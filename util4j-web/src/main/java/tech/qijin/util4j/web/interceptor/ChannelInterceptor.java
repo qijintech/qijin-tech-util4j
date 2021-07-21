@@ -39,13 +39,10 @@ public class ChannelInterceptor implements HandlerInterceptor {
         if (!className.startsWith(GROUP_ID)) {
             return true;
         }
-//        /**
-//         * 不带{@link ChannelRequired}注解的，也直接通过
-//         */
-//        if (method.getAnnotation(ChannelRequired.class) == null) {
-//            return true;
-//        }
-
+        /**
+         * 不带{@link ChannelRequired}注解的，也直接通过
+         */
+        ChannelRequired channelRequired = method.getAnnotation(ChannelRequired.class);
         Optional<String> channelOpt = ServletUtil.getHeader((HttpServletRequest) request, CHANNEL_KEYWORD);
         if (channelOpt.isPresent()) {
             try {
@@ -57,6 +54,9 @@ public class ChannelInterceptor implements HandlerInterceptor {
 
             return true;
         } else {
+            if (channelRequired != null && !channelRequired.required()) {
+                return true;
+            }
             MAssert.isTrue(false, ResEnum.BAD_REQUEST.code, "channel is required");
             return false;
         }
