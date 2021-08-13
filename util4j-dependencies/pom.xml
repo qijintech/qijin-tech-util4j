@@ -44,7 +44,7 @@
         <hibenate.validator.version>6.0.13.Final</hibenate.validator.version>
         <javax.el.api.version>3.0.1-b06</javax.el.api.version>
         <glassfish.el.versino>2.2.6</glassfish.el.versino>
-        <bouncycastle.bcprov.version>1.60</bouncycastle.bcprov.version>
+        <bouncycastle.bcprov.version>1.67</bouncycastle.bcprov.version>
         <netty.all.version>4.1.31.Final</netty.all.version>
 
         <mysql.connector.version>5.1.47</mysql.connector.version>
