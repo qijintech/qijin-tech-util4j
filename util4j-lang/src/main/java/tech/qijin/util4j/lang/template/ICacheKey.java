@@ -11,7 +11,7 @@ import org.apache.commons.lang3.StringUtils;
  **/
 public interface ICacheKey {
 
-    String KEY_SEPARATOR = ".";
+    String KEY_SEPARATOR = ":";
 
     /**
      * 返回对应module的名字
