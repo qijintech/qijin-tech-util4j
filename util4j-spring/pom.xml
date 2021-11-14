@@ -6,6 +6,8 @@
         <artifactId>util4j-dependencies</artifactId>
         <groupId>tech.qijin.util4j</groupId>
         <version>1.0.0-SNAPSHOT</version>
+        <relativePath>../util4j-dependencies</relativePath>
+
     </parent>
 
     <groupId>tech.qijin.util4j</groupId>
