@@ -38,7 +38,6 @@ public class DateUtil {
     public static final int[] dayArr = {22, 20, 19, 21, 20, 21, 22, 23, 23, 23, 24, 23, 22};
 
 
-
     /**
      * 每分钟的秒数
      */
@@ -68,6 +67,30 @@ public class DateUtil {
      */
     public static final int MILLI_PER_SECOND = 1000;
 
+    /**
+     * 返回格式化时间，如1min前、1小时前等
+     *
+     * @param date
+     * @return
+     */
+    public static String formatSocial(Date date) {
+        long seconds = (now().getTime() - date.getTime()) / 1000;
+        if (seconds < 60) {
+            return "刚刚";
+        } else if (seconds < 3600) {
+            return String.format("%d分钟前", seconds / 60);
+        } else if (seconds < 24 * 3600) {
+            return String.format("%d小时前", seconds / 3600);
+        } else if (seconds < 24 * 3600 * 7) {
+            return String.format("%d天前", seconds / (3600 * 24));
+        } else if (seconds < 24 * 3600 * 30) {
+            return String.format("%d周前", seconds / (3600 * 24 * 7));
+        } else if (seconds < 24 * 3600 * 365) {
+            return String.format("%d月前", seconds / (3600 * 24 * 30));
+        } else {
+            return String.format("%d年前", seconds / (3600 * 24 * 365));
+        }
+    }
 
     /**
      * 返回unix时间戳
@@ -534,6 +557,7 @@ public class DateUtil {
 
     /**
      * 根据生日计算年龄
+     *
      * @param birthday
      * @return
      */
@@ -572,6 +596,7 @@ public class DateUtil {
 
     /**
      * 计算星座
+     *
      * @param month
      * @param day
      * @return
