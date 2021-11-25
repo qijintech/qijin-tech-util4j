@@ -8,6 +8,7 @@ import tech.qijin.util4j.lang.constant.EnumValue;
  * 开始做眼保健操：←_← ↑_↑ →_→ ↓_↓
  **/
 public enum Channel implements EnumValue<String> {
+    NONE("无"),
     TEST("测试渠道"),
     SOCIAL("社交"),
     MALL("特产商城"),
