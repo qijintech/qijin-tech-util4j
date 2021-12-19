@@ -9,7 +9,7 @@ import com.google.common.base.Preconditions;
  * @date 2019/4/7
  * 开始做眼保健操：←_← ↑_↑ →_→ ↓_↓
  **/
-public interface EnumStatus<T extends EnumStatus> extends EnumValue {
+public interface EnumStatus<T extends EnumStatus, E> extends EnumValue<E> {
     /**
      * 当前状态机可流转的下游状态
      *

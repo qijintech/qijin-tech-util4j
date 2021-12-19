@@ -19,8 +19,11 @@ import java.util.concurrent.TimeUnit;
 
 import org.joda.time.DateTime;
 import org.joda.time.format.DateTimeFormat;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class DateUtil {
+    private static final Logger log = LoggerFactory.getLogger(DateUtil.class);
 
     private static final String TIME_FORMAT = "%02d";
     public static final String DATE_FORMAT = "yyyy-MM-dd";
@@ -120,6 +123,25 @@ public class DateUtil {
     }
 
     /**
+     * 表示永远的时间
+     *
+     * @return
+     */
+    public static Date forever() {
+        return parseDate("2222-02-22", DATE_FORMAT);
+    }
+
+    public static Date parseDate(String dateStr, String formatStr) {
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat(formatStr);
+            return dateFormat.parse(dateStr);
+        } catch (Exception e) {
+            log.error("parseDate error, dateStr={}, formatStr={}", dateStr, formatStr, e);
+        }
+        return null;
+    }
+
+    /**
      * 将秒数变成毫秒数
      *
      * @param seconds
@@ -169,6 +191,102 @@ public class DateUtil {
     }
 
     /**
+     * 获取当周的第一天
+     *
+     * @param now
+     * @return
+     */
+    public static Date firstDayOfWeek(Date now, boolean start) {
+        DateTime dateTime = new DateTime(now);
+        Calendar calendar = dateTime.toCalendar(Locale.SIMPLIFIED_CHINESE);
+        calendar.set(Calendar.DAY_OF_WEEK, calendar
+                .getActualMinimum(Calendar.DAY_OF_WEEK));
+        Date date = plusDays(new DateTime(calendar.getTime(), dateTime.getZone()).toDate(), 1);
+        if (start) return getDayBegin(date);
+        return date;
+    }
+
+    /**
+     * 获取当周的最后一天
+     *
+     * @param now
+     * @return
+     */
+    public static Date lastDayOfWeek(Date now, boolean end) {
+        DateTime dateTime = new DateTime(now);
+        Calendar calendar = dateTime.toCalendar(Locale.SIMPLIFIED_CHINESE);
+        calendar.set(Calendar.DAY_OF_WEEK, calendar
+                .getActualMaximum(Calendar.DAY_OF_WEEK));
+        Date date = plusDays(new DateTime(calendar.getTime(), dateTime.getZone()).toDate(), 1);
+        if (end) return getDayEnd(date);
+        return date;
+    }
+
+    /**
+     * 获得一个月份的第一天
+     *
+     * @param now
+     * @return
+     */
+    public static Date firstDayOfMonth(Date now, boolean start) {
+        DateTime dateTime = new DateTime(now);
+        Calendar calendar = dateTime.toCalendar(Locale.SIMPLIFIED_CHINESE);
+        calendar.set(Calendar.DAY_OF_MONTH, calendar
+                .getActualMinimum(Calendar.DAY_OF_MONTH));
+        Date date = new DateTime(calendar.getTime(), dateTime.getZone()).toDate();
+        if (start) return getDayBegin(date);
+        return date;
+    }
+
+    /**
+     * 获得一个月份的最后一天
+     *
+     * @param now
+     * @return
+     */
+    public static Date lastDayOfMonth(Date now, boolean end) {
+        DateTime dateTime = new DateTime(now);
+        Calendar calendar = dateTime.toCalendar(Locale.SIMPLIFIED_CHINESE);
+        calendar.set(Calendar.DAY_OF_MONTH, calendar
+                .getActualMaximum(Calendar.DAY_OF_MONTH));
+        Date date = new DateTime(calendar.getTime(), dateTime.getZone()).toDate();
+        if(end) return getDayEnd(date);
+        return date;
+    }
+
+    /**
+     * 一年的第一天
+     *
+     * @param now
+     * @return
+     */
+    public static Date firstDayOfYear(Date now, boolean start) {
+        DateTime dateTime = new DateTime(now);
+        Calendar calendar = dateTime.toCalendar(Locale.SIMPLIFIED_CHINESE);
+        calendar.set(Calendar.DAY_OF_YEAR, calendar
+                .getActualMinimum(Calendar.DAY_OF_YEAR));
+        Date date = new DateTime(calendar.getTime(), dateTime.getZone()).toDate();
+        if (start) return getDayBegin(date);
+        return date;
+    }
+
+    /**
+     * 一年的最后一天
+     *
+     * @param now
+     * @return
+     */
+    public static Date lastDayOfYear(Date now, boolean end) {
+        DateTime dateTime = new DateTime(now);
+        Calendar calendar = dateTime.toCalendar(Locale.SIMPLIFIED_CHINESE);
+        calendar.set(Calendar.DAY_OF_YEAR, calendar
+                .getActualMaximum(Calendar.DAY_OF_YEAR));
+        Date date = new DateTime(calendar.getTime(), dateTime.getZone()).toDate();
+        if (end) return getDayEnd(date);
+        return date;
+    }
+
+    /**
      * 在当前时间基础上增减n天
      *
      * @param date
@@ -202,6 +320,50 @@ public class DateUtil {
     public static Date incrMinutes(Date date, int n) {
         return Date.from(LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault())
                 .plusMinutes(n).atZone(ZoneId.systemDefault()).toInstant());
+    }
+
+    /**
+     * 指定时间偏移指定秒
+     *
+     * @param date
+     * @param seconds seconds为负，则向前偏移
+     * @return
+     */
+    public static Date plusSeconds(Date date, long seconds) {
+        return Date.from(date.toInstant().plusSeconds(seconds));
+    }
+
+    /**
+     * 指定时间偏移指定分
+     *
+     * @param date
+     * @param minutes
+     * @return
+     */
+    public static Date plusMinutes(Date date, long minutes) {
+        return plusSeconds(date, minutes * 60);
+    }
+
+    /**
+     * 指定时间偏移指定小时
+     *
+     * @param date
+     * @param hours
+     * @return
+     */
+    public static Date plusHours(Date date, long hours) {
+        return plusMinutes(date, hours * 60);
+    }
+
+    /**
+     * 指定时间偏移指定天
+     *
+     * @param date
+     * @param days
+     * @return
+     */
+    public static Date plusDays(Date date, long days) {
+        return plusHours(date, days * 24);
     }
 
     /**
@@ -606,9 +768,12 @@ public class DateUtil {
     }
 
     public static void main(String[] args) throws ParseException {
-        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        Date birthday = format.parse("1994-08-22 17:20:20");
-        System.out.println(getAgeByBirth(birthday));
-        System.out.println(getConstellation(birthday));
+        Date now = now();
+        System.out.println(firstDayOfWeek(now, true));
+        System.out.println(lastDayOfWeek(now, true));
+        System.out.println(firstDayOfMonth(now, true));
+        System.out.println(lastDayOfMonth(now, true));
+        System.out.println(firstDayOfYear(now, true));
+        System.out.println(lastDayOfYear(now, true));
     }
 }

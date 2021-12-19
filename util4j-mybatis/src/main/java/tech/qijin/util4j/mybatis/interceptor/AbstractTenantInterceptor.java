@@ -89,10 +89,10 @@ public abstract class AbstractTenantInterceptor<T> implements Interceptor {
         //sql类型
         SqlCommandType sqlCommandType = ms.getSqlCommandType();
         rewriteService.dispatch(sqlCommandType, invocation, boundSql, getTenantValue());
-        log.info(LogFormat.builder()
-                .message("tenant interceptor")
-                .put("time cost", (System.currentTimeMillis() - start) + " ms")
-                .build());
+//        log.info(LogFormat.builder()
+//                .message("tenant interceptor")
+//                .put("time cost", (System.currentTimeMillis() - start) + " ms")
+//                .build());
         return invocation.proceed();
     }
 
