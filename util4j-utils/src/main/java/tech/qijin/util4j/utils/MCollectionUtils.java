@@ -1,8 +1,11 @@
 package tech.qijin.util4j.utils;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import com.google.common.collect.Lists;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.logging.log4j.util.Strings;
 
 /**
  * CollectionUtils扩展
@@ -12,6 +15,10 @@ import com.google.common.collect.Lists;
  * 开始做眼保健操：←_← ↑_↑ →_→ ↓_↓
  **/
 public class MCollectionUtils {
+    public static <T extends Number> String join(List<T> list, Character separator) {
+        if (CollectionUtils.isEmpty(list)) return "";
+        return Strings.join(list.stream().map(String::valueOf).collect(Collectors.toList()), separator);
+    }
     /**
      * 将一个大的list分隔成大小最大为size的多个list
      *
@@ -57,10 +64,6 @@ public class MCollectionUtils {
 
     public static void main(String[] args) {
         List<Integer> lists = Lists.newArrayList(10, 20, 30, 40);
-        System.out.println(thresholdIndex(3, lists));
-        System.out.println(thresholdIndex(13, lists));
-        System.out.println(thresholdIndex(23, lists));
-        System.out.println(thresholdIndex(33, lists));
-        System.out.println(thresholdIndex(43, lists));
+        System.out.println(join(lists, ','));
     }
 }
