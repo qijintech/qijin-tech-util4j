@@ -52,4 +52,15 @@ public class PageVo {
      */
     private Long minId;
 
+    /**
+     * 是否是首页
+     *
+     * @return
+     */
+    public boolean isFirstPage() {
+        if (pageNo == null) return true;
+        if (pageNo <= 1) return true;
+        return false;
+    }
+
 }

@@ -1,10 +1,12 @@
 package tech.qijin.util4j.lang.event;
 
 import lombok.Data;
+import lombok.Getter;
 import org.springframework.context.ApplicationEvent;
 
-@Data
+@Getter
 public class CountingEvent extends ApplicationEvent {
+
     public CountingEvent(Object source, Long userId, String countingCode, Long target) {
         super(source);
         this.userId = userId;
