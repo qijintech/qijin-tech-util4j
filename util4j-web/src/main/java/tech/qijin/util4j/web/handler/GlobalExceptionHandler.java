@@ -43,10 +43,10 @@ public class GlobalExceptionHandler {
     public ResultVo processException(NativeWebRequest request, Exception e) {
         log.error(getUrl(request), e);
         if (e instanceof NullPointerException) {
-            return new ResultVo().fail(ResEnum.BAD_GATEWAY).data("内部异常-空指针");
+            return new ResultVo().fail(ResEnum.BAD_GATEWAY).data("系统故障");
         }
 
-        return new ResultVo().fail(ResEnum.BAD_GATEWAY).data(e.getMessage());
+        return new ResultVo().fail(ResEnum.BAD_GATEWAY).data("系统故障");
     }
 
     private String getUrl(NativeWebRequest request) {
