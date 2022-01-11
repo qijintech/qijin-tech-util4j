@@ -14,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.alibaba.fastjson.JSON;
 
 import tech.qijin.util4j.utils.LogFormat;
+import tech.qijin.util4j.web.filter.RequestWrapper;
 import tech.qijin.util4j.web.filter.ResponseWrapper;
 import tech.qijin.util4j.web.pojo.ResultVo;
 import tech.qijin.util4j.web.util.ServletUtil;
@@ -29,10 +30,15 @@ public class RequestInterceptor implements HandlerInterceptor {
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        if (!(request instanceof RequestWrapper)) {
+            return true;
+        }
+        RequestWrapper requestWrapper = (RequestWrapper) request;
         long start = System.currentTimeMillis();
         request.setAttribute("start", start);
         LOGGER.info(LogFormat.builder()
-                .put("request", "{" + request.getQueryString() + "}")
+                .put("request", request.getQueryString())
+                .put("body", requestWrapper.getBodyString())
                 .put("uri", request.getRequestURI())
                 .put("token", ServletUtil.getHeader(request, "token").orElse(null))
                 .build());

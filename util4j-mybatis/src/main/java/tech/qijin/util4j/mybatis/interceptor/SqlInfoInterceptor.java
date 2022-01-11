@@ -1,24 +1,29 @@
 package tech.qijin.util4j.mybatis.interceptor;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 import java.util.Properties;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.cache.CacheKey;
 import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.executor.statement.StatementHandler;
-import org.apache.ibatis.mapping.BoundSql;
-import org.apache.ibatis.mapping.MappedStatement;
-import org.apache.ibatis.mapping.SqlCommandType;
+import org.apache.ibatis.mapping.*;
 import org.apache.ibatis.plugin.Interceptor;
 import org.apache.ibatis.plugin.Intercepts;
 import org.apache.ibatis.plugin.Invocation;
 import org.apache.ibatis.plugin.Plugin;
 import org.apache.ibatis.plugin.Signature;
+import org.apache.ibatis.reflection.MetaObject;
 import org.apache.ibatis.session.Configuration;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
+import org.apache.ibatis.type.TypeHandlerRegistry;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import tech.qijin.util4j.lang.constant.EnumValue;
 import tech.qijin.util4j.utils.LogFormat;
 
 /**
@@ -43,6 +48,12 @@ import tech.qijin.util4j.utils.LogFormat;
                 args = {MappedStatement.class, Object.class, RowBounds.class, ResultHandler.class})})
 public class SqlInfoInterceptor implements Interceptor {
     private static final Logger LOGGER = LoggerFactory.getLogger("MyBatis");
+    private static ThreadLocal<SimpleDateFormat> dateTimeFormatter = new ThreadLocal<SimpleDateFormat>() {
+        @Override
+        protected SimpleDateFormat initialValue() {
+            return new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        }
+    };
 
     @Override
     public Object intercept(Invocation invocation) throws Throwable {
@@ -59,6 +70,7 @@ public class SqlInfoInterceptor implements Interceptor {
         //执行真正的方法
         Object result = invocation.proceed();
         long end = System.currentTimeMillis();
+        String sql = boundSql.getSql();
         //记录影响行数
         SqlCommandType sqlCommandType = mappedStatement.getSqlCommandType();
         switch (sqlCommandType) {
@@ -66,18 +78,95 @@ public class SqlInfoInterceptor implements Interceptor {
             case DELETE:
             case INSERT:
                 int affectedRows = Integer.valueOf(Integer.parseInt(result.toString()));
-                LOGGER.info(LogFormat.builder().put("sql", boundSql.getSql())
+                LOGGER.info(LogFormat.builder()
+                        .message(sqlCommandType.name().toLowerCase() + " dml")
+                        .put("sql", readableSql(sql, parseParameter(boundSql, parameter, configuration)))
                         .put("affect rows", affectedRows)
                         .put("time cost", String.format("%d %s", end - start, "ms"))
+//                        .put("parameter", parseParameter(boundSql, parameter, configuration))
                         .build());
                 break;
             case SELECT:
-                LOGGER.info(LogFormat.builder().put("sql", boundSql.getSql())
+                LOGGER.info(LogFormat.builder()
+                        .message(sqlCommandType.name().toLowerCase() + " dml")
+                        .put("sql", readableSql(sql, parseParameter(boundSql, parameter, configuration)))
                         .put("time cost", String.format("%d %s", end - start, "ms"))
+//                        .put("parameter", parseParameter(boundSql, parameter, configuration))
                         .build());
                 break;
         }
         return result;
+    }
+
+    /**
+     * 将sql中的?修改成对应的值
+     *
+     * @param sql
+     * @param params
+     * @return
+     */
+    private String readableSql(String sql, String params) {
+        if (StringUtils.isBlank(sql) || StringUtils.isBlank(params)) return sql;
+        String[] paramArr = params.split(",");
+        if (paramArr.length <= 0) return sql;
+        for (String param : paramArr) {
+            sql = StringUtils.replace(sql, "?", param, 1);
+        }
+        return StringUtils.replace(sql, "\n", "");
+    }
+
+    private String parseParameter(BoundSql boundSql, Object parameterObject, Configuration configuration) {
+        List<ParameterMapping> parameterMappings = boundSql.getParameterMappings();
+        TypeHandlerRegistry typeHandlerRegistry = configuration.getTypeHandlerRegistry();
+        StringBuilder sb = new StringBuilder();
+
+        if (parameterMappings != null) {
+            MetaObject metaObject = parameterObject == null ? null : configuration.newMetaObject(parameterObject);
+            for (int i = 0; i < parameterMappings.size(); i++) {
+                ParameterMapping parameterMapping = parameterMappings.get(i);
+                if (parameterMapping.getMode() != ParameterMode.OUT) {
+                    //  参数值
+                    Object value;
+                    String propertyName = parameterMapping.getProperty();
+                    //  获取参数名称
+                    if (boundSql.hasAdditionalParameter(propertyName)) {
+                        // 获取参数值
+                        value = boundSql.getAdditionalParameter(propertyName);
+                    } else if (parameterObject == null) {
+                        value = null;
+                    } else if (typeHandlerRegistry.hasTypeHandler(parameterObject.getClass())) {
+                        // 如果是单个值则直接赋值
+                        value = parameterObject;
+                    } else {
+                        value = metaObject == null ? null :
+                                metaObject.hasGetter(propertyName) ? metaObject.getValue(propertyName) : null;
+                    }
+
+                    if (null == value) {
+                        continue;
+                    }
+
+                    if (value instanceof Number) {
+                        sb.append(String.valueOf(value)).append(",");
+                    } else {
+                        if (value instanceof Date) {
+                            sb.append(dateTimeFormatter.get().format((Date) value)).append(",");
+                        } else if (value instanceof String) {
+                            sb.append(value).append(",");
+                        } else if (value instanceof EnumValue) {
+                            sb.append(((EnumValue) value).value()).append(",");
+                        }
+                    }
+                }
+            }
+        }
+
+        String ret = sb.toString();
+        if (ret.endsWith(",")) {
+            ret = ret.substring(0, ret.length() - 1);
+        }
+
+        return ret;
     }
 
     @Override

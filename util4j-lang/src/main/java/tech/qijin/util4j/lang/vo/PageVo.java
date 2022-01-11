@@ -13,6 +13,7 @@ public class PageVo {
     public static final String PAGE_SIZE = "pageSize";
     public static final String MIN_ID = "minId";
     public static final String MAX_ID = "maxId";
+    private static final Integer DEFAULT_PAGE_SIZE = 10;
 
     public PageVo() {
     }
@@ -61,6 +62,20 @@ public class PageVo {
         if (pageNo == null) return true;
         if (pageNo <= 1) return true;
         return false;
+    }
+
+    public static PageVo check(PageVo pageVo, Integer defaultPageSize) {
+        Integer pageSize = defaultPageSize != null ? defaultPageSize : DEFAULT_PAGE_SIZE;
+        if (pageVo == null) {
+            return new PageVo(1, pageSize);
+        }
+        if (pageVo.getPageNo() == null || pageVo.getPageNo() < 1) {
+            pageVo.setPageNo(1);
+        }
+        if (pageVo.getPageSize() == null || pageVo.getPageSize() <= 0) {
+            pageVo.setPageSize(pageSize);
+        }
+        return pageVo;
     }
 
 }
