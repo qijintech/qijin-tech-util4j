@@ -24,10 +24,10 @@ public class ResponsePrinter implements ResponseBodyAdvice<Object> {
     public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
         if (request instanceof ServletServerHttpRequest &&
                 response instanceof ServletServerHttpResponse) {
-            log.info(LogFormat.builder()
-                    .message("response body")
-                    .put("body", JSON.toJSONString(body))
-                    .build());
+//            log.info(LogFormat.builder()
+//                    .message("responseBody")
+//                    .put("body", JSON.toJSONString(body))
+//                    .build());
         }
         return body;
     }

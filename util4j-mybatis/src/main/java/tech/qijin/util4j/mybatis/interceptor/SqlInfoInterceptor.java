@@ -112,7 +112,7 @@ public class SqlInfoInterceptor implements Interceptor {
         for (String param : paramArr) {
             sql = StringUtils.replace(sql, "?", param, 1);
         }
-        return StringUtils.replace(sql, "\n", "");
+        return StringUtils.replace(sql, "\n", " ");
     }
 
     private String parseParameter(BoundSql boundSql, Object parameterObject, Configuration configuration) {
@@ -155,6 +155,8 @@ public class SqlInfoInterceptor implements Interceptor {
                             sb.append(value).append(",");
                         } else if (value instanceof EnumValue) {
                             sb.append(((EnumValue) value).value()).append(",");
+                        } else if (value instanceof Boolean) {
+                            sb.append((Boolean) value).append(",");
                         }
                     }
                 }
