@@ -83,7 +83,6 @@ public class SqlInfoInterceptor implements Interceptor {
                         .put("sql", readableSql(sql, parseParameter(boundSql, parameter, configuration)))
                         .put("affect rows", affectedRows)
                         .put("time cost", String.format("%d %s", end - start, "ms"))
-//                        .put("parameter", parseParameter(boundSql, parameter, configuration))
                         .build());
                 break;
             case SELECT:
@@ -91,7 +90,6 @@ public class SqlInfoInterceptor implements Interceptor {
                         .message(sqlCommandType.name().toLowerCase() + " dml")
                         .put("sql", readableSql(sql, parseParameter(boundSql, parameter, configuration)))
                         .put("time cost", String.format("%d %s", end - start, "ms"))
-//                        .put("parameter", parseParameter(boundSql, parameter, configuration))
                         .build());
                 break;
         }

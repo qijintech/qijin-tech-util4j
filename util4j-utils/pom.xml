@@ -23,6 +23,13 @@
             <groupId>tech.qijin.util4j</groupId>
             <artifactId>util4j-trace</artifactId>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/net.coobird/thumbnailator -->
+        <dependency>
+            <groupId>net.coobird</groupId>
+            <artifactId>thumbnailator</artifactId>
+            <version>0.4.17</version>
+        </dependency>
+
         <dependency>
             <groupId>commons-beanutils</groupId>
             <artifactId>commons-beanutils</artifactId>

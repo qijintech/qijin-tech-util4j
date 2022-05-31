@@ -86,5 +86,9 @@ public class MAssert {
         MAssert.isTrue(content.length() >= minLength && content.length() <= maxLength, message);
     }
 
+    public static void checkParam(boolean expression, String errMsg) {
+        MAssert.isTrue(expression, ResEnum.INVALID_PARAM.code, errMsg);
+    }
+
 
 }
