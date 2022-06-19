@@ -64,6 +64,14 @@ public class PageVo {
         return false;
     }
 
+    public String orderBy(String column) {
+        return orderBy(column, "desc");
+    }
+
+    public String orderBy(String column, String direction) {
+        return String.format("%s %s limit %d, %d", column, direction, (pageNo - 1) * pageSize, pageSize);
+    }
+
     public static PageVo check(PageVo pageVo, Integer defaultPageSize) {
         Integer pageSize = defaultPageSize != null ? defaultPageSize : DEFAULT_PAGE_SIZE;
         if (pageVo == null) {
