@@ -19,6 +19,7 @@ public class LocalCacheAgent<T> {
     private Date lastUpdateAt = Date.from(Instant.EPOCH);
     private List<T> data = Lists.newArrayList();
     private volatile Map<Long, T> map = Maps.newHashMap();
+    private boolean update;
 
     // 间隔时间，默认5s
     private Integer intervalSeconds = 5;
@@ -40,11 +41,14 @@ public class LocalCacheAgent<T> {
             }
             data = queryFromDB.get();
             map = Maps.newHashMap();
+            update = true;
         }
         return this;
     }
 
     public void callback(Consumer<List<T>> consumer) {
+        if (!update) return;
+        update = false;
         consumer.accept(data);
     }
 
